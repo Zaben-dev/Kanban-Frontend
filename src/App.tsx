@@ -1,11 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Column } from './api/models';
 import logo from './logo.svg';
+import getColumns from './api/getColumns';
 import './App.css';
 import server from './api/mockServer';
 
-//server()
+server();
 
 function App() {
+  const [columns, setColumns] = useState<Column[] | null>([]);
+
+  useEffect(() => {
+    getColumns().then((columns: Column[] | null) => {
+      setColumns(columns);
+    });
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">

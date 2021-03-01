@@ -1,10 +1,5 @@
 import axios from 'axios';
-
-interface Column {
-  id: number;
-  name: string;
-  limit: number;
-}
+import { Column } from './models';
 
 const parseColumns = (columns: Column[]): Column[] => {
   const parsedColumns = columns.map((column) => ({
