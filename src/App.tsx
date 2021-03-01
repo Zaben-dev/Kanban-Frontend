@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Column } from './api/models';
-import getColumns from './api/getColumns';
-import server from './api/mockServer';
+import { Column } from 'src/api/models';
+import getColumns from 'src/api/getColumns';
+import server from 'src/api/mockServer';
 
 server();
 
@@ -14,7 +14,7 @@ function App() {
     });
   }, []);
 
-  return <div></div>;
+  return <div>a</div>;
 }
 
 export default App;
