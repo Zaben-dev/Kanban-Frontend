@@ -26,6 +26,11 @@ const server = () => {
               name: 'backlog',
               limit: '10',
             },
+            {
+              id: '1',
+              name: 'kolumna',
+              limit: '10',
+            },
           ],
         };
         // return new Response(500, {}, {});

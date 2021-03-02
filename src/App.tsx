@@ -14,7 +14,7 @@ const Container = styled.div`
   height: 90vh;
 `;
 
-function App() {
+const App: React.FC = () => {
   const [columns, setColumns] = useState<ColumnData[] | null>(null);
 
   useEffect(() => {
@@ -29,11 +29,16 @@ function App() {
     return (
       <Container>
         {columns.map((column, index) => (
-          <Column key={index} />
+          <Column
+            key={index}
+            id={column.id}
+            name={column.name}
+            limit={column.limit}
+          />
         ))}
       </Container>
     );
   }
-}
+};
 
 export default App;
