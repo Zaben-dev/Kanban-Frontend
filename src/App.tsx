@@ -1,20 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { Column } from 'src/api/models';
+import { ColumnData } from 'src/api/models';
 import getColumns from 'src/api/getColumns';
 import server from 'src/api/mockServer';
+import Column from 'src/Column';
+import styled from 'styled-components';
 
 server();
 
+const Container = styled.div`
+  display: flex;
+  margin-top: 20px;
+  margin-left: 20px;
+  height: 90vh;
+`;
+
 function App() {
-  const [columns, setColumns] = useState<Column[] | null>([]);
+  const [columns, setColumns] = useState<ColumnData[] | null>(null);
 
   useEffect(() => {
-    getColumns().then((columns: Column[] | null) => {
+    getColumns().then((columns: ColumnData[] | null) => {
       setColumns(columns);
     });
   }, []);
 
-  return <div>a</div>;
+  if (columns === null) {
+    return <div>LOADING...</div>;
+  } else {
+    return (
+      <Container>
+        {columns.map((column, index) => (
+          <Column key={index} />
+        ))}
+      </Container>
+    );
+  }
 }
 
 export default App;

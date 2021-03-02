@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { Column } from 'src/api/models';
+import { ColumnData } from 'src/api/models';
 
-const parseColumns = (columns: Column[]): Column[] => {
+const parseColumns = (columns: ColumnData[]): ColumnData[] => {
   const parsedColumns = columns.map((column) => ({
     id: Number(column.id),
     name: String(column.name),
@@ -10,7 +10,7 @@ const parseColumns = (columns: Column[]): Column[] => {
   return parsedColumns;
 };
 
-const getColumns = async (): Promise<Column[] | null> => {
+const getColumns = async (): Promise<ColumnData[] | null> => {
   try {
     const response = await axios.get('/columns');
     return parseColumns(response.data.columns);
