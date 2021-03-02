@@ -24,6 +24,8 @@ const Container = styled.div`
 const Name = styled.div`
   padding-left: 15px;
   margin-top: 8px;
+  font-size: 17px;
+  font-weight: 400;
 `;
 
 const Column: React.FunctionComponent<ColumnData> = ({ id, name, limit }) => {
