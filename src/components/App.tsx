@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ColumnData } from 'src/api/models';
 import getColumns from 'src/api/getColumns';
 import server from 'src/api/mockServer';
-import Column from 'src/Column';
+import Column from 'src/components/Column';
 import styled from 'styled-components';
 
 server();
