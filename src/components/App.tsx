@@ -4,6 +4,7 @@ import getColumns from 'src/api/getColumns';
 import server from 'src/api/mockServer';
 import Column from 'src/components/Column';
 import styled from 'styled-components';
+import columnsContext from 'src/utils/columnsContext';
 
 server();
 
@@ -28,14 +29,16 @@ const App: React.FC = () => {
   } else {
     return (
       <Container>
-        {columns.map((column, index) => (
-          <Column
-            key={index}
-            id={column.id}
-            name={column.name}
-            limit={column.limit}
-          />
-        ))}
+        <columnsContext.Provider value={{ columns, setColumns }}>
+          {columns.map((column, index) => (
+            <Column
+              key={index}
+              id={column.id}
+              name={column.name}
+              limit={column.limit}
+            />
+          ))}
+        </columnsContext.Provider>
       </Container>
     );
   }

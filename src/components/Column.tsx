@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ColumnData } from 'src/api/models';
+import ColumnMenu from 'src/components/ColumnMenu';
+import currentColumnIdContext from 'src/utils/currentColumnIdContext';
 
 const Container = styled.div`
   background-color: rgb(219, 218, 218);
   min-width: 240px;
+  max-width: 240px;
   margin-left: 20px;
   height: 100%;
   border-radius: 6px;
@@ -28,10 +31,25 @@ const Name = styled.div`
   font-weight: 400;
 `;
 
+const FlexContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Column: React.FunctionComponent<ColumnData> = ({ id, name, limit }) => {
   return (
     <Container>
-      <Name>{name}</Name>
+      <FlexContainer>
+        <Name>
+          {name}
+          &nbsp;(max&nbsp;
+          {limit})
+        </Name>
+        <currentColumnIdContext.Provider value={{ id }}>
+          <ColumnMenu />
+        </currentColumnIdContext.Provider>
+      </FlexContainer>
+      TUTAJ BEDA TASKI TUTAJ BEDA TASKI TUTAJ BEDA TASKI
     </Container>
   );
 };
