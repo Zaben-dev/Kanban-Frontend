@@ -2,20 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { ColumnData } from 'src/api/models';
 import getColumns from 'src/api/getColumns';
 import server from 'src/api/mockServer';
-import Column from 'src/components/Column';
+import Column from 'src/components/presentational/Column';
 import styled from 'styled-components';
 import columnsContext from 'src/utils/columnsContext';
+import App from 'src/components/presentational/App';
 
 server();
 
-const Container = styled.div`
-  display: flex;
-  margin-top: 20px;
-  margin-left: 20px;
-  height: 90vh;
-`;
-
-const App: React.FC = () => {
+const AppContainer: React.FC = () => {
   const [columns, setColumns] = useState<ColumnData[] | null>(null);
 
   useEffect(() => {
@@ -28,7 +22,7 @@ const App: React.FC = () => {
     return <div>LOADING...</div>;
   } else {
     return (
-      <Container>
+      <App>
         <columnsContext.Provider value={{ columns, setColumns }}>
           {columns.map((column, index) => (
             <Column
@@ -39,9 +33,9 @@ const App: React.FC = () => {
             />
           ))}
         </columnsContext.Provider>
-      </Container>
+      </App>
     );
   }
 };
 
-export default App;
+export default AppContainer;

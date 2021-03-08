@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { useDetectOutsideClick } from 'src/utils/useDetectOutsideClick';
-import ColumnMenuUI from 'src/components/ColumnMenuUI';
+import ColumnMenu from 'src/components/presentational/ColumnMenu';
 
-const ColumnMenu = () => {
+const ColumnMenuContainer = () => {
   const dropdownRef = useRef(null);
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const onClick = () => {
@@ -11,7 +11,7 @@ const ColumnMenu = () => {
 
   return (
     <>
-      <ColumnMenuUI
+      <ColumnMenu
         onClick={onClick}
         isActive={isActive}
         dropdownRef={dropdownRef}
@@ -20,4 +20,4 @@ const ColumnMenu = () => {
   );
 };
 
-export default ColumnMenu;
+export default ColumnMenuContainer;

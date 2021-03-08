@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ColumnData } from 'src/api/models';
-import ColumnMenu from 'src/components/ColumnMenu';
+import ColumnMenuContainer from 'src/components/containers/ColumnMenuContainer';
 import currentColumnIdContext from 'src/utils/currentColumnIdContext';
 
 const Container = styled.div`
@@ -46,7 +46,7 @@ const Column: React.FunctionComponent<ColumnData> = ({ id, name, limit }) => {
           {limit})
         </Name>
         <currentColumnIdContext.Provider value={{ id }}>
-          <ColumnMenu />
+          <ColumnMenuContainer />
         </currentColumnIdContext.Provider>
       </FlexContainer>
       TUTAJ BEDA TASKI TUTAJ BEDA TASKI TUTAJ BEDA TASKI

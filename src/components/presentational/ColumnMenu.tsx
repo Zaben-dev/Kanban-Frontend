@@ -1,7 +1,7 @@
 import React, { MutableRefObject } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import DeleteColumnButton from 'src/components/deleteColumnButton';
+import DeleteColumnContainer from 'src/components/containers/DeleteColumnContainer';
 
 const Container = styled.div`
   position: relative;
@@ -49,7 +49,7 @@ interface props {
   onClick: () => void;
 }
 
-const ColumnMenuUI: React.FunctionComponent<props> = ({
+const ColumnMenu: React.FunctionComponent<props> = ({
   isActive,
   dropdownRef,
   onClick,
@@ -60,10 +60,10 @@ const ColumnMenuUI: React.FunctionComponent<props> = ({
         <GiHamburgerMenu />
       </MenuButton>
       <Menu ref={dropdownRef} isActive={isActive}>
-        <DeleteColumnButton />
+        <DeleteColumnContainer />
       </Menu>
     </Container>
   );
 };
 
-export default ColumnMenuUI;
+export default ColumnMenu;
