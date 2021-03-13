@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ColumnData } from 'src/api/models';
 import getColumns from 'src/api/getColumns';
-import server from 'src/api/mockServer';
 import Column from 'src/components/presentational/Column';
-import styled from 'styled-components';
 import columnsContext from 'src/utils/columnsContext';
 import App from 'src/components/presentational/App';
 
-server();
-
-const AppContainer: React.FC = () => {
+const AppContainer = () => {
   const [columns, setColumns] = useState<ColumnData[] | null>(null);
 
   useEffect(() => {
@@ -22,7 +18,7 @@ const AppContainer: React.FC = () => {
     return <div>LOADING...</div>;
   } else {
     return (
-      <App>
+      <App columns={columns}>
         <columnsContext.Provider value={{ columns, setColumns }}>
           {columns.map((column, index) => (
             <Column

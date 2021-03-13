@@ -2,6 +2,7 @@ import React, { MutableRefObject } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import DeleteColumnContainer from 'src/components/containers/DeleteColumnContainer';
+import EditColumnContainer from 'src/components/containers/EditColumnContainer';
 
 const Container = styled.div`
   position: relative;
@@ -61,6 +62,7 @@ const ColumnMenu: React.FunctionComponent<props> = ({
       </MenuButton>
       <Menu ref={dropdownRef} isActive={isActive}>
         <DeleteColumnContainer />
+        <EditColumnContainer />
       </Menu>
     </Container>
   );

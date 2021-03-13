@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import columnsContext from 'src/utils/columnsContext';
 import currentColumnIdContext from 'src/utils/currentColumnIdContext';
 import DeleteColumn from 'src/components/presentational/DeleteColumn';
@@ -10,9 +10,9 @@ const DeleteColumnContainer = () => {
 
   const handleClick = () => {
     deleteColumn(currentColumnId).then(() => {
-      setColumns((prevColumns) => {
-        if (prevColumns === null) return null;
-        return prevColumns.filter(({ id }) => id !== currentColumnId);
+      setColumns((prev) => {
+        if (prev === null) return null;
+        return prev.filter(({ id }) => id !== currentColumnId);
       });
     });
   };

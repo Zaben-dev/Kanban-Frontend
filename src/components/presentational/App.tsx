@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
+import { ColumnData } from 'src/api/models';
 
 const Container = styled.div`
   display: flex;
@@ -10,6 +11,7 @@ const Container = styled.div`
 
 interface Props {
   children: ReactNode;
+  columns: ColumnData[] | null;
 }
 
 const App: React.FunctionComponent<Props> = ({ children }) => {
