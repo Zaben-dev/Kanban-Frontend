@@ -4,6 +4,7 @@ import getColumns from 'src/api/getColumns';
 import Column from 'src/components/presentational/Column';
 import columnsContext from 'src/utils/columnsContext';
 import App from 'src/components/presentational/App';
+import AddColumnContainer from 'src/components/containers/AddColumnContainer';
 
 const AppContainer = () => {
   const [columns, setColumns] = useState<ColumnData[] | null>(null);
@@ -18,8 +19,9 @@ const AppContainer = () => {
     return <div>LOADING...</div>;
   } else {
     return (
-      <App columns={columns}>
+      <App>
         <columnsContext.Provider value={{ columns, setColumns }}>
+          <AddColumnContainer />
           {columns.map((column, index) => (
             <Column
               key={index}

@@ -7,7 +7,7 @@ const editColumn = async (
 ): Promise<AxiosResponse<any>> => {
   try {
     const response = await axios.put(
-      'http://127.0.0.1:8000/api/Columns/' + id + '/',
+      'http://127.0.0.1:8000/Columns/' + id + '/',
       { name, limit }
     );
     return response;

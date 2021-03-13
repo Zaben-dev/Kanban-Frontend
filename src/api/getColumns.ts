@@ -12,7 +12,7 @@ const parseColumns = (columns: ColumnData[]): ColumnData[] => {
 
 const getColumns = async (): Promise<ColumnData[] | null> => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/Columns/');
+    const response = await axios.get('http://127.0.0.1:8000/Columns/');
     return parseColumns(response.data);
   } catch (e) {
     return null;

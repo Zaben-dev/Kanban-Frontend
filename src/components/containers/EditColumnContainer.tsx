@@ -1,9 +1,9 @@
 import { useState, useContext } from 'react';
-import EditColumn from 'src/components/presentational/EditColumn';
 import editColumn from 'src/api/editColumn';
 import columnsContext from 'src/utils/columnsContext';
 import currentColumnIdContext from 'src/utils/currentColumnIdContext';
 import { ColumnData } from 'src/api/models';
+import EditColumn from 'src/components/presentational/EditColumn';
 
 const EditColumnContainer = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
