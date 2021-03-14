@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
+import { SpinnerComponent } from 'react-element-spinner';
 
 const StyledModal = styled(Modal)`
   margin-top: 10vh;
@@ -20,6 +21,7 @@ interface Props {
   modalIsOpen: boolean;
   inputNameValue: string;
   inputLimitValue: number;
+  isLoading: boolean;
 }
 
 const EditColumn: React.FunctionComponent<Props> = ({
@@ -31,6 +33,7 @@ const EditColumn: React.FunctionComponent<Props> = ({
   handleNameChange,
   inputLimitValue,
   handleLimitChange,
+  isLoading,
 }) => {
   Modal.setAppElement('#root');
   return (
@@ -46,6 +49,11 @@ const EditColumn: React.FunctionComponent<Props> = ({
           min="0"
         />
         <button onClick={handleSubmit}>submit</button>
+        <SpinnerComponent
+          loading={isLoading}
+          position="global"
+          color="#498DFF"
+        />
       </StyledModal>
     </>
   );

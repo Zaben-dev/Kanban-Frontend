@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import { ColumnData } from 'src/api/models';
+import AddColumnContainer from 'src/components/containers/AddColumnContainer';
 
 const Container = styled.div`
   display: flex;
@@ -14,7 +15,11 @@ interface Props {
 }
 
 const App: React.FunctionComponent<Props> = ({ children }) => {
-  return <Container>{children}</Container>;
+  return (
+    <>
+      <AddColumnContainer /> <Container>{children}</Container>
+    </>
+  );
 };
 
 export default App;

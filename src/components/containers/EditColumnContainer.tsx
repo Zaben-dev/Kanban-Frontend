@@ -7,6 +7,7 @@ import EditColumn from 'src/components/presentational/EditColumn';
 
 const EditColumnContainer = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { columns, setColumns } = useContext(columnsContext);
   const { id: currentColumnId } = useContext(currentColumnIdContext);
   const [inputNameValue, setInputNameValue] = useState(
@@ -41,6 +42,7 @@ const EditColumnContainer = () => {
   };
 
   const handleSubmit = () => {
+    setIsLoading((prev) => !prev);
     editColumn(currentColumnId, inputNameValue, inputLimitValue).then(() => {
       setColumns((prev) => {
         if (prev === null) return null;
@@ -51,6 +53,7 @@ const EditColumnContainer = () => {
         );
       });
       closeModal();
+      setIsLoading((prev) => !prev);
     });
   };
   return (
@@ -59,6 +62,7 @@ const EditColumnContainer = () => {
       openModal={openModal}
       closeModal={closeModal}
       modalIsOpen={modalIsOpen}
+      isLoading={isLoading}
       inputNameValue={inputNameValue}
       inputLimitValue={inputLimitValue}
       handleNameChange={handleNameChange}

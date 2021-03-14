@@ -1,11 +1,21 @@
 import React from 'react';
+import { SpinnerComponent } from 'react-element-spinner';
 
 interface Props {
-  handleClick: () => void;
+  handleDelete: () => void;
+  isLoading: boolean;
 }
 
-const DeleteColumn: React.FunctionComponent<Props> = ({ handleClick }) => {
-  return <button onClick={handleClick}>delete</button>;
+const DeleteColumn: React.FunctionComponent<Props> = ({
+  handleDelete,
+  isLoading,
+}) => {
+  return (
+    <>
+      <SpinnerComponent loading={isLoading} position="global" />
+      <button onClick={handleDelete}>delete</button>;
+    </>
+  );
 };
 
 export default DeleteColumn;

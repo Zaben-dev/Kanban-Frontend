@@ -5,6 +5,7 @@ import columnsContext from 'src/utils/columnsContext';
 
 const AddColumnContainer = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { setColumns } = useContext(columnsContext);
   const [inputNameValue, setInputNameValue] = useState('');
   const [inputLimitValue, setInputLimitValue] = useState(10);
@@ -30,6 +31,7 @@ const AddColumnContainer = () => {
   };
 
   const handleSubmit = () => {
+    setIsLoading((prev) => !prev);
     addColumn(inputNameValue, inputLimitValue).then((column) => {
       setColumns((prev) => {
         if (prev === null) return null;
@@ -38,6 +40,7 @@ const AddColumnContainer = () => {
           { id: column.id, name: column.name, limit: column.limit },
         ];
       });
+      setIsLoading((prev) => !prev);
       closeModal();
     });
   };
@@ -46,6 +49,7 @@ const AddColumnContainer = () => {
     <AddColumn
       handleSubmit={handleSubmit}
       openModal={openModal}
+      isLoading={isLoading}
       closeModal={closeModal}
       modalIsOpen={modalIsOpen}
       inputNameValue={inputNameValue}

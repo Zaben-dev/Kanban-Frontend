@@ -1,6 +1,12 @@
 import React from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
+import { SpinnerComponent } from 'react-element-spinner';
+
+const AddColumnButton = styled.button`
+  margin-left: 40px;
+  margin-top: 20px;
+`;
 
 const StyledModal = styled(Modal)`
   margin-top: 10vh;
@@ -20,6 +26,7 @@ interface Props {
   modalIsOpen: boolean;
   inputNameValue: string;
   inputLimitValue: number;
+  isLoading: boolean;
 }
 
 const AddColumn: React.FunctionComponent<Props> = ({
@@ -31,11 +38,13 @@ const AddColumn: React.FunctionComponent<Props> = ({
   handleNameChange,
   inputLimitValue,
   handleLimitChange,
+  isLoading,
 }) => {
   Modal.setAppElement('#root');
   return (
     <>
-      <button onClick={openModal}>add</button>
+      <SpinnerComponent loading={isLoading} position="global" />
+      <AddColumnButton onClick={openModal}>add</AddColumnButton>
       <StyledModal isOpen={modalIsOpen}>
         <button onClick={closeModal}>close</button>
         <input type="text" value={inputNameValue} onChange={handleNameChange} />
