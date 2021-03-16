@@ -2,6 +2,7 @@ import React from 'react';
 import { SpinnerComponent } from 'react-element-spinner';
 import styled from 'styled-components';
 import { DeleteOutline } from '@styled-icons/material/DeleteOutline';
+import Modal from 'react-modal';
 
 const StyledDeleteButton = styled.button`
   background-color: #008cba;
@@ -21,26 +22,84 @@ const StyledDeleteButton = styled.button`
   }
 `;
 
+const StyledModal = styled(Modal)`
+  margin-top: 10vh;
+  width: 500px;
+  height: 215px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #b4e1ff;
+  border: none;
+  outline: none;
+`;
+
 const StyledDeleteIcon = styled(DeleteOutline)`
   padding-bottom: 4px;
 `;
 
+const StyledText = styled.div`
+  padding-top: 50px;
+  text-align: center;
+  font-size: 17px;
+`;
+
+const StyledCloseButton = styled.button`
+  margin-top: 50px;
+  margin-left: 125px;
+  margin-right: 80px;
+  background-color: #f35f5f;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 9px 18px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 17px;
+  cursor: pointer;
+`;
+
+const StyledSubmitButton = styled.button`
+  margin-top: 50px;
+  background-color: #cf4141;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 9px 18px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 17px;
+  cursor: pointer;
+`;
+
 interface Props {
   handleDelete: () => void;
+  closeModal: () => void;
+  openModal: () => void;
+  columnName: string;
   isLoading: boolean;
+  modalIsOpen: boolean;
 }
 
 const DeleteColumn: React.FunctionComponent<Props> = ({
   handleDelete,
   isLoading,
+  modalIsOpen,
+  closeModal,
+  openModal,
+  columnName,
 }) => {
   return (
     <>
-      <SpinnerComponent loading={isLoading} position="global" />
-      <StyledDeleteButton onClick={handleDelete}>
+      <StyledDeleteButton onClick={openModal}>
         delete
         <StyledDeleteIcon size="22" />
       </StyledDeleteButton>
+      <StyledModal isOpen={modalIsOpen}>
+        <StyledText>Are you sure you want to delete {columnName}?</StyledText>
+        <StyledCloseButton onClick={closeModal}>close</StyledCloseButton>
+        <StyledSubmitButton onClick={handleDelete}>Delete</StyledSubmitButton>
+        <SpinnerComponent loading={isLoading} position="global" />
+      </StyledModal>
     </>
   );
 };

@@ -52,8 +52,8 @@ const EditColumnContainer = () => {
             : column
         );
       });
-      closeModal();
       setIsLoading((prev) => !prev);
+      closeModal();
     });
   };
   return (

@@ -41,8 +41,8 @@ const AddColumnContainer = () => {
         ];
       });
       setInputNameValue('');
-      closeModal();
       setIsLoading((prev) => !prev);
+      closeModal();
     });
   };
 
