@@ -5,9 +5,18 @@ import DeleteColumn from 'src/components/presentational/DeleteColumn';
 import deleteColumn from 'src/api/deleteColumn';
 
 const DeleteColumnContainer = () => {
+  const [modalIsOpen, setIsOpen] = useState(false);
   const { setColumns } = useContext(columnsContext);
   const { id: currentColumnId } = useContext(currentColumnIdContext);
   const [isLoading, setIsLoading] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   const handleDelete = () => {
     setIsLoading((prev) => !prev);

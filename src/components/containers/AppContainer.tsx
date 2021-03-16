@@ -16,7 +16,9 @@ const AppContainer = () => {
   }, []);
 
   if (columns === null) {
-    return <SpinnerComponent loading={true} position="global" />;
+    return (
+      <SpinnerComponent loading={true} position="global" color="#008cba" />
+    );
   } else {
     return (
       <columnsContext.Provider value={{ columns, setColumns }}>

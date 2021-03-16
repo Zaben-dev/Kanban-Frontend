@@ -6,6 +6,20 @@ body {
     'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: linear-gradient(
+    to bottom,
+    rgb(180, 225, 255),
+    rgb(45, 171, 255)
+  );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  min-height: 100vh;
 }
 
 code {

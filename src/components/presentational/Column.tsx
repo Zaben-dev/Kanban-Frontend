@@ -4,15 +4,15 @@ import { ColumnData } from 'src/api/models';
 import ColumnMenuContainer from 'src/components/containers/ColumnMenuContainer';
 import currentColumnIdContext from 'src/utils/currentColumnIdContext';
 
-const Container = styled.div`
-  background-color: rgb(219, 218, 218);
+const StyledContainer = styled.div`
+  background-color: #008cba40;
+  color: #1a1a1a;
   min-width: 240px;
   max-width: 240px;
   margin-left: 20px;
-  height: 100%;
-  border-radius: 6px;
-  box-shadow: 4px 3px rgb(211, 211, 211);
+  min-height: 97%;
   animation: fadein 1s;
+  border: 4px solid #0041572e;
 
   @keyframes fadein {
     from {
@@ -24,33 +24,45 @@ const Container = styled.div`
   }
 `;
 
-const Name = styled.div`
-  padding-left: 15px;
-  margin-top: 8px;
-  font-size: 17px;
+const StyledFlexContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 25px;
+`;
+
+const StyledName = styled.div`
+  padding-left: 9px;
+  margin-top: 7px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 16px;
   font-weight: 400;
 `;
 
-const FlexContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
+const StyledLimit = styled.div`
+  display: inline-block;
+  background-color: #a8e9ff5c;
+  font-size: 13px;
+  border-radius: 4px;
+  padding: 2px 5px 2px 5px;
+  margin-left: 9px;
+  margin-top: 5px;
 `;
 
 const Column: React.FunctionComponent<ColumnData> = ({ id, name, limit }) => {
   return (
-    <Container>
-      <FlexContainer>
-        <Name>
+    <StyledContainer>
+      <StyledFlexContainer>
+        <StyledName>
           {name}
-          &nbsp;(max&nbsp;
-          {limit})
-        </Name>
+          &nbsp;
+        </StyledName>
         <currentColumnIdContext.Provider value={{ id }}>
           <ColumnMenuContainer />
         </currentColumnIdContext.Provider>
-      </FlexContainer>
-      TUTAJ BEDA TASKI TUTAJ BEDA TASKI TUTAJ BEDA TASKI
-    </Container>
+      </StyledFlexContainer>
+      <StyledLimit>max: {limit}</StyledLimit>
+    </StyledContainer>
   );
 };
 

@@ -40,8 +40,9 @@ const AddColumnContainer = () => {
           { id: column.id, name: column.name, limit: column.limit },
         ];
       });
-      setIsLoading((prev) => !prev);
+      setInputNameValue('');
       closeModal();
+      setIsLoading((prev) => !prev);
     });
   };
 

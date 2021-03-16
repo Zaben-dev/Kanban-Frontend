@@ -1,10 +1,10 @@
 import React, { MutableRefObject } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { GiHamburgerMenu } from 'react-icons/gi';
+import { MenuOutline } from '@styled-icons/evaicons-outline/MenuOutline';
 import DeleteColumnContainer from 'src/components/containers/DeleteColumnContainer';
 import EditColumnContainer from 'src/components/containers/EditColumnContainer';
 
-const Container = styled.div`
+const StyledContainer = styled.div`
   position: relative;
 `;
 
@@ -22,18 +22,17 @@ interface MenuProps {
   isActive: boolean;
 }
 
-const Menu = styled.div<MenuProps>`
+const StyledMenu = styled.div<MenuProps>`
   display: ${({ isActive }) => (isActive ? 'block' : 'none')};
   animation: ${({ isActive }) => isActive && fadeIn} 0.2s linear;
   position: absolute;
-  border-radius: 5px;
-  box-shadow: 4px 3px rgb(211, 211, 211);
-  background-color: white;
+  border: 2px solid #b4e1ff;
+  background-color: #b4e1ff;
   right: 5px;
   opacity: 1;
 `;
 
-const MenuButton = styled.button`
+const StyledMenuButton = styled.button`
   background-color: Transparent;
   background-repeat: no-repeat;
   border: none;
@@ -42,6 +41,10 @@ const MenuButton = styled.button`
   outline: none;
   font-size: 25px;
   padding-top: 6px;
+`;
+
+const StyledIcon = styled(MenuOutline)`
+  color: #1a5669;
 `;
 
 interface props {
@@ -56,15 +59,15 @@ const ColumnMenu: React.FunctionComponent<props> = ({
   onClick,
 }) => {
   return (
-    <Container>
-      <MenuButton onClick={onClick}>
-        <GiHamburgerMenu />
-      </MenuButton>
-      <Menu ref={dropdownRef} isActive={isActive}>
-        <DeleteColumnContainer />
+    <StyledContainer>
+      <StyledMenuButton onClick={onClick}>
+        <StyledIcon size="33" />
+      </StyledMenuButton>
+      <StyledMenu ref={dropdownRef} isActive={isActive}>
         <EditColumnContainer />
-      </Menu>
-    </Container>
+        <DeleteColumnContainer />
+      </StyledMenu>
+    </StyledContainer>
   );
 };
 
