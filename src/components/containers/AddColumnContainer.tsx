@@ -4,17 +4,17 @@ import addColumn from 'src/api/addColumn';
 import columnsContext from 'src/utils/columnsContext';
 
 const AddColumnContainer = () => {
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { setColumns } = useContext(columnsContext);
-  const [inputNameValue, setInputNameValue] = useState('');
-  const [inputLimitValue, setInputLimitValue] = useState(10);
+  const [inputNameValue, setInputNameValue] = useState<string>('');
+  const [inputLimitValue, setInputLimitValue] = useState<number>(10);
 
-  const openModal = () => {
+  const openModal = (): void => {
     setIsOpen(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setIsOpen(false);
   };
 
@@ -30,7 +30,7 @@ const AddColumnContainer = () => {
     setInputLimitValue(parseInt(event.target.value));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (): void => {
     setIsLoading((prev) => !prev);
     addColumn(inputNameValue, inputLimitValue).then((column) => {
       setColumns((prev) => {

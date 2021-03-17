@@ -1,11 +1,11 @@
-import { useRef } from 'react';
+import { MutableRefObject, useRef } from 'react';
 import { useDetectOutsideClick } from 'src/utils/useDetectOutsideClick';
 import ColumnMenu from 'src/components/presentational/ColumnMenu';
 
 const ColumnMenuContainer = () => {
   const dropdownRef = useRef(null);
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
-  const onClick = () => {
+  const onClick = (): void => {
     setIsActive(!isActive);
   };
 

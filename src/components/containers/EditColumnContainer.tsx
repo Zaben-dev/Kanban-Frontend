@@ -6,26 +6,26 @@ import { ColumnData } from 'src/api/models';
 import EditColumn from 'src/components/presentational/EditColumn';
 
 const EditColumnContainer = () => {
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { columns, setColumns } = useContext(columnsContext);
   const { id: currentColumnId } = useContext(currentColumnIdContext);
-  const [inputNameValue, setInputNameValue] = useState(
+  const [inputNameValue, setInputNameValue] = useState<string>(
     columns ? columns[columns.findIndex(findColumnIndexById)].name : ''
   );
-  const [inputLimitValue, setInputLimitValue] = useState(
+  const [inputLimitValue, setInputLimitValue] = useState<number>(
     columns ? columns[columns.findIndex(findColumnIndexById)].limit : 0
   );
 
-  function findColumnIndexById(column: ColumnData) {
+  function findColumnIndexById(column: ColumnData): boolean {
     return column.id === currentColumnId;
   }
 
-  const openModal = () => {
+  const openModal = (): void => {
     setIsOpen(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setIsOpen(false);
   };
 
@@ -41,7 +41,7 @@ const EditColumnContainer = () => {
     setInputLimitValue(parseInt(event.target.value));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (): void => {
     setIsLoading((prev) => !prev);
     editColumn(currentColumnId, inputNameValue, inputLimitValue).then(() => {
       setColumns((prev) => {

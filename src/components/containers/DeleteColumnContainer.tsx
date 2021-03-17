@@ -6,24 +6,24 @@ import deleteColumn from 'src/api/deleteColumn';
 import { ColumnData } from 'src/api/models';
 
 const DeleteColumnContainer = () => {
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const { columns, setColumns } = useContext(columnsContext);
   const { id: currentColumnId } = useContext(currentColumnIdContext);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const findColumnIndexById = (column: ColumnData) => {
+  const findColumnIndexById = (column: ColumnData): boolean => {
     return column.id === currentColumnId;
   };
 
-  const openModal = () => {
+  const openModal = (): void => {
     setIsOpen(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setIsOpen(false);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (): void => {
     setIsLoading((prev) => !prev);
     deleteColumn(currentColumnId).then(() => {
       setColumns((prev) => {
