@@ -17,7 +17,7 @@ const StyledAddButton = styled.button`
   font-size: 17px;
   cursor: pointer;
   &:hover {
-    background: #0083af;
+    background-color: #0083af;
   }
 `;
 
@@ -83,6 +83,9 @@ const StyledCloseButton = styled.button`
   text-decoration: none;
   font-size: 17px;
   cursor: pointer;
+  &:hover {
+    background-color: #e95656;
+  }
 `;
 
 const StyledSubmitButton = styled.button`
@@ -95,6 +98,9 @@ const StyledSubmitButton = styled.button`
   text-decoration: none;
   font-size: 17px;
   cursor: pointer;
+  &:hover {
+    background-color: #007da7;
+  }
 `;
 
 interface Props {

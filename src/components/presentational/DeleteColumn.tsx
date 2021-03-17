@@ -56,6 +56,9 @@ const StyledCloseButton = styled.button`
   text-decoration: none;
   font-size: 17px;
   cursor: pointer;
+  &:hover {
+    background-color: #e95656;
+  }
 `;
 
 const StyledSubmitButton = styled.button`
@@ -69,6 +72,9 @@ const StyledSubmitButton = styled.button`
   text-decoration: none;
   font-size: 17px;
   cursor: pointer;
+  &:hover {
+    background-color: #c43c3c;
+  }
 `;
 
 interface Props {
