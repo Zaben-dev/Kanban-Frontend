@@ -1,4 +1,4 @@
-import { MutableRefObject, useRef } from 'react';
+import { useRef } from 'react';
 import { useDetectOutsideClick } from 'src/utils/useDetectOutsideClick';
 import ColumnMenu from 'src/components/presentational/ColumnMenu';
 

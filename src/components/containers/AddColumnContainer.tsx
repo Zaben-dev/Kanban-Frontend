@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import AddColumn from 'src/components/presentational/AddColumn';
 import addColumn from 'src/api/addColumn';
-import columnsContext from 'src/utils/columnsContext';
+import columnsContext from 'src/contexts/columnsContext';
 
 const AddColumnContainer = () => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);

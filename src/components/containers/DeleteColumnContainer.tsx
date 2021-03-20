@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
-import columnsContext from 'src/utils/columnsContext';
-import currentColumnIdContext from 'src/utils/currentColumnIdContext';
+import columnsContext from 'src/contexts/columnsContext';
+import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import DeleteColumn from 'src/components/presentational/DeleteColumn';
 import deleteColumn from 'src/api/deleteColumn';
 import { ColumnData } from 'src/api/models';

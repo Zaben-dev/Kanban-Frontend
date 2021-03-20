@@ -13,13 +13,10 @@ body {
   );
   background-repeat: no-repeat;
   background-attachment: fixed;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
   margin: 0;
   padding: 0;
-  position: relative;
-  min-height: 100vh;
+  overflow: scroll;
+  overflow-y: hidden;
 }
 
 code {

@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import editColumn from 'src/api/editColumn';
-import columnsContext from 'src/utils/columnsContext';
-import currentColumnIdContext from 'src/utils/currentColumnIdContext';
+import columnsContext from 'src/contexts/columnsContext';
+import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import { ColumnData } from 'src/api/models';
 import EditColumn from 'src/components/presentational/EditColumn';
 

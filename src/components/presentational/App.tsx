@@ -6,7 +6,7 @@ const StyledContainer = styled.div`
   display: flex;
   margin-top: 18px;
   margin-left: 20px;
-  height: 90vh;
+  height: 850px;
 `;
 
 interface Props {

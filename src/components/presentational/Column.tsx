@@ -2,15 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { ColumnData } from 'src/api/models';
 import ColumnMenuContainer from 'src/components/containers/ColumnMenuContainer';
-import currentColumnIdContext from 'src/utils/currentColumnIdContext';
+import TasksAreaContainer from 'src/components/containers/TasksAreaContainer';
+import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 
 const StyledContainer = styled.div`
   background-color: #008cba40;
   color: #1a1a1a;
   min-width: 240px;
-  max-width: 240px;
+  height: 88vh;
   margin-left: 20px;
-  min-height: 97%;
   animation: fadein 1s;
   border: 4px solid #0041572e;
 
@@ -62,6 +62,9 @@ const Column: React.FunctionComponent<ColumnData> = ({ id, name, limit }) => {
         </currentColumnIdContext.Provider>
       </StyledFlexContainer>
       <StyledLimit>max: {limit}</StyledLimit>
+      <currentColumnIdContext.Provider value={{ id }}>
+        <TasksAreaContainer />
+      </currentColumnIdContext.Provider>
     </StyledContainer>
   );
 };
