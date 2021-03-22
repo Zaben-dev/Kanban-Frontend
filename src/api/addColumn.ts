@@ -1,6 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { ColumnData } from 'src/api/models';
-import Column from 'src/components/presentational/Column';
 
 const parseColumn = (column: ColumnData): ColumnData => {
   return {

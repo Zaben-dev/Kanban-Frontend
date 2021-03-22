@@ -3,6 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import { MenuOutline } from '@styled-icons/evaicons-outline/MenuOutline';
 import DeleteColumnContainer from 'src/components/containers/DeleteColumnContainer';
 import EditColumnContainer from 'src/components/containers/EditColumnContainer';
+import AddTaskContainer from 'src/components/containers/AddTaskContainer';
 
 const StyledContainer = styled.div`
   position: relative;
@@ -64,6 +65,7 @@ const ColumnMenu: React.FunctionComponent<props> = ({
         <StyledIcon size="33" />
       </StyledMenuButton>
       <StyledMenu ref={dropdownRef} isActive={isActive}>
+        <AddTaskContainer />
         <EditColumnContainer />
         <DeleteColumnContainer />
       </StyledMenu>

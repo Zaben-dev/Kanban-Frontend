@@ -12,10 +12,10 @@ const StyledDeleteButton = styled.button`
   color: white;
   padding: 4px 20px;
   text-align: center;
-  width: 120px;
+  width: 160px;
   height: 30px;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
   &:hover {
     background: #0083af;
@@ -97,8 +97,8 @@ const DeleteColumn: React.FunctionComponent<Props> = ({
   return (
     <>
       <StyledDeleteButton onClick={openModal}>
-        delete
-        <StyledDeleteIcon size="22" />
+        delete column
+        <StyledDeleteIcon size="24" />
       </StyledDeleteButton>
       <StyledModal isOpen={modalIsOpen}>
         <StyledText>Are you sure you want to delete {columnName}?</StyledText>

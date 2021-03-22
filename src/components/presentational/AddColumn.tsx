@@ -14,7 +14,7 @@ const StyledAddButton = styled.button`
   padding: 9px 13px 6px 18px;
   text-align: center;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 15px;
   cursor: pointer;
   &:hover {
     background-color: #0083af;
@@ -110,8 +110,8 @@ interface Props {
   handleNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleLimitChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   modalIsOpen: boolean;
-  inputNameValue: string;
-  inputLimitValue: number;
+  inputName: string;
+  inputLimit: number;
   isLoading: boolean;
 }
 
@@ -120,9 +120,9 @@ const AddColumn: React.FunctionComponent<Props> = ({
   openModal,
   modalIsOpen,
   closeModal,
-  inputNameValue,
+  inputName,
   handleNameChange,
-  inputLimitValue,
+  inputLimit,
   handleLimitChange,
   isLoading,
 }) => {
@@ -139,13 +139,13 @@ const AddColumn: React.FunctionComponent<Props> = ({
           <StyledTextInput
             type="text"
             placeholder="To do"
-            value={inputNameValue}
+            value={inputName}
             onChange={handleNameChange}
           />
           <StyledDescription>tasks limit:</StyledDescription>
           <StyledNumberInput
             type="number"
-            value={inputLimitValue}
+            value={inputLimit}
             onChange={handleLimitChange}
             min="0"
           />

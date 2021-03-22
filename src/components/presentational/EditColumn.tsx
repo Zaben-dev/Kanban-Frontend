@@ -6,15 +6,16 @@ import { Edit } from '@styled-icons/boxicons-regular/Edit';
 
 const StyledEditButton = styled.button`
   background-color: #008cba;
+  margin-top: 2px;
   border: none;
   outline: none;
   color: white;
   padding: 4px 20px;
   text-align: center;
-  width: 120px;
+  width: 160px;
   height: 30px;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 15px;
   cursor: pointer;
   &:hover {
     background: #0083af;
@@ -22,7 +23,7 @@ const StyledEditButton = styled.button`
 `;
 
 const StyledEditIcon = styled(Edit)`
-  padding-bottom: 5px;
+  padding-bottom: 3px;
 `;
 
 const StyledModal = styled(Modal)`
@@ -128,7 +129,7 @@ const EditColumn: React.FunctionComponent<Props> = ({
   return (
     <>
       <StyledEditButton onClick={openModal}>
-        edit <StyledEditIcon size="21" />
+        edit column <StyledEditIcon size="23" />
       </StyledEditButton>
       <StyledModal isOpen={modalIsOpen}>
         <StyledGridContainer>

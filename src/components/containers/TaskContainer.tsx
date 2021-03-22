@@ -25,12 +25,12 @@ const TaskContainer: React.FunctionComponent<Props> = ({ id }) => {
         priority={
           tasks
             ? tasks[tasks.findIndex(findTaskIndexById)].priority
-            : priority.low
+            : priority.Low
         }
         difficulty={
           tasks
             ? tasks[tasks.findIndex(findTaskIndexById)].difficulty
-            : difficulty.easy
+            : difficulty.Easy
         }
       />
     </currentTaskIdContext.Provider>

@@ -6,7 +6,7 @@ import TasksAreaContainer from 'src/components/containers/TasksAreaContainer';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 
 const StyledContainer = styled.div`
-  background-color: #008cba40;
+  background-color: #008cba2a;
   color: #1a1a1a;
   min-width: 240px;
   height: 88vh;

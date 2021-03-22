@@ -13,6 +13,7 @@ const TasksAreaContainer = () => {
       {tasks &&
         tasks
           .filter((task) => task.columnId === currentColumnId)
+          .sort((a, b) => a.position - b.position)
           .map((task, index) => <TaskContainer key={index} id={task.id} />)}
     </TasksArea>
   );

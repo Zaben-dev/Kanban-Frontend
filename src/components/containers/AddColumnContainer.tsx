@@ -7,8 +7,8 @@ const AddColumnContainer = () => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { setColumns } = useContext(columnsContext);
-  const [inputNameValue, setInputNameValue] = useState<string>('');
-  const [inputLimitValue, setInputLimitValue] = useState<number>(10);
+  const [inputName, setInputName] = useState<string>('');
+  const [inputLimit, setInputLimit] = useState<number>(10);
 
   const openModal = (): void => {
     setIsOpen(true);
@@ -21,18 +21,18 @@ const AddColumnContainer = () => {
   const handleNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setInputNameValue(event.target.value);
+    setInputName(event.target.value);
   };
 
   const handleLimitChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setInputLimitValue(parseInt(event.target.value));
+    setInputLimit(parseInt(event.target.value));
   };
 
   const handleSubmit = (): void => {
     setIsLoading((prev) => !prev);
-    addColumn(inputNameValue, inputLimitValue).then((column) => {
+    addColumn(inputName, inputLimit).then((column) => {
       setColumns((prev) => {
         if (prev === null) return null;
         return [
@@ -40,7 +40,7 @@ const AddColumnContainer = () => {
           { id: column.id, name: column.name, limit: column.limit },
         ];
       });
-      setInputNameValue('');
+      setInputName('');
       setIsLoading((prev) => !prev);
       closeModal();
     });
@@ -53,8 +53,8 @@ const AddColumnContainer = () => {
       isLoading={isLoading}
       closeModal={closeModal}
       modalIsOpen={modalIsOpen}
-      inputNameValue={inputNameValue}
-      inputLimitValue={inputLimitValue}
+      inputName={inputName}
+      inputLimit={inputLimit}
       handleNameChange={handleNameChange}
       handleLimitChange={handleLimitChange}
     />

@@ -5,15 +5,15 @@ export interface ColumnData {
 }
 
 export enum priority {
-  low = 'low',
-  medium = 'medium',
-  high = 'high',
+  Low = 'Low',
+  Medium = 'Medium',
+  High = 'High',
 }
 
 export enum difficulty {
-  easy = 'easy',
-  intermediate = 'intermediate',
-  hard = 'hard',
+  Easy = 'Easy',
+  Intermediate = 'Intermediate',
+  Hard = 'Hard',
 }
 
 export interface TaskData {
@@ -24,4 +24,5 @@ export interface TaskData {
   difficulty: difficulty;
   columnId: number;
   column_id?: string;
+  position: number;
 }
