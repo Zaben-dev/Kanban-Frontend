@@ -28,9 +28,9 @@ const DeleteTaskContainer = () => {
     setIsLoading((prev) => !prev);
     deleteTask(currentTaskId).then(() => {
       getTasks().then((tasks: TaskData[] | null) => {
-        setTasks(tasks);
         closeModal();
         setIsLoading((prev) => !prev);
+        setTasks(tasks);
       });
     });
   };

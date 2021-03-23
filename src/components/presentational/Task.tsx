@@ -10,6 +10,7 @@ const StyledTaskContainer = styled.div`
   border: 3px solid #008cbaaf;
   background-color: #008cba22;
   border-radius: 4px;
+  overflow: hidden;
 `;
 
 const StyledTaskTopbar = styled.div`
@@ -41,6 +42,8 @@ const StyledAdditionalInfo = styled.div`
 const StyledDescription = styled.div`
   font-size: 14px;
   margin: 4px 4px 4px 4px;
+  word-break: break-all;
+  hyphens: auto;
 `;
 
 interface Props {

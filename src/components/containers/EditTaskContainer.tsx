@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import EditTask from 'src/components/presentational/EditTask';
 import tasksContext from 'src/contexts/tasksContext';
 import currentTaskIdContext from 'src/contexts/currentTaskIdContext';
@@ -16,26 +16,38 @@ const AddTaskContainer = () => {
   const { id: currentTaskId } = useContext(currentTaskIdContext);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [inputTitle, setInputTitle] = useState<string>(
-    tasks ? tasks[tasks.findIndex(findTaskIndexById)].title : ''
-  );
-  const [inputDescription, setInputDescription] = useState<string>(
-    tasks ? tasks[tasks.findIndex(findTaskIndexById)].description : ''
-  );
+  const [inputTitle, setInputTitle] = useState<string>('');
+  const [inputDescription, setInputDescription] = useState<string>('');
   const [inputPriority, setInputPriority] = useState<priorityEnum>(
-    tasks
-      ? tasks[tasks.findIndex(findTaskIndexById)].priority
-      : priorityEnum.Medium
+    priorityEnum.Medium
   );
   const [inputDifficulty, setInputDifficulty] = useState<difficultyEnum>(
-    tasks
-      ? tasks[tasks.findIndex(findTaskIndexById)].difficulty
-      : difficultyEnum.Intermediate
+    difficultyEnum.Intermediate
   );
 
-  function findTaskIndexById(task: TaskData): boolean {
-    return task.id === currentTaskId;
-  }
+  const findTaskIndexById = useCallback(
+    (task: TaskData): boolean => {
+      return task.id === currentTaskId;
+    },
+    [currentTaskId]
+  );
+
+  useEffect(() => {
+    setInputTitle(tasks ? tasks[tasks.findIndex(findTaskIndexById)].title : '');
+    setInputDescription(
+      tasks ? tasks[tasks.findIndex(findTaskIndexById)].description : ''
+    );
+    setInputPriority(
+      tasks
+        ? tasks[tasks.findIndex(findTaskIndexById)].priority
+        : priorityEnum.Medium
+    );
+    setInputDifficulty(
+      tasks
+        ? tasks[tasks.findIndex(findTaskIndexById)].difficulty
+        : difficultyEnum.Intermediate
+    );
+  }, [currentTaskId, findTaskIndexById, tasks]);
 
   const openModal = (): void => {
     setIsOpen(true);
@@ -100,9 +112,9 @@ const AddTaskContainer = () => {
     )
       .then(() => {
         getTasks().then((tasks: TaskData[] | null) => {
-          setTasks(tasks);
           closeModal();
           setIsLoading((prev) => !prev);
+          setTasks(tasks);
         });
       })
       .catch((e) => {
