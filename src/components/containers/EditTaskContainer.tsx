@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
-import AddTask from 'src/components/presentational/AddTask';
+import EditTask from 'src/components/presentational/EditTask';
 import tasksContext from 'src/contexts/tasksContext';
-import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
-import addTask from 'src/api/addTask';
+import currentTaskIdContext from 'src/contexts/currentTaskIdContext';
+import editTask from 'src/api/editTask';
 import getTasks from 'src/api/getTasks';
 import {
   TaskData,
@@ -12,18 +12,30 @@ import {
 } from 'src/api/models';
 
 const AddTaskContainer = () => {
-  const { setTasks } = useContext(tasksContext);
-  const { id: currentColumnId } = useContext(currentColumnIdContext);
+  const { tasks, setTasks } = useContext(tasksContext);
+  const { id: currentTaskId } = useContext(currentTaskIdContext);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [inputTitle, setInputTitle] = useState<string>('');
-  const [inputDescription, setInputDescription] = useState<string>('');
+  const [inputTitle, setInputTitle] = useState<string>(
+    tasks ? tasks[tasks.findIndex(findTaskIndexById)].title : ''
+  );
+  const [inputDescription, setInputDescription] = useState<string>(
+    tasks ? tasks[tasks.findIndex(findTaskIndexById)].description : ''
+  );
   const [inputPriority, setInputPriority] = useState<priorityEnum>(
-    priorityEnum.Medium
+    tasks
+      ? tasks[tasks.findIndex(findTaskIndexById)].priority
+      : priorityEnum.Medium
   );
   const [inputDifficulty, setInputDifficulty] = useState<difficultyEnum>(
-    difficultyEnum.Intermediate
+    tasks
+      ? tasks[tasks.findIndex(findTaskIndexById)].difficulty
+      : difficultyEnum.Intermediate
   );
+
+  function findTaskIndexById(task: TaskData): boolean {
+    return task.id === currentTaskId;
+  }
 
   const openModal = (): void => {
     setIsOpen(true);
@@ -79,18 +91,16 @@ const AddTaskContainer = () => {
 
   const handleSubmit = (): void => {
     setIsLoading((prev) => !prev);
-    addTask(
+    editTask(
+      currentTaskId,
       inputTitle,
       inputDescription,
       inputPriority,
-      inputDifficulty,
-      currentColumnId
+      inputDifficulty
     )
       .then(() => {
         getTasks().then((tasks: TaskData[] | null) => {
           setTasks(tasks);
-          setInputTitle('');
-          setInputDescription('');
           closeModal();
           setIsLoading((prev) => !prev);
         });
@@ -102,7 +112,7 @@ const AddTaskContainer = () => {
   };
 
   return (
-    <AddTask
+    <EditTask
       modalIsOpen={modalIsOpen}
       isLoading={isLoading}
       inputTitle={inputTitle}
