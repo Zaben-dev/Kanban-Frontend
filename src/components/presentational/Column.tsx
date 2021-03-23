@@ -9,6 +9,7 @@ const StyledContainer = styled.div`
   background-color: #008cba2a;
   color: #1a1a1a;
   min-width: 240px;
+  max-width: 240px;
   height: 88vh;
   margin-left: 20px;
   animation: fadein 1s;

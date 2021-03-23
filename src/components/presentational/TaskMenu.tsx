@@ -1,9 +1,7 @@
 import React from 'react';
+import DeleteTaskContainer from 'src/components/containers/DeleteTaskContainer';
 import styled, { keyframes } from 'styled-components';
-import { MenuOutline } from '@styled-icons/evaicons-outline/MenuOutline';
-import DeleteColumnContainer from 'src/components/containers/DeleteColumnContainer';
-import EditColumnContainer from 'src/components/containers/EditColumnContainer';
-import AddTaskContainer from 'src/components/containers/AddTaskContainer';
+import { DotsHorizontalRounded } from '@styled-icons/boxicons-regular/DotsHorizontalRounded';
 
 const StyledContainer = styled.div`
   position: relative;
@@ -31,7 +29,6 @@ const StyledMenu = styled.div<MenuProps>`
   background-color: #b4e1ff;
   right: 5px;
   opacity: 1;
-  z-index: 1;
 `;
 
 const StyledMenuButton = styled.button`
@@ -41,11 +38,10 @@ const StyledMenuButton = styled.button`
   cursor: pointer;
   overflow: hidden;
   outline: none;
-  font-size: 25px;
-  padding-top: 6px;
+  padding-bottom: 13px;
 `;
 
-const StyledIcon = styled(MenuOutline)`
+const StyledIcon = styled(DotsHorizontalRounded)`
   color: #1a5669;
 `;
 
@@ -58,12 +54,10 @@ const ColumnMenu: React.FunctionComponent<props> = ({ isActive, onClick }) => {
   return (
     <StyledContainer>
       <StyledMenuButton onClick={onClick}>
-        <StyledIcon size="33" />
+        <StyledIcon size="25" />
       </StyledMenuButton>
       <StyledMenu isActive={isActive}>
-        <AddTaskContainer />
-        <EditColumnContainer />
-        <DeleteColumnContainer />
+        <DeleteTaskContainer />
       </StyledMenu>
     </StyledContainer>
   );

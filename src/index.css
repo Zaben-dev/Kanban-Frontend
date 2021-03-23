@@ -8,8 +8,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-image: linear-gradient(
     to bottom,
-    rgb(180, 225, 255),
-    rgb(45, 171, 255)
+    rgb(249, 252, 209),
+    rgb(255, 254, 166)
   );
   background-repeat: no-repeat;
   background-attachment: fixed;

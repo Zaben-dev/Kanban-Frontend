@@ -1,7 +1,7 @@
 import { useDetectClick } from 'src/utils/useDetectClick';
-import ColumnMenu from 'src/components/presentational/ColumnMenu';
+import TaskMenu from 'src/components/presentational/TaskMenu';
 
-const ColumnMenuContainer = () => {
+const TaskMenuContainer = () => {
   const [isActive, setIsActive] = useDetectClick(false);
   const onClick = (): void => {
     setIsActive(!isActive);
@@ -9,9 +9,9 @@ const ColumnMenuContainer = () => {
 
   return (
     <>
-      <ColumnMenu onClick={onClick} isActive={isActive} />
+      <TaskMenu onClick={onClick} isActive={isActive} />
     </>
   );
 };
 
-export default ColumnMenuContainer;
+export default TaskMenuContainer;

@@ -81,28 +81,28 @@ interface Props {
   handleDelete: () => void;
   closeModal: () => void;
   openModal: () => void;
-  columnName: string;
+  taskTitle: string;
   isLoading: boolean;
   modalIsOpen: boolean;
 }
 
-const DeleteColumn: React.FunctionComponent<Props> = ({
+const DeleteTask: React.FunctionComponent<Props> = ({
   handleDelete,
   isLoading,
   modalIsOpen,
   closeModal,
   openModal,
-  columnName,
+  taskTitle,
 }) => {
   return (
     <>
       <StyledDeleteButton onClick={openModal}>
-        delete column
+        delete task
         <StyledDeleteIcon size="24" />
       </StyledDeleteButton>
       <StyledModal isOpen={modalIsOpen}>
         <StyledText>
-          Are you sure you want to delete column {columnName}?
+          Are you sure you want to delete task {taskTitle}?
         </StyledText>
         <StyledCloseButton onClick={closeModal}>close</StyledCloseButton>
         <StyledSubmitButton onClick={handleDelete}>Delete</StyledSubmitButton>
@@ -112,4 +112,4 @@ const DeleteColumn: React.FunctionComponent<Props> = ({
   );
 };
 
-export default DeleteColumn;
+export default DeleteTask;

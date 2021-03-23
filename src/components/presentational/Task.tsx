@@ -1,5 +1,6 @@
 import React from 'react';
 import { priority, difficulty } from 'src/api/models';
+import TaskMenu from 'src/components/containers/TaskMenuContainer';
 import styled from 'styled-components';
 
 const StyledTaskContainer = styled.div`
@@ -15,17 +16,25 @@ const StyledTaskTopbar = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #008cbaaf;
+  color: #373810;
   padding-left: 2px;
-  height: 40px;
+  height: 41px;
   font-size: 15px;
+`;
+
+const StyledFlexContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 20px;
+  line-height: 1.3;
 `;
 
 const StyledAdditionalInfo = styled.div`
   display: inline-block;
   background-color: #a8e9ff5c;
-  font-size: 12px;
+  font-size: 11px;
   border-radius: 4px;
-  padding: 2px 5px 2px 5px;
+  padding: 2px 4px 2px 4px;
   margin-right: 4px;
 `;
 
@@ -50,7 +59,10 @@ const Task: React.FunctionComponent<Props> = ({
   return (
     <StyledTaskContainer>
       <StyledTaskTopbar>
-        {title}
+        <StyledFlexContainer>
+          <div>{title}</div>
+          <TaskMenu />
+        </StyledFlexContainer>
         <div>
           <StyledAdditionalInfo>priority: {priority}</StyledAdditionalInfo>
           <StyledAdditionalInfo>difficulty: {difficulty}</StyledAdditionalInfo>

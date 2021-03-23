@@ -8,7 +8,7 @@ const parseTasks = (tasks: TaskData[]): TaskData[] => {
     description: String(task.description),
     priority: String(task.priority) as priority,
     difficulty: String(task.difficulty) as difficulty,
-    columnId: Number(task.column_id),
+    columnId: Number(task.columnId),
     position: Number(task.position),
   }));
   return parsedTasks;
