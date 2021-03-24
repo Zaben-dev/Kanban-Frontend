@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useCallback, useEffect } from 'react';
 import editColumn from 'src/api/editColumn';
 import columnsContext from 'src/contexts/columnsContext';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
@@ -10,16 +10,24 @@ const EditColumnContainer = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { columns, setColumns } = useContext(columnsContext);
   const { id: currentColumnId } = useContext(currentColumnIdContext);
-  const [inputNameValue, setInputNameValue] = useState<string>(
-    columns ? columns[columns.findIndex(findColumnIndexById)].name : ''
-  );
-  const [inputLimitValue, setInputLimitValue] = useState<number>(
-    columns ? columns[columns.findIndex(findColumnIndexById)].limit : 0
+  const [inputName, setInputName] = useState<string>('');
+  const [inputLimit, setInputLimit] = useState<number>(0);
+
+  const findColumnIndexById = useCallback(
+    (column: ColumnData): boolean => {
+      return column.id === currentColumnId;
+    },
+    [currentColumnId]
   );
 
-  function findColumnIndexById(column: ColumnData): boolean {
-    return column.id === currentColumnId;
-  }
+  useEffect(() => {
+    setInputName(
+      columns ? columns[columns.findIndex(findColumnIndexById)].name : ''
+    );
+    setInputLimit(
+      columns ? columns[columns.findIndex(findColumnIndexById)].limit : 0
+    );
+  }, [currentColumnId, findColumnIndexById, columns]);
 
   const openModal = (): void => {
     setIsOpen(true);
@@ -32,23 +40,23 @@ const EditColumnContainer = () => {
   const handleNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setInputNameValue(event.target.value);
+    setInputName(event.target.value);
   };
 
   const handleLimitChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setInputLimitValue(parseInt(event.target.value));
+    setInputLimit(parseInt(event.target.value));
   };
 
   const handleSubmit = (): void => {
     setIsLoading((prev) => !prev);
-    editColumn(currentColumnId, inputNameValue, inputLimitValue).then(() => {
+    editColumn(currentColumnId, inputName, inputLimit).then(() => {
       setColumns((prev) => {
         if (prev === null) return null;
         return prev.map((column) =>
           column.id === currentColumnId
-            ? { ...column, name: inputNameValue, limit: inputLimitValue }
+            ? { ...column, name: inputName, limit: inputLimit }
             : column
         );
       });
@@ -63,8 +71,8 @@ const EditColumnContainer = () => {
       closeModal={closeModal}
       modalIsOpen={modalIsOpen}
       isLoading={isLoading}
-      inputNameValue={inputNameValue}
-      inputLimitValue={inputLimitValue}
+      inputName={inputName}
+      inputLimit={inputLimit}
       handleNameChange={handleNameChange}
       handleLimitChange={handleLimitChange}
     />

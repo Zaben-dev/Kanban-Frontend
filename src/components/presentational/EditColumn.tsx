@@ -109,8 +109,8 @@ interface Props {
   handleNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleLimitChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   modalIsOpen: boolean;
-  inputNameValue: string;
-  inputLimitValue: number;
+  inputName: string;
+  inputLimit: number;
   isLoading: boolean;
 }
 
@@ -119,9 +119,9 @@ const EditColumn: React.FunctionComponent<Props> = ({
   openModal,
   modalIsOpen,
   closeModal,
-  inputNameValue,
+  inputName,
   handleNameChange,
-  inputLimitValue,
+  inputLimit,
   handleLimitChange,
   isLoading,
 }) => {
@@ -136,13 +136,13 @@ const EditColumn: React.FunctionComponent<Props> = ({
           <StyledDescription>name:</StyledDescription>
           <StyledTextInput
             type="text"
-            value={inputNameValue}
+            value={inputName}
             onChange={handleNameChange}
           />
           <StyledDescription>tasks limit:</StyledDescription>
           <StyledNumberInput
             type="number"
-            value={inputLimitValue}
+            value={inputLimit}
             onChange={handleLimitChange}
             min="0"
           />
