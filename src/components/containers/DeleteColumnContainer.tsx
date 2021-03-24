@@ -27,11 +27,11 @@ const DeleteColumnContainer = () => {
     setIsLoading((prev) => !prev);
     deleteColumn(currentColumnId).then(() => {
       setColumns((prev) => {
+        setIsLoading((prev) => !prev);
+        closeModal();
         if (prev === null) return null;
         return prev.filter(({ id }) => id !== currentColumnId);
       });
-      setIsLoading((prev) => !prev);
-      closeModal();
     });
   };
 
