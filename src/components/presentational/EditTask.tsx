@@ -169,7 +169,7 @@ const AddTask: React.FunctionComponent<Props> = ({
             <option value={priorityEnum.Medium}>medium</option>
             <option value={priorityEnum.High}>high</option>
           </StyledSelect>
-          <StyledDescription>priority:</StyledDescription>
+          <StyledDescription>difficulty:</StyledDescription>
           <StyledSelect
             value={inputDifficulty}
             onChange={handleDifficultyChange}

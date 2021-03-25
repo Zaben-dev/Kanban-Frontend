@@ -2,7 +2,6 @@ import React from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import { Add } from '@styled-icons/ionicons-outline/Add';
-import 'react-toastify/dist/ReactToastify.css';
 
 const StyledAddButton = styled.button`
   margin-left: 40px;

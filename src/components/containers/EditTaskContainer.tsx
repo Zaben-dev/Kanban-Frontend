@@ -116,8 +116,6 @@ const AddTaskContainer = () => {
       );
       const tasks = await getTasks();
       setTasks(tasks);
-      setInputTitle('');
-      setInputDescription('');
       closeModal();
     } catch {
       newNotification('Sorry, something went wrong.');

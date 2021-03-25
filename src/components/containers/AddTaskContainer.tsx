@@ -1,18 +1,21 @@
 import React, { useState, useContext } from 'react';
 import AddTask from 'src/components/presentational/AddTask';
 import tasksContext from 'src/contexts/tasksContext';
+import columnsContext from 'src/contexts/columnsContext';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import addTask from 'src/api/addTask';
 import getTasks from 'src/api/getTasks';
 import newNotification from 'src/utils/newNotification';
 import {
+  ColumnData,
   priority as priorityEnum,
   difficulty as difficultyEnum,
   difficulty,
 } from 'src/api/models';
 
 const AddTaskContainer = () => {
-  const { setTasks } = useContext(tasksContext);
+  const { tasks, setTasks } = useContext(tasksContext);
+  const { columns } = useContext(columnsContext);
   const { id: currentColumnId } = useContext(currentColumnIdContext);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const [inputTitle, setInputTitle] = useState<string>('');
@@ -23,6 +26,10 @@ const AddTaskContainer = () => {
   const [inputDifficulty, setInputDifficulty] = useState<difficultyEnum>(
     difficultyEnum.Intermediate
   );
+
+  const findColumnIndexById = (column: ColumnData): boolean => {
+    return column.id === currentColumnId;
+  };
 
   const openModal = (): void => {
     setIsOpen(true);
@@ -79,6 +86,16 @@ const AddTaskContainer = () => {
   const handleSubmit = async (): Promise<void> => {
     if (inputTitle === '' || inputDescription === '') {
       newNotification('Please provide all required fields.');
+      return;
+    }
+    if (!tasks) return;
+    if (!columns) return;
+    if (
+      tasks.filter((task) => task.columnId === currentColumnId).length ===
+      columns[columns.findIndex(findColumnIndexById)].limit
+    ) {
+      newNotification("Can't add more than column's task limit.");
+      closeModal();
       return;
     }
     try {
