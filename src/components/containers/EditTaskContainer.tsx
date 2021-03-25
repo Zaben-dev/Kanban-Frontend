@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect, useCallback } from 'react';
 import EditTask from 'src/components/presentational/EditTask';
 import tasksContext from 'src/contexts/tasksContext';
 import currentTaskIdContext from 'src/contexts/currentTaskIdContext';
+import newNotification from 'src/utils/newNotification';
 import editTask from 'src/api/editTask';
 import getTasks from 'src/api/getTasks';
 import {
@@ -15,7 +16,6 @@ const AddTaskContainer = () => {
   const { tasks, setTasks } = useContext(tasksContext);
   const { id: currentTaskId } = useContext(currentTaskIdContext);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [inputTitle, setInputTitle] = useState<string>('');
   const [inputDescription, setInputDescription] = useState<string>('');
   const [inputPriority, setInputPriority] = useState<priorityEnum>(
@@ -101,32 +101,32 @@ const AddTaskContainer = () => {
     }
   };
 
-  const handleSubmit = (): void => {
-    setIsLoading((prev) => !prev);
-    editTask(
-      currentTaskId,
-      inputTitle,
-      inputDescription,
-      inputPriority,
-      inputDifficulty
-    )
-      .then(() => {
-        getTasks().then((tasks: TaskData[] | null) => {
-          closeModal();
-          setIsLoading((prev) => !prev);
-          setTasks(tasks);
-        });
-      })
-      .catch((e) => {
-        closeModal();
-        setIsLoading(false);
-      });
+  const handleSubmit = async (): Promise<void> => {
+    if (inputTitle === '' || inputDescription === '') {
+      newNotification('Please provide all required fields.');
+      return;
+    }
+    try {
+      await editTask(
+        currentTaskId,
+        inputTitle,
+        inputDescription,
+        inputPriority,
+        inputDifficulty
+      );
+      const tasks = await getTasks();
+      setTasks(tasks);
+      setInputTitle('');
+      setInputDescription('');
+      closeModal();
+    } catch {
+      newNotification('Sorry, something went wrong.');
+    }
   };
 
   return (
     <EditTask
       modalIsOpen={modalIsOpen}
-      isLoading={isLoading}
       inputTitle={inputTitle}
       inputDescription={inputDescription}
       inputPriority={inputPriority}

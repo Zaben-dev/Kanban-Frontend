@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ColumnData, TaskData } from 'src/api/models';
 import getColumns from 'src/api/getColumns';
 import getTasks from 'src/api/getTasks';
@@ -12,14 +12,20 @@ const AppContainer = () => {
   const [columns, setColumns] = useState<ColumnData[] | null>(null);
   const [tasks, setTasks] = useState<TaskData[] | null>(null);
 
-  useEffect(() => {
-    getColumns().then((columns: ColumnData[] | null) => {
+  const getAppData = useCallback(async (): Promise<void> => {
+    try {
+      const columns = await getColumns();
       setColumns(columns);
-    });
-    getTasks().then((tasks: TaskData[] | null) => {
+      const tasks = await getTasks();
       setTasks(tasks);
-    });
+    } catch {
+      return window.location.reload();
+    }
   }, []);
+
+  useEffect(() => {
+    getAppData();
+  }, [getAppData]);
 
   if (columns === null || tasks === null) {
     return (

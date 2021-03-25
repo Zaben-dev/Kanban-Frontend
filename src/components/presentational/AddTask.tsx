@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Add } from '@styled-icons/ionicons-outline/Add';
 import Modal from 'react-modal';
-import { SpinnerComponent } from 'react-element-spinner';
 import {
   priority as priorityEnum,
   difficulty as difficultyEnum,
@@ -32,7 +31,7 @@ const StyledAddIcon = styled(Add)`
 `;
 
 const StyledModal = styled(Modal)`
-  margin-top: 10vh;
+  margin-top: 130px;
   width: 500px;
   height: 480px;
   margin-left: auto;
@@ -117,7 +116,6 @@ const StyledCloseButton = styled.button`
 
 interface Props {
   modalIsOpen: boolean;
-  isLoading: boolean;
   inputTitle: string;
   inputDescription: string;
   inputPriority: priorityEnum;
@@ -135,7 +133,6 @@ interface Props {
 
 const AddTask: React.FunctionComponent<Props> = ({
   modalIsOpen,
-  isLoading,
   inputTitle,
   inputDescription,
   inputPriority,
@@ -189,11 +186,6 @@ const AddTask: React.FunctionComponent<Props> = ({
         </StyledGridContainer>
         <StyledCloseButton onClick={closeModal}>close</StyledCloseButton>
         <StyledSubmitButton onClick={handleSubmit}>submit</StyledSubmitButton>
-        <SpinnerComponent
-          loading={isLoading}
-          position="global"
-          color="#498DFF"
-        />
       </StyledModal>
     </>
   );

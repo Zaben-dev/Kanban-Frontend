@@ -2,10 +2,10 @@ import { useState, useContext } from 'react';
 import AddColumn from 'src/components/presentational/AddColumn';
 import addColumn from 'src/api/addColumn';
 import columnsContext from 'src/contexts/columnsContext';
+import newNotification from 'src/utils/newNotification';
 
 const AddColumnContainer = () => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { setColumns } = useContext(columnsContext);
   const [inputName, setInputName] = useState<string>('');
   const [inputLimit, setInputLimit] = useState<number>(10);
@@ -30,9 +30,13 @@ const AddColumnContainer = () => {
     setInputLimit(parseInt(event.target.value));
   };
 
-  const handleSubmit = (): void => {
-    setIsLoading((prev) => !prev);
-    addColumn(inputName, inputLimit).then((column) => {
+  const handleSubmit = async (): Promise<void> => {
+    if (inputName === '') {
+      newNotification('Please provide all required fields.');
+      return;
+    }
+    try {
+      const column = await addColumn(inputName, inputLimit);
       setColumns((prev) => {
         if (prev === null) return null;
         return [
@@ -41,16 +45,16 @@ const AddColumnContainer = () => {
         ];
       });
       setInputName('');
-      setIsLoading((prev) => !prev);
       closeModal();
-    });
+    } catch {
+      newNotification('Sorry, something went wrong.');
+    }
   };
 
   return (
     <AddColumn
       handleSubmit={handleSubmit}
       openModal={openModal}
-      isLoading={isLoading}
       closeModal={closeModal}
       modalIsOpen={modalIsOpen}
       inputName={inputName}

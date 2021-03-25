@@ -1,12 +1,12 @@
 import React from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
-import { SpinnerComponent } from 'react-element-spinner';
 import { Add } from '@styled-icons/ionicons-outline/Add';
+import 'react-toastify/dist/ReactToastify.css';
 
 const StyledAddButton = styled.button`
   margin-left: 40px;
-  margin-top: 20px;
+  margin-top: 18px;
   background-color: #008cba;
   border: none;
   outline: none;
@@ -28,7 +28,7 @@ const StyledAddIcon = styled(Add)`
 `;
 
 const StyledModal = styled(Modal)`
-  margin-top: 10vh;
+  margin-top: 130px;
   width: 500px;
   height: 280px;
   margin-left: auto;
@@ -112,7 +112,6 @@ interface Props {
   modalIsOpen: boolean;
   inputName: string;
   inputLimit: number;
-  isLoading: boolean;
 }
 
 const AddColumn: React.FunctionComponent<Props> = ({
@@ -124,7 +123,6 @@ const AddColumn: React.FunctionComponent<Props> = ({
   handleNameChange,
   inputLimit,
   handleLimitChange,
-  isLoading,
 }) => {
   Modal.setAppElement('#root');
   return (
@@ -152,11 +150,6 @@ const AddColumn: React.FunctionComponent<Props> = ({
         </StyledGridContainer>
         <StyledCloseButton onClick={closeModal}>close</StyledCloseButton>
         <StyledSubmitButton onClick={handleSubmit}>submit</StyledSubmitButton>
-        <SpinnerComponent
-          loading={isLoading}
-          position="global"
-          color="#498DFF"
-        />
       </StyledModal>
     </>
   );

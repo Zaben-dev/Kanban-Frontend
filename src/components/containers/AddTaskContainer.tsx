@@ -4,8 +4,8 @@ import tasksContext from 'src/contexts/tasksContext';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import addTask from 'src/api/addTask';
 import getTasks from 'src/api/getTasks';
+import newNotification from 'src/utils/newNotification';
 import {
-  TaskData,
   priority as priorityEnum,
   difficulty as difficultyEnum,
   difficulty,
@@ -15,7 +15,6 @@ const AddTaskContainer = () => {
   const { setTasks } = useContext(tasksContext);
   const { id: currentColumnId } = useContext(currentColumnIdContext);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [inputTitle, setInputTitle] = useState<string>('');
   const [inputDescription, setInputDescription] = useState<string>('');
   const [inputPriority, setInputPriority] = useState<priorityEnum>(
@@ -77,34 +76,32 @@ const AddTaskContainer = () => {
     }
   };
 
-  const handleSubmit = (): void => {
-    setIsLoading((prev) => !prev);
-    addTask(
-      inputTitle,
-      inputDescription,
-      inputPriority,
-      inputDifficulty,
-      currentColumnId
-    )
-      .then(() => {
-        getTasks().then((tasks: TaskData[] | null) => {
-          setTasks(tasks);
-          setInputTitle('');
-          setInputDescription('');
-          closeModal();
-          setIsLoading((prev) => !prev);
-        });
-      })
-      .catch((e) => {
-        closeModal();
-        setIsLoading(false);
-      });
+  const handleSubmit = async (): Promise<void> => {
+    if (inputTitle === '' || inputDescription === '') {
+      newNotification('Please provide all required fields.');
+      return;
+    }
+    try {
+      await addTask(
+        inputTitle,
+        inputDescription,
+        inputPriority,
+        inputDifficulty,
+        currentColumnId
+      );
+      const tasks = await getTasks();
+      setTasks(tasks);
+      setInputTitle('');
+      setInputDescription('');
+      closeModal();
+    } catch {
+      newNotification('Sorry, something went wrong.');
+    }
   };
 
   return (
     <AddTask
       modalIsOpen={modalIsOpen}
-      isLoading={isLoading}
       inputTitle={inputTitle}
       inputDescription={inputDescription}
       inputPriority={inputPriority}

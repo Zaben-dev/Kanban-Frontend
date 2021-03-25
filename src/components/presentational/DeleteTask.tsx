@@ -1,5 +1,4 @@
 import React from 'react';
-import { SpinnerComponent } from 'react-element-spinner';
 import styled from 'styled-components';
 import { DeleteOutline } from '@styled-icons/material/DeleteOutline';
 import Modal from 'react-modal';
@@ -23,7 +22,7 @@ const StyledDeleteButton = styled.button`
 `;
 
 const StyledModal = styled(Modal)`
-  margin-top: 10vh;
+  margin-top: 130px;
   width: 500px;
   height: 215px;
   margin-left: auto;
@@ -82,13 +81,11 @@ interface Props {
   closeModal: () => void;
   openModal: () => void;
   taskTitle: string;
-  isLoading: boolean;
   modalIsOpen: boolean;
 }
 
 const DeleteTask: React.FunctionComponent<Props> = ({
   handleDelete,
-  isLoading,
   modalIsOpen,
   closeModal,
   openModal,
@@ -106,7 +103,6 @@ const DeleteTask: React.FunctionComponent<Props> = ({
         </StyledText>
         <StyledCloseButton onClick={closeModal}>close</StyledCloseButton>
         <StyledSubmitButton onClick={handleDelete}>Delete</StyledSubmitButton>
-        <SpinnerComponent loading={isLoading} position="global" />
       </StyledModal>
     </>
   );

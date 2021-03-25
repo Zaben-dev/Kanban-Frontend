@@ -1,7 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
-import { SpinnerComponent } from 'react-element-spinner';
 import { Edit } from '@styled-icons/boxicons-regular/Edit';
 
 const StyledEditButton = styled.button`
@@ -27,7 +26,7 @@ const StyledEditIcon = styled(Edit)`
 `;
 
 const StyledModal = styled(Modal)`
-  margin-top: 10vh;
+  margin-top: 130px;
   width: 500px;
   height: 280px;
   margin-left: auto;
@@ -111,7 +110,6 @@ interface Props {
   modalIsOpen: boolean;
   inputName: string;
   inputLimit: number;
-  isLoading: boolean;
 }
 
 const EditColumn: React.FunctionComponent<Props> = ({
@@ -123,7 +121,6 @@ const EditColumn: React.FunctionComponent<Props> = ({
   handleNameChange,
   inputLimit,
   handleLimitChange,
-  isLoading,
 }) => {
   Modal.setAppElement('#root');
   return (
@@ -149,11 +146,6 @@ const EditColumn: React.FunctionComponent<Props> = ({
         </StyledGridContainer>
         <StyledCloseButton onClick={closeModal}>close</StyledCloseButton>
         <StyledSubmitButton onClick={handleSubmit}>submit</StyledSubmitButton>
-        <SpinnerComponent
-          loading={isLoading}
-          position="global"
-          color="#498DFF"
-        />
       </StyledModal>
     </>
   );
