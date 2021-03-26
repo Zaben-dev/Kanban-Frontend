@@ -1,7 +1,8 @@
 import { useContext, useState } from 'react';
 import tasksContext from 'src/contexts/tasksContext';
 import currentTaskIdContext from 'src/contexts/currentTaskIdContext';
-import DeleteTask from 'src/components/presentational/DeleteTask';
+import DeleteConfirmation from 'src/components/presentational/modals/confirmations/DeleteConfirmation';
+import DeleteTaskButton from 'src/components/presentational/buttons/DeleteTaskButton';
 import newNotification from 'src/utils/newNotification';
 import getTasks from 'src/api/getTasks';
 import deleteTask from 'src/api/deleteTask';
@@ -36,13 +37,15 @@ const DeleteTaskContainer = () => {
   };
 
   return (
-    <DeleteTask
-      handleDelete={handleDelete}
-      modalIsOpen={modalIsOpen}
-      openModal={openModal}
-      closeModal={closeModal}
-      taskTitle={tasks ? tasks[tasks.findIndex(findTaskIndexById)].title : ''}
-    />
+    <>
+      <DeleteTaskButton openModal={openModal} />
+      <DeleteConfirmation
+        handleDelete={handleDelete}
+        modalIsOpen={modalIsOpen}
+        closeModal={closeModal}
+        name={tasks ? tasks[tasks.findIndex(findTaskIndexById)].title : ''}
+      />
+    </>
   );
 };
 

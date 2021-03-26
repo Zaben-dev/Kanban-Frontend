@@ -1,7 +1,7 @@
 export interface ColumnData {
   id: number;
   name: string;
-  limit: number;
+  limit: number | null;
 }
 
 export enum priority {

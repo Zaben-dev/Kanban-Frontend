@@ -2,7 +2,8 @@ import { useContext, useState } from 'react';
 import columnsContext from 'src/contexts/columnsContext';
 import tasksContext from 'src/contexts/tasksContext';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
-import DeleteColumn from 'src/components/presentational/DeleteColumn';
+import DeleteConfirmation from 'src/components/presentational/modals/confirmations/DeleteConfirmation';
+import DeleteColumnButton from 'src/components/presentational/buttons/DeleteColumnButton';
 import newNotification from 'src/utils/newNotification';
 import deleteColumn from 'src/api/deleteColumn';
 import { ColumnData } from 'src/api/models';
@@ -49,15 +50,17 @@ const DeleteColumnContainer = () => {
   };
 
   return (
-    <DeleteColumn
-      handleDelete={handleDelete}
-      modalIsOpen={modalIsOpen}
-      openModal={openModal}
-      closeModal={closeModal}
-      columnName={
-        columns ? columns[columns.findIndex(findColumnIndexById)].name : ''
-      }
-    />
+    <>
+      <DeleteColumnButton openModal={openModal} />
+      <DeleteConfirmation
+        handleDelete={handleDelete}
+        modalIsOpen={modalIsOpen}
+        closeModal={closeModal}
+        name={
+          columns ? columns[columns.findIndex(findColumnIndexById)].name : ''
+        }
+      />
+    </>
   );
 };
 

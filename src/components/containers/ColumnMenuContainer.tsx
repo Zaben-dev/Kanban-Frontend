@@ -1,5 +1,5 @@
 import { useDetectClick } from 'src/utils/useDetectClick';
-import ColumnMenu from 'src/components/presentational/ColumnMenu';
+import ColumnMenu from 'src/components/presentational/menus/ColumnMenu';
 
 const ColumnMenuContainer = () => {
   const [isActive, setIsActive] = useDetectClick(false);

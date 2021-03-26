@@ -4,6 +4,7 @@ import { ColumnData } from 'src/api/models';
 import ColumnMenuContainer from 'src/components/containers/ColumnMenuContainer';
 import TasksAreaContainer from 'src/components/containers/TasksAreaContainer';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
+import { Infinity } from '@styled-icons/octicons/Infinity';
 
 const StyledContainer = styled.div`
   background-color: #008cba2a;
@@ -42,12 +43,16 @@ const StyledName = styled.div`
 
 const StyledLimit = styled.div`
   display: inline-block;
-  background-color: #a8e9ff5c;
-  font-size: 13px;
+  background-color: #88c5da5c;
+  font-size: 14px;
   border-radius: 4px;
   padding: 2px 5px 2px 5px;
-  margin-left: 9px;
+  margin-left: 6px;
   margin-top: 5px;
+`;
+const StyledInfinityIcon = styled(Infinity)`
+  padding-bottom: 1px;
+  color: #1a1a1a;
 `;
 
 const Column: React.FunctionComponent<ColumnData> = ({ id, name, limit }) => {
@@ -62,7 +67,9 @@ const Column: React.FunctionComponent<ColumnData> = ({ id, name, limit }) => {
           <ColumnMenuContainer />
         </currentColumnIdContext.Provider>
       </StyledFlexContainer>
-      <StyledLimit>max: {limit}</StyledLimit>
+      <StyledLimit>
+        max: {limit === null ? <StyledInfinityIcon size="18" /> : limit}
+      </StyledLimit>
       <currentColumnIdContext.Provider value={{ id }}>
         <TasksAreaContainer />
       </currentColumnIdContext.Provider>

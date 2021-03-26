@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
-import AddTask from 'src/components/presentational/AddTask';
+import TaskDataForm from 'src/components/presentational/modals/forms/TaskDataForm';
+import AddTaskButton from 'src/components/presentational/buttons/AddTaskButton';
 import tasksContext from 'src/contexts/tasksContext';
 import columnsContext from 'src/contexts/columnsContext';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
@@ -95,7 +96,6 @@ const AddTaskContainer = () => {
       columns[columns.findIndex(findColumnIndexById)].limit
     ) {
       newNotification("Can't add more than column's task limit.");
-      closeModal();
       return;
     }
     try {
@@ -117,20 +117,22 @@ const AddTaskContainer = () => {
   };
 
   return (
-    <AddTask
-      modalIsOpen={modalIsOpen}
-      inputTitle={inputTitle}
-      inputDescription={inputDescription}
-      inputPriority={inputPriority}
-      inputDifficulty={inputDifficulty}
-      openModal={openModal}
-      closeModal={closeModal}
-      handleTitleChange={handleTitleChange}
-      handleDescriptionChange={handleDescriptionChange}
-      handlePriorityChange={handlePriorityChange}
-      handleDifficultyChange={handleDifficultyChange}
-      handleSubmit={handleSubmit}
-    />
+    <>
+      <AddTaskButton openModal={openModal} />
+      <TaskDataForm
+        modalIsOpen={modalIsOpen}
+        inputTitle={inputTitle}
+        inputDescription={inputDescription}
+        inputPriority={inputPriority}
+        inputDifficulty={inputDifficulty}
+        closeModal={closeModal}
+        handleTitleChange={handleTitleChange}
+        handleDescriptionChange={handleDescriptionChange}
+        handlePriorityChange={handlePriorityChange}
+        handleDifficultyChange={handleDifficultyChange}
+        handleSubmit={handleSubmit}
+      />
+    </>
   );
 };
 

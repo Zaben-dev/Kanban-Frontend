@@ -5,11 +5,14 @@ const parseColumn = (column: ColumnData): ColumnData => {
   return {
     id: Number(column.id),
     name: String(column.name),
-    limit: Number(column.limit),
+    limit: column.limit === null ? null : Number(column.limit),
   };
 };
 
-const addColumn = async (name: string, limit: number): Promise<ColumnData> => {
+const addColumn = async (
+  name: string,
+  limit: number | null
+): Promise<ColumnData> => {
   try {
     const response = await axios.post('http://127.0.0.1:8000/Columns/', {
       name,

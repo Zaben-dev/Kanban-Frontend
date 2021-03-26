@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 const editColumn = async (
   id: number,
   name: string,
-  limit: number
+  limit: number | null
 ): Promise<AxiosResponse<any>> => {
   try {
     const response = await axios.put(

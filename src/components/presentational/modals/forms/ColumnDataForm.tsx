@@ -1,29 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
-import { Edit } from '@styled-icons/boxicons-regular/Edit';
-
-const StyledEditButton = styled.button`
-  background-color: #008cba;
-  margin-top: 2px;
-  border: none;
-  outline: none;
-  color: white;
-  padding: 4px 20px;
-  text-align: center;
-  width: 160px;
-  height: 30px;
-  text-decoration: none;
-  font-size: 15px;
-  cursor: pointer;
-  &:hover {
-    background: #0083af;
-  }
-`;
-
-const StyledEditIcon = styled(Edit)`
-  padding-bottom: 3px;
-`;
 
 const StyledModal = styled(Modal)`
   margin-top: 130px;
@@ -43,13 +20,14 @@ const StyledGridContainer = styled.div`
   padding-top: 50px;
   margin-left: auto;
   margin-right: auto;
-  grid-template-columns: 100px 350px;
+  grid-template-columns: 100px 100px 250px;
   grid-template-rows: 30px 30px;
   grid-row-gap: 50px;
 `;
 
 const StyledDescription = styled.div`
   line-height: 30px;
+  grid-column: 1/2;
 `;
 
 const StyledTextInput = styled.input`
@@ -58,15 +36,23 @@ const StyledTextInput = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: vertical;
+  grid-column: 2/4;
 `;
 
 const StyledNumberInput = styled.input`
   font-size: 17px;
-  width: 15%;
-  padding: 6px;
+  width: 50px;
+  padding: 7px 6px 6px 6px;
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: vertical;
+  grid-column: 2/3;
+`;
+
+const StyledChceckboxContainer = styled.div`
+  font-size: 17px;
+  grid-column: 3/4;
+  padding-top: 7px;
 `;
 
 const StyledCloseButton = styled.button`
@@ -103,46 +89,54 @@ const StyledSubmitButton = styled.button`
 
 interface Props {
   handleSubmit: () => void;
-  openModal: () => void;
   closeModal: () => void;
   handleNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleLimitChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInfiniteLimit: (event: React.ChangeEvent<HTMLInputElement>) => void;
   modalIsOpen: boolean;
   inputName: string;
-  inputLimit: number;
+  inputLimit: number | null;
 }
 
-const EditColumn: React.FunctionComponent<Props> = ({
+const ColumnDataForm: React.FunctionComponent<Props> = ({
   handleSubmit,
-  openModal,
   modalIsOpen,
   closeModal,
   inputName,
   handleNameChange,
   inputLimit,
   handleLimitChange,
+  handleInfiniteLimit,
 }) => {
   Modal.setAppElement('#root');
   return (
     <>
-      <StyledEditButton onClick={openModal}>
-        edit column <StyledEditIcon size="23" />
-      </StyledEditButton>
       <StyledModal isOpen={modalIsOpen}>
         <StyledGridContainer>
           <StyledDescription>name:</StyledDescription>
           <StyledTextInput
             type="text"
+            placeholder="To do"
             value={inputName}
             onChange={handleNameChange}
           />
           <StyledDescription>tasks limit:</StyledDescription>
-          <StyledNumberInput
-            type="number"
-            value={inputLimit}
-            onChange={handleLimitChange}
-            min="0"
-          />
+          {inputLimit !== null && (
+            <StyledNumberInput
+              type="number"
+              value={inputLimit}
+              onChange={handleLimitChange}
+              min="0"
+            />
+          )}
+          <StyledChceckboxContainer>
+            <input
+              type="checkbox"
+              checked={inputLimit === null ? true : false}
+              onChange={handleInfiniteLimit}
+            />
+            &nbsp;infinite tasks
+          </StyledChceckboxContainer>
         </StyledGridContainer>
         <StyledCloseButton onClick={closeModal}>close</StyledCloseButton>
         <StyledSubmitButton onClick={handleSubmit}>submit</StyledSubmitButton>
@@ -151,4 +145,4 @@ const EditColumn: React.FunctionComponent<Props> = ({
   );
 };
 
-export default EditColumn;
+export default ColumnDataForm;

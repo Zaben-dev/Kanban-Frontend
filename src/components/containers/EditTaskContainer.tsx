@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
-import EditTask from 'src/components/presentational/EditTask';
+import TaskDataForm from 'src/components/presentational/modals/forms/TaskDataForm';
+import EditTaskButton from 'src/components/presentational/buttons/EditTaskButton';
 import tasksContext from 'src/contexts/tasksContext';
 import currentTaskIdContext from 'src/contexts/currentTaskIdContext';
 import newNotification from 'src/utils/newNotification';
@@ -123,20 +124,22 @@ const AddTaskContainer = () => {
   };
 
   return (
-    <EditTask
-      modalIsOpen={modalIsOpen}
-      inputTitle={inputTitle}
-      inputDescription={inputDescription}
-      inputPriority={inputPriority}
-      inputDifficulty={inputDifficulty}
-      openModal={openModal}
-      closeModal={closeModal}
-      handleTitleChange={handleTitleChange}
-      handleDescriptionChange={handleDescriptionChange}
-      handlePriorityChange={handlePriorityChange}
-      handleDifficultyChange={handleDifficultyChange}
-      handleSubmit={handleSubmit}
-    />
+    <>
+      <EditTaskButton openModal={openModal} />
+      <TaskDataForm
+        modalIsOpen={modalIsOpen}
+        inputTitle={inputTitle}
+        inputDescription={inputDescription}
+        inputPriority={inputPriority}
+        inputDifficulty={inputDifficulty}
+        closeModal={closeModal}
+        handleTitleChange={handleTitleChange}
+        handleDescriptionChange={handleDescriptionChange}
+        handlePriorityChange={handlePriorityChange}
+        handleDifficultyChange={handleDifficultyChange}
+        handleSubmit={handleSubmit}
+      />
+    </>
   );
 };
 

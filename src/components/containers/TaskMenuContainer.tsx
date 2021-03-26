@@ -1,5 +1,5 @@
 import { useDetectClick } from 'src/utils/useDetectClick';
-import TaskMenu from 'src/components/presentational/TaskMenu';
+import TaskMenu from 'src/components/presentational/menus/TaskMenu';
 
 const TaskMenuContainer = () => {
   const [isActive, setIsActive] = useDetectClick(false);

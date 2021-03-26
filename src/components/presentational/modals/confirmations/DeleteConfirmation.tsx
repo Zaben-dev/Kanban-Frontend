@@ -1,25 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DeleteOutline } from '@styled-icons/material/DeleteOutline';
 import Modal from 'react-modal';
-
-const StyledDeleteButton = styled.button`
-  background-color: #008cba;
-  margin-top: 2px;
-  border: none;
-  outline: none;
-  color: white;
-  padding: 4px 20px;
-  text-align: center;
-  width: 140px;
-  height: 30px;
-  text-decoration: none;
-  font-size: 15px;
-  cursor: pointer;
-  &:hover {
-    background: #0083af;
-  }
-`;
 
 const StyledModal = styled(Modal)`
   margin-top: 130px;
@@ -30,10 +11,6 @@ const StyledModal = styled(Modal)`
   background-color: #b4e1ff;
   border: none;
   outline: none;
-`;
-
-const StyledDeleteIcon = styled(DeleteOutline)`
-  padding-bottom: 4px;
 `;
 
 const StyledText = styled.div`
@@ -79,28 +56,20 @@ const StyledSubmitButton = styled.button`
 interface Props {
   handleDelete: () => void;
   closeModal: () => void;
-  openModal: () => void;
-  taskTitle: string;
+  name: string;
   modalIsOpen: boolean;
 }
 
-const DeleteTask: React.FunctionComponent<Props> = ({
+const DeleteColumn: React.FunctionComponent<Props> = ({
   handleDelete,
   modalIsOpen,
   closeModal,
-  openModal,
-  taskTitle,
+  name,
 }) => {
   return (
     <>
-      <StyledDeleteButton onClick={openModal}>
-        delete task
-        <StyledDeleteIcon size="24" />
-      </StyledDeleteButton>
       <StyledModal isOpen={modalIsOpen}>
-        <StyledText>
-          Are you sure you want to delete task {taskTitle}?
-        </StyledText>
+        <StyledText>Are you sure you want to delete {name}?</StyledText>
         <StyledCloseButton onClick={closeModal}>close</StyledCloseButton>
         <StyledSubmitButton onClick={handleDelete}>Delete</StyledSubmitButton>
       </StyledModal>
@@ -108,4 +77,4 @@ const DeleteTask: React.FunctionComponent<Props> = ({
   );
 };
 
-export default DeleteTask;
+export default DeleteColumn;

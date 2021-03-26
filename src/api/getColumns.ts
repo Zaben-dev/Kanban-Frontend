@@ -5,7 +5,7 @@ const parseColumns = (columns: ColumnData[]): ColumnData[] => {
   const parsedColumns = columns.map((column) => ({
     id: Number(column.id),
     name: String(column.name),
-    limit: Number(column.limit),
+    limit: column.limit === null ? null : Number(column.limit),
   }));
   return parsedColumns;
 };

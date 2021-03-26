@@ -1,32 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Edit } from '@styled-icons/boxicons-regular/Edit';
 import Modal from 'react-modal';
 import {
   priority as priorityEnum,
   difficulty as difficultyEnum,
 } from 'src/api/models';
-
-const StyledEditButton = styled.button`
-  background-color: #008cba;
-  border: none;
-  outline: none;
-  color: white;
-  padding: 2px 20px;
-  text-align: center;
-  width: 140px;
-  height: 30px;
-  text-decoration: none;
-  font-size: 15px;
-  cursor: pointer;
-  &:hover {
-    background: #0083af;
-  }
-`;
-
-const StyledEditIcon = styled(Edit)`
-  padding-bottom: 3px;
-`;
 
 const StyledModal = styled(Modal)`
   margin-top: 130px;
@@ -118,7 +96,6 @@ interface Props {
   inputDescription: string;
   inputPriority: priorityEnum;
   inputDifficulty: difficultyEnum;
-  openModal: () => void;
   closeModal: () => void;
   handleTitleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleDescriptionChange: (
@@ -129,13 +106,12 @@ interface Props {
   handleSubmit: () => void;
 }
 
-const AddTask: React.FunctionComponent<Props> = ({
+const TaskDataForm: React.FunctionComponent<Props> = ({
   modalIsOpen,
   inputTitle,
   inputDescription,
   inputPriority,
   inputDifficulty,
-  openModal,
   closeModal,
   handleTitleChange,
   handleDescriptionChange,
@@ -145,9 +121,6 @@ const AddTask: React.FunctionComponent<Props> = ({
 }) => {
   return (
     <>
-      <StyledEditButton onClick={openModal}>
-        edit task <StyledEditIcon size="23" />
-      </StyledEditButton>
       <StyledModal isOpen={modalIsOpen}>
         <StyledGridContainer>
           <StyledDescription>title:</StyledDescription>
@@ -186,4 +159,4 @@ const AddTask: React.FunctionComponent<Props> = ({
   );
 };
 
-export default AddTask;
+export default TaskDataForm;
