@@ -57,23 +57,21 @@ const StyledInfinityIcon = styled(Infinity)`
 
 const Column: React.FunctionComponent<ColumnData> = ({ id, name, limit }) => {
   return (
-    <StyledContainer>
-      <StyledFlexContainer>
-        <StyledName>
-          {name}
-          &nbsp;
-        </StyledName>
-        <currentColumnIdContext.Provider value={{ id }}>
+    <currentColumnIdContext.Provider value={{ id }}>
+      <StyledContainer>
+        <StyledFlexContainer>
+          <StyledName>
+            {name}
+            &nbsp;
+          </StyledName>
           <ColumnMenuContainer />
-        </currentColumnIdContext.Provider>
-      </StyledFlexContainer>
-      <StyledLimit>
-        max: {limit === null ? <StyledInfinityIcon size="18" /> : limit}
-      </StyledLimit>
-      <currentColumnIdContext.Provider value={{ id }}>
+        </StyledFlexContainer>
+        <StyledLimit>
+          max: {limit === null ? <StyledInfinityIcon size="18" /> : limit}
+        </StyledLimit>
         <TasksAreaContainer />
-      </currentColumnIdContext.Provider>
-    </StyledContainer>
+      </StyledContainer>
+    </currentColumnIdContext.Provider>
   );
 };
 

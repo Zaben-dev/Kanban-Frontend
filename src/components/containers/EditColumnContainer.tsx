@@ -1,7 +1,6 @@
 import { useState, useContext, useCallback, useEffect } from 'react';
 import editColumn from 'src/api/editColumn';
-import tasksContext from 'src/contexts/tasksContext';
-import columnsContext from 'src/contexts/columnsContext';
+import boardDataContext from 'src/contexts/boardDataContext';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import newNotification from 'src/utils/newNotification';
 import { ColumnData } from 'src/api/models';
@@ -10,27 +9,26 @@ import EditColumnButton from 'src/components/presentational/buttons/EditColumnBu
 
 const EditColumnContainer = () => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
-  const { columns, setColumns } = useContext(columnsContext);
-  const { tasks } = useContext(tasksContext);
+  const { boardData, setBoardData } = useContext(boardDataContext);
   const { id: currentColumnId } = useContext(currentColumnIdContext);
   const [inputName, setInputName] = useState<string>('');
   const [inputLimit, setInputLimit] = useState<number | null>(0);
 
-  const findColumnIndexById = useCallback(
-    (column: ColumnData): boolean => {
-      return column.id === currentColumnId;
-    },
-    [currentColumnId]
-  );
+  const getColumnIndex = useCallback((): number => {
+    const columnIndex = boardData.findIndex(
+      (column) => column.id === currentColumnId
+    );
+    return columnIndex;
+  }, [boardData, currentColumnId]);
+
+  const getColumn = useCallback((): ColumnData => {
+    return boardData[getColumnIndex()];
+  }, [boardData, getColumnIndex]);
 
   useEffect(() => {
-    setInputName(
-      columns ? columns[columns.findIndex(findColumnIndexById)].name : ''
-    );
-    setInputLimit(
-      columns ? columns[columns.findIndex(findColumnIndexById)].limit : 0
-    );
-  }, [currentColumnId, findColumnIndexById, columns]);
+    setInputName(getColumn().name);
+    setInputLimit(getColumn().limit);
+  }, [getColumn]);
 
   const openModal = (): void => {
     setIsOpen(true);
@@ -60,8 +58,9 @@ const EditColumnContainer = () => {
     }
     if (event.target.checked === false) {
       setInputLimit(
-        tasks &&
-          tasks.filter((task) => task.columnId === currentColumnId).length
+        boardData[getColumnIndex()].tasks.filter(
+          (task) => task.columnId === currentColumnId
+        ).length
       );
     }
   };
@@ -71,26 +70,27 @@ const EditColumnContainer = () => {
       newNotification('Please provide all required fields.');
       return;
     }
-    if (!tasks) return;
     if (
       inputLimit !== null &&
       inputLimit <
-        tasks.filter((task) => task.columnId === currentColumnId).length
+        boardData[getColumnIndex()].tasks.filter(
+          (task) => task.columnId === currentColumnId
+        ).length
     ) {
       newNotification(" Limit can't be less than the number of tasks");
       return;
     }
 
     try {
-      await editColumn(currentColumnId, inputName, inputLimit);
-      setColumns((prev) => {
-        if (prev === null) return null;
-        return prev.map((column) =>
-          column.id === currentColumnId
-            ? { ...column, name: inputName, limit: inputLimit }
-            : column
-        );
-      });
+      const column = await editColumn(currentColumnId, inputName, inputLimit);
+      const newBoardData = [...boardData];
+      newBoardData[getColumnIndex()] = {
+        id: column.id,
+        name: column.name,
+        limit: column.limit,
+        tasks: boardData[getColumnIndex()].tasks,
+      };
+      setBoardData(newBoardData);
       setInputName('');
       closeModal();
     } catch {

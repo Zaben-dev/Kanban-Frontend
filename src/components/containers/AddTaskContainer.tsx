@@ -1,22 +1,18 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import TaskDataForm from 'src/components/presentational/modals/forms/TaskDataForm';
 import AddTaskButton from 'src/components/presentational/buttons/AddTaskButton';
-import tasksContext from 'src/contexts/tasksContext';
-import columnsContext from 'src/contexts/columnsContext';
+import boardDataContext from 'src/contexts/boardDataContext';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import addTask from 'src/api/addTask';
-import getTasks from 'src/api/getTasks';
 import newNotification from 'src/utils/newNotification';
 import {
-  ColumnData,
   priority as priorityEnum,
   difficulty as difficultyEnum,
   difficulty,
 } from 'src/api/models';
 
 const AddTaskContainer = () => {
-  const { tasks, setTasks } = useContext(tasksContext);
-  const { columns } = useContext(columnsContext);
+  const { boardData, setBoardData } = useContext(boardDataContext);
   const { id: currentColumnId } = useContext(currentColumnIdContext);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const [inputTitle, setInputTitle] = useState<string>('');
@@ -28,9 +24,12 @@ const AddTaskContainer = () => {
     difficultyEnum.Intermediate
   );
 
-  const findColumnIndexById = (column: ColumnData): boolean => {
-    return column.id === currentColumnId;
-  };
+  const getColumnIndex = useCallback((): number => {
+    const columnIndex = boardData.findIndex(
+      (column) => column.id === currentColumnId
+    );
+    return columnIndex;
+  }, [boardData, currentColumnId]);
 
   const openModal = (): void => {
     setIsOpen(true);
@@ -89,25 +88,27 @@ const AddTaskContainer = () => {
       newNotification('Please provide all required fields.');
       return;
     }
-    if (!tasks) return;
-    if (!columns) return;
     if (
-      tasks.filter((task) => task.columnId === currentColumnId).length ===
-      columns[columns.findIndex(findColumnIndexById)].limit
+      boardData[getColumnIndex()].tasks.length ===
+      boardData[getColumnIndex()].limit
     ) {
       newNotification("Can't add more than column's task limit.");
       return;
     }
     try {
-      await addTask(
+      const task = await addTask(
         inputTitle,
         inputDescription,
         inputPriority,
         inputDifficulty,
         currentColumnId
       );
-      const tasks = await getTasks();
-      setTasks(tasks);
+      const newBoardData = [...boardData];
+      newBoardData[getColumnIndex()].tasks = newBoardData[
+        getColumnIndex()
+      ].tasks.map((task) => ({ ...task, position: task.position + 1 }));
+      newBoardData[getColumnIndex()].tasks.push(task);
+      setBoardData(newBoardData);
       setInputTitle('');
       setInputDescription('');
       closeModal();

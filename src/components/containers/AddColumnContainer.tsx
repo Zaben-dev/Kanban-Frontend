@@ -2,12 +2,12 @@ import { useState, useContext } from 'react';
 import ColumnDataForm from 'src/components/presentational/modals/forms/ColumnDataForm';
 import AddColumnButton from 'src/components/presentational/buttons/AddColumnButton';
 import addColumn from 'src/api/addColumn';
-import columnsContext from 'src/contexts/columnsContext';
+import boardDataContext from 'src/contexts/boardDataContext';
 import newNotification from 'src/utils/newNotification';
 
 const AddColumnContainer = () => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
-  const { setColumns } = useContext(columnsContext);
+  const { boardData, setBoardData } = useContext(boardDataContext);
   const [inputName, setInputName] = useState<string>('');
   const [inputLimit, setInputLimit] = useState<number | null>(10);
 
@@ -49,13 +49,11 @@ const AddColumnContainer = () => {
     }
     try {
       const column = await addColumn(inputName, inputLimit);
-      setColumns((prev) => {
-        if (prev === null) return null;
-        return [
-          ...prev,
-          { id: column.id, name: column.name, limit: column.limit },
-        ];
-      });
+      const newBoardData = [
+        ...boardData,
+        { id: column.id, name: column.name, limit: column.limit, tasks: [] },
+      ];
+      setBoardData(newBoardData);
       setInputName('');
       closeModal();
     } catch {

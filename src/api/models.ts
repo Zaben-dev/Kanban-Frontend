@@ -1,9 +1,3 @@
-export interface ColumnData {
-  id: number;
-  name: string;
-  limit: number | null;
-}
-
 export enum priority {
   Low = 'Low',
   Medium = 'Medium',
@@ -16,6 +10,12 @@ export enum difficulty {
   Hard = 'Hard',
 }
 
+export interface ColumnData {
+  id: number;
+  name: string;
+  limit: number | null;
+}
+
 export interface TaskData {
   id: number;
   title: string;
@@ -24,4 +24,11 @@ export interface TaskData {
   difficulty: difficulty;
   columnId: number;
   position: number;
+}
+
+export interface boardData {
+  id: number;
+  name: string;
+  limit: number | null;
+  tasks: TaskData[];
 }

@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 import TaskDataForm from 'src/components/presentational/modals/forms/TaskDataForm';
 import EditTaskButton from 'src/components/presentational/buttons/EditTaskButton';
-import tasksContext from 'src/contexts/tasksContext';
+import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import currentTaskIdContext from 'src/contexts/currentTaskIdContext';
+import boardDataContext from 'src/contexts/boardDataContext';
 import newNotification from 'src/utils/newNotification';
 import editTask from 'src/api/editTask';
-import getTasks from 'src/api/getTasks';
 import {
   TaskData,
   priority as priorityEnum,
@@ -14,10 +14,11 @@ import {
 } from 'src/api/models';
 
 const AddTaskContainer = () => {
-  const { tasks, setTasks } = useContext(tasksContext);
   const { id: currentTaskId } = useContext(currentTaskIdContext);
+  const { id: currentColumnId } = useContext(currentColumnIdContext);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const [inputTitle, setInputTitle] = useState<string>('');
+  const { boardData, setBoardData } = useContext(boardDataContext);
   const [inputDescription, setInputDescription] = useState<string>('');
   const [inputPriority, setInputPriority] = useState<priorityEnum>(
     priorityEnum.Medium
@@ -26,29 +27,33 @@ const AddTaskContainer = () => {
     difficultyEnum.Intermediate
   );
 
-  const findTaskIndexById = useCallback(
-    (task: TaskData): boolean => {
-      return task.id === currentTaskId;
-    },
-    [currentTaskId]
-  );
+  const getColumnIndex = useCallback((): number => {
+    const columnIndex = boardData.findIndex(
+      (column) => column.id === currentColumnId
+    );
+    return columnIndex;
+  }, [boardData, currentColumnId]);
+
+  const getTaskIndex = useCallback((): number => {
+    const columnIndex = boardData.findIndex(
+      (column) => column.id === currentColumnId
+    );
+    const taskIndex = boardData[columnIndex].tasks.findIndex(
+      (task) => task.id === currentTaskId
+    );
+    return taskIndex;
+  }, [boardData, currentTaskId, currentColumnId]);
+
+  const getTask = useCallback((): TaskData => {
+    return boardData[getColumnIndex()].tasks[getTaskIndex()];
+  }, [boardData, getColumnIndex, getTaskIndex]);
 
   useEffect(() => {
-    setInputTitle(tasks ? tasks[tasks.findIndex(findTaskIndexById)].title : '');
-    setInputDescription(
-      tasks ? tasks[tasks.findIndex(findTaskIndexById)].description : ''
-    );
-    setInputPriority(
-      tasks
-        ? tasks[tasks.findIndex(findTaskIndexById)].priority
-        : priorityEnum.Medium
-    );
-    setInputDifficulty(
-      tasks
-        ? tasks[tasks.findIndex(findTaskIndexById)].difficulty
-        : difficultyEnum.Intermediate
-    );
-  }, [currentTaskId, findTaskIndexById, tasks]);
+    setInputTitle(getTask().title);
+    setInputDescription(getTask().description);
+    setInputPriority(getTask().priority);
+    setInputDifficulty(getTask().difficulty);
+  }, [getTask]);
 
   const openModal = (): void => {
     setIsOpen(true);
@@ -108,15 +113,25 @@ const AddTaskContainer = () => {
       return;
     }
     try {
-      await editTask(
+      const editedTask = await editTask(
         currentTaskId,
         inputTitle,
         inputDescription,
         inputPriority,
         inputDifficulty
       );
-      const tasks = await getTasks();
-      setTasks(tasks);
+
+      const newBoardData = [...boardData];
+      newBoardData[getColumnIndex()].tasks[getTaskIndex()] = {
+        id: editedTask.id,
+        title: editedTask.title,
+        description: editedTask.description,
+        priority: editedTask.priority,
+        difficulty: editedTask.difficulty,
+        columnId: editedTask.columnId,
+        position: editedTask.position,
+      };
+      setBoardData(newBoardData);
       closeModal();
     } catch {
       newNotification('Sorry, something went wrong.');

@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
-import { difficulty, priority } from 'src/api/models';
+import axios from 'axios';
+import { difficulty, priority, TaskData } from 'src/api/models';
 
 const editTask = async (
   id: number,
@@ -7,13 +7,13 @@ const editTask = async (
   description: string,
   priority: priority,
   difficulty: difficulty
-): Promise<AxiosResponse<any>> => {
+): Promise<TaskData> => {
   try {
     const response = await axios.put(
       'http://127.0.0.1:8000/Tasks/' + id + '/',
       { title, description, priority, difficulty }
     );
-    return response;
+    return response.data;
   } catch (e) {
     throw new Error(e);
   }

@@ -1,37 +1,35 @@
 import React, { useContext } from 'react';
 import Task from 'src/components/presentational/Task';
-import { TaskData, priority, difficulty } from 'src/api/models';
+import { TaskData } from 'src/api/models';
 import currentTaskIdContext from 'src/contexts/currentTaskIdContext';
-import tasksContext from 'src/contexts/tasksContext';
+import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
+import boardDataContext from 'src/contexts/boardDataContext';
 
 interface Props {
   id: number;
 }
 
 const TaskContainer: React.FunctionComponent<Props> = ({ id }) => {
-  const { tasks } = useContext(tasksContext);
+  const { id: currentColumnId } = useContext(currentColumnIdContext);
+  const { boardData } = useContext(boardDataContext);
 
-  const findTaskIndexById = (task: TaskData): boolean => {
-    return task.id === id;
+  const getTask = (): TaskData => {
+    const columnIndex = boardData.findIndex(
+      (column) => column.id === currentColumnId
+    );
+    const taskIndex = boardData[columnIndex].tasks.findIndex(
+      (task) => task.id === id
+    );
+    return boardData[columnIndex].tasks[taskIndex];
   };
 
   return (
     <currentTaskIdContext.Provider value={{ id }}>
       <Task
-        title={tasks ? tasks[tasks.findIndex(findTaskIndexById)].title : ''}
-        description={
-          tasks ? tasks[tasks.findIndex(findTaskIndexById)].description : ''
-        }
-        priority={
-          tasks
-            ? tasks[tasks.findIndex(findTaskIndexById)].priority
-            : priority.Low
-        }
-        difficulty={
-          tasks
-            ? tasks[tasks.findIndex(findTaskIndexById)].difficulty
-            : difficulty.Easy
-        }
+        title={getTask().title}
+        description={getTask().description}
+        priority={getTask().priority}
+        difficulty={getTask().difficulty}
       />
     </currentTaskIdContext.Provider>
   );

@@ -1,23 +1,20 @@
 import { useState, useEffect, useCallback } from 'react';
-import { ColumnData, TaskData } from 'src/api/models';
-import getColumns from 'src/api/getColumns';
-import getTasks from 'src/api/getTasks';
+import { boardData } from 'src/api/models';
+import getBoardData from 'src/api/getBoardData';
 import Column from 'src/components/presentational/Column';
-import columnsContext from 'src/contexts/columnsContext';
-import tasksContext from 'src/contexts/tasksContext';
+import boardDataContext from 'src/contexts/boardDataContext';
 import App from 'src/components/presentational/App';
 import { SpinnerComponent } from 'react-element-spinner';
 
 const AppContainer = () => {
-  const [columns, setColumns] = useState<ColumnData[] | null>(null);
-  const [tasks, setTasks] = useState<TaskData[] | null>(null);
+  const [boardData, setBoardData] = useState<boardData[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getAppData = useCallback(async (): Promise<void> => {
     try {
-      const columns = await getColumns();
-      setColumns(columns);
-      const tasks = await getTasks();
-      setTasks(tasks);
+      const boardData = await getBoardData();
+      setBoardData(boardData);
+      setIsLoading(false);
     } catch {
       return window.location.reload();
     }
@@ -27,26 +24,24 @@ const AppContainer = () => {
     getAppData();
   }, [getAppData]);
 
-  if (columns === null || tasks === null) {
+  if (isLoading === true) {
     return (
       <SpinnerComponent loading={true} position="global" color="#008cba" />
     );
   } else {
     return (
-      <columnsContext.Provider value={{ columns, setColumns }}>
+      <boardDataContext.Provider value={{ boardData, setBoardData }}>
         <App>
-          <tasksContext.Provider value={{ tasks, setTasks }}>
-            {columns.map((column, index) => (
-              <Column
-                key={index}
-                id={column.id}
-                name={column.name}
-                limit={column.limit}
-              />
-            ))}
-          </tasksContext.Provider>
+          {boardData.map((column, index) => (
+            <Column
+              key={index}
+              id={column.id}
+              name={column.name}
+              limit={column.limit}
+            />
+          ))}
         </App>
-      </columnsContext.Provider>
+      </boardDataContext.Provider>
     );
   }
 };
