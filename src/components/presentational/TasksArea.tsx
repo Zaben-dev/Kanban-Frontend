@@ -35,13 +35,21 @@ const StyledTasksArea = styled.div`
 
 interface Props {
   children: ReactNode;
+  innerRef: any;
+  provided: any;
 }
 
-const TasksArea: React.FunctionComponent<Props> = ({ children }) => {
+const TasksArea: React.FunctionComponent<Props> = ({
+  children,
+  innerRef,
+  provided,
+}) => {
   return (
     <>
       <StyledHorizontalLine></StyledHorizontalLine>
-      <StyledTasksArea>{children}</StyledTasksArea>
+      <StyledTasksArea {...provided.droppableProps} ref={innerRef}>
+        {children}
+      </StyledTasksArea>
     </>
   );
 };

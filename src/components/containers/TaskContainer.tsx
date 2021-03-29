@@ -4,12 +4,14 @@ import { TaskData } from 'src/api/models';
 import currentTaskIdContext from 'src/contexts/currentTaskIdContext';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import boardDataContext from 'src/contexts/boardDataContext';
+import { Draggable } from 'react-beautiful-dnd';
 
 interface Props {
   id: number;
+  index: number;
 }
 
-const TaskContainer: React.FunctionComponent<Props> = ({ id }) => {
+const TaskContainer: React.FunctionComponent<Props> = ({ id, index }) => {
   const { id: currentColumnId } = useContext(currentColumnIdContext);
   const { boardData } = useContext(boardDataContext);
 
@@ -25,12 +27,18 @@ const TaskContainer: React.FunctionComponent<Props> = ({ id }) => {
 
   return (
     <currentTaskIdContext.Provider value={{ id }}>
-      <Task
-        title={getTask().title}
-        description={getTask().description}
-        priority={getTask().priority}
-        difficulty={getTask().difficulty}
-      />
+      <Draggable key={id} draggableId={id.toString()} index={index}>
+        {(provided) => (
+          <Task
+            provided={provided}
+            innerRef={provided.innerRef}
+            title={getTask().title}
+            description={getTask().description}
+            priority={getTask().priority}
+            difficulty={getTask().difficulty}
+          />
+        )}
+      </Draggable>
     </currentTaskIdContext.Provider>
   );
 };

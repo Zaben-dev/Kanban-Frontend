@@ -51,6 +51,8 @@ interface Props {
   description: string;
   priority: priority;
   difficulty: difficulty;
+  provided: any;
+  innerRef: any;
 }
 
 const Task: React.FunctionComponent<Props> = ({
@@ -58,9 +60,15 @@ const Task: React.FunctionComponent<Props> = ({
   description,
   priority,
   difficulty,
+  provided,
+  innerRef,
 }) => {
   return (
-    <StyledTaskContainer>
+    <StyledTaskContainer
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
+      ref={innerRef}
+    >
       <StyledTaskTopbar>
         <StyledFlexContainer>
           <div>{title}</div>
