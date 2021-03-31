@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
+import Modal from 'react-modal';
 import AddColumnContainer from 'src/components/containers/AddColumnContainer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,6 +16,7 @@ interface Props {
 }
 
 const App: React.FunctionComponent<Props> = ({ children }) => {
+  Modal.setAppElement('#root');
   return (
     <>
       <AddColumnContainer /> <StyledContainer>{children}</StyledContainer>{' '}

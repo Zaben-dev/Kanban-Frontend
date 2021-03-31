@@ -113,7 +113,6 @@ const ColumnDataForm: React.FunctionComponent<Props> = ({
   handleLimitChange,
   handleInfiniteLimit,
 }) => {
-  Modal.setAppElement('#root');
   return (
     <>
       <StyledModal isOpen={modalIsOpen}>
