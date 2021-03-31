@@ -48,7 +48,7 @@ const AddColumnContainer = () => {
       return;
     }
     if (inputName.length > 40) {
-      newNotification('Name is too long.');
+      newNotification('Column name is too long.');
       return;
     }
     try {

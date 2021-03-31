@@ -84,16 +84,16 @@ const AddTaskContainer = () => {
   };
 
   const handleSubmit = async (): Promise<void> => {
-    if (inputTitle === '' || inputDescription === '') {
-      newNotification('Please provide all required fields.');
+    if (inputTitle === '') {
+      newNotification('Task title is required.');
       return;
     }
     if (inputTitle.length > 70) {
-      newNotification('Title is too long.');
+      newNotification('Task title is too long.');
       return;
     }
     if (inputDescription.length > 400) {
-      newNotification('Description is too long.');
+      newNotification('Task description is too long.');
       return;
     }
     if (

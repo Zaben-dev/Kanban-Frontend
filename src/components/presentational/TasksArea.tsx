@@ -16,7 +16,7 @@ const StyledHorizontalLine = styled.div`
 const StyledTasksArea = styled.div`
   display: inline-block;
   padding-right: 9px;
-  height: 100%;
+  height: 92%;
   width: 258px;
   padding-left: 4px;
   overflow: scroll;

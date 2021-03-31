@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 const StyledModal = styled(Modal)`
   margin-top: 130px;
   width: 500px;
-  height: 380px;
+  height: 450px;
   margin-left: auto;
   margin-right: auto;
   background-color: #b4e1ff;
@@ -15,7 +15,7 @@ const StyledModal = styled(Modal)`
 
 const StyledContainer = styled.div`
   display: grid;
-  grid-template-rows: 80px 195px 45px;
+  grid-template-rows: 80px 265px 45px;
   grid-row-gap: 15px;
 `;
 

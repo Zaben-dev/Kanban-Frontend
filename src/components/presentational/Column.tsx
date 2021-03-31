@@ -12,7 +12,7 @@ const StyledContainer = styled.div`
   color: #1a1a1a;
   min-width: 270px;
   max-width: 270px;
-  height: 89vh;
+  height: 89.5vh;
   margin-left: 20px;
   animation: fadein 1s;
   border: 4px solid #0041572e;
