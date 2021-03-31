@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 const StyledModal = styled(Modal)`
   margin-top: 130px;
   width: 500px;
-  height: 215px;
+  height: 245px;
   margin-left: auto;
   margin-right: auto;
   background-color: #b4e1ff;
@@ -15,10 +15,12 @@ const StyledModal = styled(Modal)`
 
 const StyledText = styled.div`
   padding-top: 50px;
+  width: 450px;
+  margin-left: 25px;
+  margin-right: 25px;
   text-align: center;
   font-size: 17px;
-  margin-left: 15px;
-  margin-right: 15px;
+  word-break: break-word;
 `;
 
 const StyledCloseButton = styled.button`

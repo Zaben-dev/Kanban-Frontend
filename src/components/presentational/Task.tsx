@@ -2,6 +2,7 @@ import React from 'react';
 import { priority, difficulty } from 'src/api/models';
 import TaskMenu from 'src/components/containers/TaskMenuContainer';
 import styled from 'styled-components';
+import { DraggableProvided } from 'react-beautiful-dnd';
 
 const StyledTaskContainer = styled.div`
   max-height: 180px;
@@ -59,7 +60,7 @@ interface Props {
   description: string;
   priority: priority;
   difficulty: difficulty;
-  provided: any;
+  provided: DraggableProvided;
   innerRef: any;
 }
 

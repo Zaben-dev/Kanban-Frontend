@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
+import { DroppableProvided } from 'react-beautiful-dnd';
 
 const StyledHorizontalLine = styled.div`
   border: 0;
@@ -37,7 +38,7 @@ const StyledTasksArea = styled.div`
 interface Props {
   children: ReactNode;
   innerRef: any;
-  provided: any;
+  provided: DroppableProvided;
 }
 
 const TasksArea: React.FunctionComponent<Props> = ({

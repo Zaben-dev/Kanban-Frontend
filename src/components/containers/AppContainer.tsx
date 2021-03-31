@@ -27,20 +27,26 @@ const AppContainer = () => {
     getAppData();
   }, [getAppData]);
 
-  const onDragEnd = async (result: any) => {
-    if (!result.destination) {
+  const onDragEnd = async (result: {
+    destination?: { droppableId: string; index: number };
+    source?: { droppableId: string; index: number };
+  }) => {
+    if (!result || !result.destination || !result.source) {
       return;
     }
-
     const sourceColumnIndex = (): number =>
       boardData.findIndex(
-        (column) => column.id === Number(result.source.droppableId)
+        (column) => column.id === Number(result.source?.droppableId)
       );
 
-    const destinationColumnIndex = (): number =>
-      boardData.findIndex(
-        (column) => column.id === Number(result.destination.droppableId)
+    const destinationColumnIndex = (): number => {
+      if (!result || !result.destination) {
+        return 0;
+      }
+      return boardData.findIndex(
+        (column) => column.id === Number(result.destination?.droppableId)
       );
+    };
 
     if (
       result.source.droppableId !== result.destination.droppableId &&
@@ -99,7 +105,7 @@ const AppContainer = () => {
         task.id,
         task.title,
         task.description,
-        result.destination.droppableId,
+        Number(result.destination.droppableId),
         Number(result.destination.index) + 1
       );
     } catch {
