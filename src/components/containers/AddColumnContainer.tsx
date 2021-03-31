@@ -47,6 +47,10 @@ const AddColumnContainer = () => {
       newNotification('Please provide all required fields.');
       return;
     }
+    if (inputName.length > 40) {
+      newNotification('Name is too long.');
+      return;
+    }
     try {
       const column = await addColumn(inputName, inputLimit);
       const newBoardData = [

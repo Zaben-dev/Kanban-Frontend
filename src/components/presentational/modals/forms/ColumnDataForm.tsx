@@ -31,12 +31,17 @@ const StyledDescription = styled.div`
 `;
 
 const StyledTextInput = styled.input`
+  width: 330px;
   font-size: 17px;
   padding: 6px;
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: vertical;
   grid-column: 2/4;
+`;
+
+const StyledCharactersLimit = styled.div`
+  margin-top: 5px;
 `;
 
 const StyledNumberInput = styled.input`
@@ -114,12 +119,17 @@ const ColumnDataForm: React.FunctionComponent<Props> = ({
       <StyledModal isOpen={modalIsOpen}>
         <StyledGridContainer>
           <StyledDescription>name:</StyledDescription>
-          <StyledTextInput
-            type="text"
-            placeholder="To do"
-            value={inputName}
-            onChange={handleNameChange}
-          />
+          <div>
+            <StyledTextInput
+              type="text"
+              placeholder="To do"
+              value={inputName}
+              onChange={handleNameChange}
+            />
+            <StyledCharactersLimit>
+              {inputName.length > 29 && inputName.length + '/40'}
+            </StyledCharactersLimit>
+          </div>
           <StyledDescription>tasks limit:</StyledDescription>
           {inputLimit !== null && (
             <StyledNumberInput

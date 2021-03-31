@@ -4,7 +4,8 @@ import TaskMenu from 'src/components/containers/TaskMenuContainer';
 import styled from 'styled-components';
 
 const StyledTaskContainer = styled.div`
-  height: 115px;
+  max-height: 180px;
+  min-height: 73px;
   width: 100%;
   margin-top: 12px;
   border: 3px solid #008cbaaf;
@@ -16,18 +17,18 @@ const StyledTaskContainer = styled.div`
 const StyledTaskTopbar = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #008cbaaf;
+  background-color: #008cba75;
   color: #373810;
   padding-left: 2px;
-  height: 41px;
+  min-height: 35px;
   font-size: 15px;
+  word-break: break-word;
 `;
 
 const StyledFlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 20px;
-  line-height: 1.3;
+  line-height: 1.15;
 `;
 
 const StyledAdditionalInfo = styled.div`
@@ -37,16 +38,23 @@ const StyledAdditionalInfo = styled.div`
   border-radius: 4px;
   padding: 2px 4px 2px 4px;
   margin-right: 4px;
+  margin-bottom: 2px;
 `;
 
 const StyledDescription = styled.div`
   font-size: 14px;
   margin: 4px 4px 4px 4px;
-  word-break: break-all;
-  hyphens: auto;
+  word-break: break-word;
+`;
+
+const StyledShowMore = styled.a`
+  color: #5082f0;
+  cursor: pointer;
+  word-break: break-word;
 `;
 
 interface Props {
+  openModal: () => void;
   title: string;
   description: string;
   priority: priority;
@@ -56,6 +64,7 @@ interface Props {
 }
 
 const Task: React.FunctionComponent<Props> = ({
+  openModal,
   title,
   description,
   priority,
@@ -79,7 +88,12 @@ const Task: React.FunctionComponent<Props> = ({
           <StyledAdditionalInfo>difficulty: {difficulty}</StyledAdditionalInfo>
         </div>
       </StyledTaskTopbar>
-      <StyledDescription>{description}</StyledDescription>
+      <StyledDescription>
+        {description.slice(0, 30)}
+        {description.length > 29 && (
+          <StyledShowMore onClick={openModal}>... show More</StyledShowMore>
+        )}
+      </StyledDescription>
     </StyledTaskContainer>
   );
 };

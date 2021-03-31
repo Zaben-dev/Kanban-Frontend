@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Add } from '@styled-icons/ionicons-outline/Add';
 
 const StyledAddButton = styled.button`
-  margin-left: 40px;
-  margin-top: 18px;
+  margin-left: 30px;
+  margin-top: 9px;
   background-color: #008cba;
   border: none;
   outline: none;

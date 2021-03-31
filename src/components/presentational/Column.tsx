@@ -8,10 +8,11 @@ import { Infinity } from '@styled-icons/octicons/Infinity';
 
 const StyledContainer = styled.div`
   background-color: #008cba2a;
+  overflow: hidden;
   color: #1a1a1a;
-  min-width: 240px;
-  max-width: 240px;
-  height: 88vh;
+  min-width: 270px;
+  max-width: 270px;
+  height: 89vh;
   margin-left: 20px;
   animation: fadein 1s;
   border: 4px solid #0041572e;
@@ -29,16 +30,18 @@ const StyledContainer = styled.div`
 const StyledFlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 25px;
+  max-height: 60px;
 `;
 
 const StyledName = styled.div`
+  max-height: 60px;
   padding-left: 9px;
   margin-top: 7px;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 16px;
   font-weight: 400;
+  word-break: break-word;
 `;
 
 const StyledLimit = styled.div`

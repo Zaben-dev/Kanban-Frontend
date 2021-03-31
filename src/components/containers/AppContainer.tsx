@@ -5,7 +5,7 @@ import Column from 'src/components/presentational/Column';
 import boardDataContext from 'src/contexts/boardDataContext';
 import App from 'src/components/presentational/App';
 import { SpinnerComponent } from 'react-element-spinner';
-import { DragDropContext, BeforeCapture } from 'react-beautiful-dnd';
+import { DragDropContext } from 'react-beautiful-dnd';
 import newNotification from 'src/utils/newNotification';
 import moveTask from 'src/api/moveTask';
 
@@ -43,8 +43,9 @@ const AppContainer = () => {
       );
 
     if (
+      result.source.droppableId !== result.destination.droppableId &&
       boardData[destinationColumnIndex()].tasks.length ===
-      boardData[destinationColumnIndex()].limit
+        boardData[destinationColumnIndex()].limit
     ) {
       newNotification("Can't add more than column's task limit.");
       return;

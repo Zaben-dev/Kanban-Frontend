@@ -112,6 +112,14 @@ const AddTaskContainer = () => {
       newNotification('Please provide all required fields.');
       return;
     }
+    if (inputTitle.length > 70) {
+      newNotification('Title is too long.');
+      return;
+    }
+    if (inputDescription.length > 400) {
+      newNotification('Description is too long.');
+      return;
+    }
     try {
       const editedTask = await editTask(
         currentTaskId,

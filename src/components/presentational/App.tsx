@@ -6,8 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const StyledContainer = styled.div`
   display: flex;
-  margin-top: 18px;
-  margin-left: 20px;
+  margin-top: 12px;
+  margin-left: 10px;
 `;
 
 interface Props {

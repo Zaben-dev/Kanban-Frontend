@@ -42,7 +42,6 @@ const StyledMenuButton = styled.button`
   overflow: hidden;
   outline: none;
   font-size: 25px;
-  padding-top: 6px;
 `;
 
 const StyledIcon = styled(MenuOutline)`
@@ -58,7 +57,7 @@ const ColumnMenu: React.FunctionComponent<props> = ({ isActive, onClick }) => {
   return (
     <StyledContainer>
       <StyledMenuButton onClick={onClick}>
-        <StyledIcon size="33" />
+        <StyledIcon size="32" />
       </StyledMenuButton>
       <StyledMenu isActive={isActive}>
         <AddTaskContainer />

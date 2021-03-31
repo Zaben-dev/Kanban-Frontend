@@ -28,9 +28,10 @@ const StyledMenu = styled.div<MenuProps>`
   position: absolute;
   border: 2px solid #b4e1ff;
   background-color: #b4e1ff;
-  right: 5px;
-  top: 27px;
+  right: 36px;
+  top: 7px;
   opacity: 1;
+  overflow: visible;
 `;
 
 const StyledMenuButton = styled.button`

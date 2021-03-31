@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Task from 'src/components/presentational/Task';
+import ShowMoreTask from 'src/components/presentational/modals/ShowMoreTask';
 import { TaskData } from 'src/api/models';
 import currentTaskIdContext from 'src/contexts/currentTaskIdContext';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
@@ -14,6 +15,7 @@ interface Props {
 const TaskContainer: React.FunctionComponent<Props> = ({ id, index }) => {
   const { id: currentColumnId } = useContext(currentColumnIdContext);
   const { boardData } = useContext(boardDataContext);
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
 
   const getTask = (): TaskData => {
     const columnIndex = boardData.findIndex(
@@ -25,8 +27,22 @@ const TaskContainer: React.FunctionComponent<Props> = ({ id, index }) => {
     return boardData[columnIndex].tasks[taskIndex];
   };
 
+  const openModal = (): void => {
+    setIsOpen(true);
+  };
+
+  const closeModal = (): void => {
+    setIsOpen(false);
+  };
+
   return (
     <currentTaskIdContext.Provider value={{ id }}>
+      <ShowMoreTask
+        modalIsOpen={modalIsOpen}
+        closeModal={closeModal}
+        title={getTask().title}
+        description={getTask().description}
+      />
       <Draggable key={id} draggableId={id.toString()} index={index}>
         {(provided) => (
           <Task
@@ -36,6 +52,7 @@ const TaskContainer: React.FunctionComponent<Props> = ({ id, index }) => {
             description={getTask().description}
             priority={getTask().priority}
             difficulty={getTask().difficulty}
+            openModal={openModal}
           />
         )}
       </Draggable>

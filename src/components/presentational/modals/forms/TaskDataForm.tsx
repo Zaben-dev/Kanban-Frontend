@@ -35,10 +35,15 @@ const StyledDescription = styled.div`
 
 const StyledTitleInput = styled.input`
   font-size: 17px;
+  width: 335px;
   padding: 6px;
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: none;
+`;
+
+const StyledCharactersLimit = styled.div`
+  margin-top: 5px;
 `;
 
 const StyledDescriptionInput = styled.textarea`
@@ -46,7 +51,7 @@ const StyledDescriptionInput = styled.textarea`
   padding: 2px 3px;
   font-family: Roboto;
   min-height: 105px;
-  max-width: 340px;
+  width: 335px;
   border: 1px solid #ccc;
   border-radius: 4px;
 
@@ -124,18 +129,29 @@ const TaskDataForm: React.FunctionComponent<Props> = ({
       <StyledModal isOpen={modalIsOpen}>
         <StyledGridContainer>
           <StyledDescription>title:</StyledDescription>
-          <StyledTitleInput
-            type="text"
-            placeholder="add functionality"
-            value={inputTitle}
-            onChange={handleTitleChange}
-          />
+          <div>
+            <StyledTitleInput
+              type="text"
+              placeholder="add functionality"
+              value={inputTitle}
+              onChange={handleTitleChange}
+            />
+            <StyledCharactersLimit>
+              {inputTitle.length > 54 && inputTitle.length + '/70'}
+            </StyledCharactersLimit>
+          </div>
           <StyledDescription>description:</StyledDescription>
-          <StyledDescriptionInput
-            placeholder="functionality that allows to do new things"
-            value={inputDescription}
-            onChange={handleDescriptionChange}
-          />
+          <div>
+            <StyledDescriptionInput
+              placeholder="functionality that allows to do new things"
+              value={inputDescription}
+              onChange={handleDescriptionChange}
+            />
+            <StyledCharactersLimit>
+              {inputDescription.length > 350 &&
+                inputDescription.length + '/400'}
+            </StyledCharactersLimit>
+          </div>
           <StyledDescription>priority:</StyledDescription>
           <StyledSelect value={inputPriority} onChange={handlePriorityChange}>
             <option value={priorityEnum.Low}>low</option>

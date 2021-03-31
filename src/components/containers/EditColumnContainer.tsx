@@ -70,6 +70,10 @@ const EditColumnContainer = () => {
       newNotification('Please provide all required fields.');
       return;
     }
+    if (inputName.length > 40) {
+      newNotification('Name is too long.');
+      return;
+    }
     if (
       inputLimit !== null &&
       inputLimit <

@@ -17,6 +17,8 @@ const StyledText = styled.div`
   padding-top: 50px;
   text-align: center;
   font-size: 17px;
+  margin-left: 15px;
+  margin-right: 15px;
 `;
 
 const StyledCloseButton = styled.button`
@@ -60,7 +62,7 @@ interface Props {
   modalIsOpen: boolean;
 }
 
-const DeleteColumn: React.FunctionComponent<Props> = ({
+const DeleteConfirmation: React.FunctionComponent<Props> = ({
   handleDelete,
   modalIsOpen,
   closeModal,
@@ -77,4 +79,4 @@ const DeleteColumn: React.FunctionComponent<Props> = ({
   );
 };
 
-export default DeleteColumn;
+export default DeleteConfirmation;

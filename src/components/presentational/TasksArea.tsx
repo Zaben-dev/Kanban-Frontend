@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const StyledHorizontalLine = styled.div`
   border: 0;
   height: 1px;
-  margin-top: 5px;
+  margin-top: 3px;
   background-image: linear-gradient(
     to right,
     rgba(0, 0, 0, 0),
@@ -14,10 +14,11 @@ const StyledHorizontalLine = styled.div`
 `;
 
 const StyledTasksArea = styled.div`
-  display: block;
+  display: inline-block;
   padding-right: 9px;
+  height: 100%;
+  width: 258px;
   padding-left: 4px;
-  height: 93%;
   overflow: scroll;
   overflow-x: hidden;
   scrollbar-color: #008cba transparent !important;
