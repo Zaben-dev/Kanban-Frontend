@@ -57,6 +57,7 @@ const EditColumnContainer = () => {
       setInputLimit(null);
     }
     if (event.target.checked === false) {
+      console.log(getColumnIndex());
       setInputLimit(
         boardData[getColumnIndex()].tasks.filter(
           (task) => task.columnId === currentColumnId
@@ -76,10 +77,7 @@ const EditColumnContainer = () => {
     }
     if (
       inputLimit !== null &&
-      inputLimit <
-        boardData[getColumnIndex()].tasks.filter(
-          (task) => task.columnId === currentColumnId
-        ).length
+      inputLimit < boardData[getColumnIndex()].tasks.length
     ) {
       newNotification(" Limit can't be less than the number of tasks");
       return;

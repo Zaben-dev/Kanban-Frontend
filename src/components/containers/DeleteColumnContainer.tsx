@@ -32,11 +32,7 @@ const DeleteColumnContainer = () => {
   };
 
   const handleDelete = async (): Promise<void> => {
-    if (
-      boardData[getColumnIndex()].tasks.filter(
-        (task) => task.columnId === currentColumnId
-      ).length !== 0
-    ) {
+    if (boardData[getColumnIndex()].tasks.length !== 0) {
       newNotification("Can't delete column which contain tasks.");
       closeModal();
       return;
