@@ -6,6 +6,7 @@ import {
   priority,
   difficulty,
 } from 'src/api/models';
+import { DOMAIN } from 'src/api/serverDomain';
 
 const parseColumns = (columns: ColumnData[]): ColumnData[] => {
   const parsedColumns = columns.map((column) => ({
@@ -42,8 +43,8 @@ const parseBoardData = (
 
 const getBoardData = async (): Promise<boardData[]> => {
   try {
-    const columnsResponse = await axios.get('http://127.0.0.1:8000/Columns/');
-    const tasksResponse = await axios.get('http://127.0.0.1:8000/Tasks/');
+    const columnsResponse = await axios.get(DOMAIN + '/Columns/');
+    const tasksResponse = await axios.get(DOMAIN + '/Tasks/');
     const parsedColumns = parseColumns(columnsResponse.data);
     const parsedTasks = parseTasks(tasksResponse.data);
     const boardData = parseBoardData(parsedColumns, parsedTasks);

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { TaskData, priority, difficulty } from 'src/api/models';
+import { DOMAIN } from 'src/api/serverDomain';
 
 const parseTask = (task: TaskData): TaskData => {
   return {
@@ -21,7 +22,7 @@ const addTask = async (
   columnId: number
 ): Promise<TaskData> => {
   try {
-    const response = await axios.post('http://127.0.0.1:8000/Tasks/', {
+    const response = await axios.post(DOMAIN + '/Tasks/', {
       title,
       description,
       priority,

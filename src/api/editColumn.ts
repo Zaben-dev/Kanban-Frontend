@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ColumnData } from './models';
+import { DOMAIN } from 'src/api/serverDomain';
 
 const editColumn = async (
   id: number,
@@ -7,10 +8,10 @@ const editColumn = async (
   limit: number | null
 ): Promise<ColumnData> => {
   try {
-    const response = await axios.put(
-      'http://127.0.0.1:8000/Columns/' + id + '/',
-      { name, limit }
-    );
+    const response = await axios.put(DOMAIN + '/Columns/' + id + '/', {
+      name,
+      limit,
+    });
     return response.data;
   } catch (e) {
     throw new Error(e);

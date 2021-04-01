@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ColumnData } from 'src/api/models';
+import { DOMAIN } from 'src/api/serverDomain';
 
 const parseColumn = (column: ColumnData): ColumnData => {
   return {
@@ -14,7 +15,7 @@ const addColumn = async (
   limit: number | null
 ): Promise<ColumnData> => {
   try {
-    const response = await axios.post('http://127.0.0.1:8000/Columns/', {
+    const response = await axios.post(DOMAIN + '/Columns/', {
       name,
       limit,
     });

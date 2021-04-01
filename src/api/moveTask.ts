@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { TaskData } from 'src/api/models';
+import { DOMAIN } from 'src/api/serverDomain';
 
 const moveTask = async (
   id: number,
@@ -9,10 +10,12 @@ const moveTask = async (
   position: number
 ): Promise<TaskData> => {
   try {
-    const response = await axios.put(
-      'http://127.0.0.1:8000/Tasks/' + id + '/',
-      { title, description, columnId, position }
-    );
+    const response = await axios.put(DOMAIN + '/Tasks/' + id + '/', {
+      title,
+      description,
+      columnId,
+      position,
+    });
     return response.data;
   } catch (e) {
     throw new Error(e);

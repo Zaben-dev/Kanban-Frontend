@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { difficulty, priority, TaskData } from 'src/api/models';
+import { DOMAIN } from 'src/api/serverDomain';
 
 const editTask = async (
   id: number,
@@ -9,10 +10,12 @@ const editTask = async (
   difficulty: difficulty
 ): Promise<TaskData> => {
   try {
-    const response = await axios.put(
-      'http://127.0.0.1:8000/Tasks/' + id + '/',
-      { title, description, priority, difficulty }
-    );
+    const response = await axios.put(DOMAIN + '/Tasks/' + id + '/', {
+      title,
+      description,
+      priority,
+      difficulty,
+    });
     return response.data;
   } catch (e) {
     throw new Error(e);
