@@ -1,4 +1,6 @@
-### Kanban board developed by the los programadores.
+### Kanban board created for college purposes
+#### hosting (heroku may need a minute or two to start server)
+    https://los-programadores-kanban.herokuapp.com
 
 #### stack:
    * typescript  
