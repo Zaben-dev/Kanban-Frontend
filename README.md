@@ -1,5 +1,5 @@
-### Kanban board created for college purposes
-#### hosting (heroku may need a minute or two to start server)
+### Kanban board being created for college purposes (work in progress)
+#### hosting (heroku may need a minute or two to start the server)
     https://los-programadores-kanban.herokuapp.com
 
 #### stack:
