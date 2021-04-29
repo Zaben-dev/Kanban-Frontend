@@ -10,6 +10,7 @@ const parseTask = (task: TaskData): TaskData => {
     difficulty: String(task.difficulty) as difficulty,
     columnId: Number(task.columnId),
     position: Number(task.position),
+    rowId: Number(task.rowId),
   };
 };
 
@@ -18,7 +19,8 @@ const addTask = async (
   description: string,
   priority: priority,
   difficulty: difficulty,
-  columnId: number
+  columnId: number,
+  rowId: number
 ): Promise<TaskData> => {
   try {
     const response = await axios.post('http://127.0.0.1:8000/Tasks/', {
@@ -27,6 +29,7 @@ const addTask = async (
       priority,
       difficulty,
       columnId,
+      rowId,
     });
     return parseTask(response.data);
   } catch (e) {

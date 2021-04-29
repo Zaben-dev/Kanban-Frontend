@@ -19,7 +19,7 @@ const AppContainer = () => {
       setBoardData(boardData);
       setIsLoading(false);
     } catch {
-      return window.location.reload();
+      //return window.location.reload();
     }
   }, []);
 
@@ -31,88 +31,78 @@ const AppContainer = () => {
     destination?: { droppableId: string; index: number };
     source?: { droppableId: string; index: number };
   }) => {
-    if (!result || !result.destination || !result.source) {
-      return;
-    }
-    const sourceColumnIndex = (): number =>
-      boardData.findIndex(
-        (column) => column.id === Number(result.source?.droppableId)
-      );
-
-    const destinationColumnIndex = (): number => {
-      if (!result || !result.destination) {
-        return 0;
-      }
-      return boardData.findIndex(
-        (column) => column.id === Number(result.destination?.droppableId)
-      );
-    };
-
-    if (
-      result.source.droppableId !== result.destination.droppableId &&
-      boardData[destinationColumnIndex()].tasks.length ===
-        boardData[destinationColumnIndex()].limit
-    ) {
-      newNotification("Can't add more than column's task limit.");
-      return;
-    }
-
-    const task = boardData[sourceColumnIndex()].tasks[result.source.index];
-    let newBoardData = [...boardData];
-    let newSourceTasks = [
-      ...boardData[sourceColumnIndex()].tasks.slice(0, result.source.index),
-      ...newBoardData[sourceColumnIndex()].tasks.slice(result.source.index + 1),
-    ];
-    newBoardData[sourceColumnIndex()].tasks = newSourceTasks;
-
-    for (
-      let i = result.source.index;
-      i < boardData[sourceColumnIndex()].tasks.length;
-      i++
-    ) {
-      newBoardData[sourceColumnIndex()].tasks[i].position--;
-    }
-
-    let newDestinationTasks = [
-      ...boardData[destinationColumnIndex()].tasks.slice(
-        0,
-        result.destination.index
-      ),
-      task,
-      ...newBoardData[destinationColumnIndex()].tasks.slice(
-        result.destination.index
-      ),
-    ];
-
-    for (
-      let i = result.destination.index;
-      i < boardData[destinationColumnIndex()].tasks.length;
-      i++
-    ) {
-      newBoardData[destinationColumnIndex()].tasks[i].position++;
-    }
-
-    newBoardData[destinationColumnIndex()].tasks = newDestinationTasks;
-
-    newBoardData[destinationColumnIndex()].tasks[
-      result.destination.index
-    ].position = result.destination.index + 1;
-
-    setBoardData(newBoardData);
-
-    try {
-      await moveTask(
-        task.id,
-        task.title,
-        task.description,
-        Number(result.destination.droppableId),
-        Number(result.destination.index) + 1
-      );
-    } catch {
-      const boardData = await getBoardData();
-      setBoardData(boardData);
-      newNotification('Sorry, something went wrong.');
-    }
+    // if (!result || !result.destination || !result.source) {
+    //   return;
+    // }
+    // const sourceColumnIndex = (): number =>
+    //   boardData.findIndex(
+    //     (column) => column.id === Number(result.source?.droppableId)
+    //   );
+    // const destinationColumnIndex = (): number => {
+    //   if (!result || !result.destination) {
+    //     return 0;
+    //   }
+    //   return boardData.findIndex(
+    //     (column) => column.id === Number(result.destination?.droppableId)
+    //   );
+    // };
+    // if (
+    //   result.source.droppableId !== result.destination.droppableId &&
+    //   boardData[destinationColumnIndex()].rows.length ===
+    //     boardData[destinationColumnIndex()].limit
+    // ) {
+    //   newNotification("Can't add more than column's task limit.");
+    //   return;
+    // }
+    // const task = boardData[sourceColumnIndex()].rows.tasks[result.source.index];
+    // let newBoardData = [...boardData];
+    // let newSourceTasks = [
+    //   ...boardData[sourceColumnIndex()].tasks.slice(0, result.source.index),
+    //   ...newBoardData[sourceColumnIndex()].tasks.slice(result.source.index + 1),
+    // ];
+    // newBoardData[sourceColumnIndex()].tasks = newSourceTasks;
+    // for (
+    //   let i = result.source.index;
+    //   i < boardData[sourceColumnIndex()].tasks.length;
+    //   i++
+    // ) {
+    //   newBoardData[sourceColumnIndex()].tasks[i].position--;
+    // }
+    // let newDestinationTasks = [
+    //   ...boardData[destinationColumnIndex()].tasks.slice(
+    //     0,
+    //     result.destination.index
+    //   ),
+    //   task,
+    //   ...newBoardData[destinationColumnIndex()].tasks.slice(
+    //     result.destination.index
+    //   ),
+    // ];
+    // for (
+    //   let i = result.destination.index;
+    //   i < boardData[destinationColumnIndex()].tasks.length;
+    //   i++
+    // ) {
+    //   newBoardData[destinationColumnIndex()].tasks[i].position++;
+    // }
+    // newBoardData[destinationColumnIndex()].tasks = newDestinationTasks;
+    // newBoardData[destinationColumnIndex()].tasks[
+    //   result.destination.index
+    // ].position = result.destination.index + 1;
+    // setBoardData(newBoardData);
+    // try {
+    //   await moveTask(
+    //     task.id,
+    //     task.title,
+    //     task.description,
+    //     Number(result.destination.droppableId),
+    //     Number(result.destination.index) + 1
+    //   );
+    // } catch {
+    //   const boardData = await getBoardData();
+    //   setBoardData(boardData);
+    //   newNotification('Sorry, something went wrong.');
+    // }
   };
 
   if (isLoading === true) {

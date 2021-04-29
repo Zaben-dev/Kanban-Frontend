@@ -58,11 +58,7 @@ const EditColumnContainer = () => {
     }
     if (event.target.checked === false) {
       console.log(getColumnIndex());
-      setInputLimit(
-        boardData[getColumnIndex()].tasks.filter(
-          (task) => task.columnId === currentColumnId
-        ).length
-      );
+      setInputLimit(boardData[getColumnIndex()].limit);
     }
   };
 
@@ -75,13 +71,13 @@ const EditColumnContainer = () => {
       newNotification('Column name is too long.');
       return;
     }
-    if (
-      inputLimit !== null &&
-      inputLimit < boardData[getColumnIndex()].tasks.length
-    ) {
-      newNotification(" Limit can't be less than the number of tasks");
-      return;
-    }
+
+    boardData[getColumnIndex()].rows.forEach((row) => {
+      if (inputLimit && inputLimit < row.tasks.length) {
+        newNotification(" Limit can't be less than the number of tasks");
+        return;
+      }
+    });
 
     try {
       const column = await editColumn(currentColumnId, inputName, inputLimit);
@@ -90,7 +86,7 @@ const EditColumnContainer = () => {
         id: column.id,
         name: column.name,
         limit: column.limit,
-        tasks: boardData[getColumnIndex()].tasks,
+        rows: boardData[getColumnIndex()].rows,
       };
       setBoardData(newBoardData);
       setInputName('');

@@ -3,6 +3,7 @@ import TaskDataForm from 'src/components/presentational/modals/forms/TaskDataFor
 import EditTaskButton from 'src/components/presentational/buttons/EditTaskButton';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import currentTaskIdContext from 'src/contexts/currentTaskIdContext';
+import currentRowIdContext from 'src/contexts/currentRowIdContext';
 import boardDataContext from 'src/contexts/boardDataContext';
 import newNotification from 'src/utils/newNotification';
 import editTask from 'src/api/editTask';
@@ -16,6 +17,7 @@ import {
 const AddTaskContainer = () => {
   const { id: currentTaskId } = useContext(currentTaskIdContext);
   const { id: currentColumnId } = useContext(currentColumnIdContext);
+  const { id: currentRowId } = useContext(currentRowIdContext);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const [inputTitle, setInputTitle] = useState<string>('');
   const { boardData, setBoardData } = useContext(boardDataContext);
@@ -34,18 +36,36 @@ const AddTaskContainer = () => {
     return columnIndex;
   }, [boardData, currentColumnId]);
 
+  const getRowIndex = useCallback((): number => {
+    const columnIndex = boardData.findIndex(
+      (column) => column.id === currentColumnId
+    );
+
+    const rowIndex = boardData[columnIndex].rows.findIndex(
+      (row) => row.id === currentRowId
+    );
+    return rowIndex;
+  }, [boardData, currentRowId, currentColumnId]);
+
   const getTaskIndex = useCallback((): number => {
     const columnIndex = boardData.findIndex(
       (column) => column.id === currentColumnId
     );
-    const taskIndex = boardData[columnIndex].tasks.findIndex(
+
+    const rowIndex = boardData[columnIndex].rows.findIndex(
+      (row) => row.id === currentRowId
+    );
+
+    const taskIndex = boardData[columnIndex].rows[rowIndex].tasks.findIndex(
       (task) => task.id === currentTaskId
     );
     return taskIndex;
-  }, [boardData, currentTaskId, currentColumnId]);
+  }, [boardData, currentRowId, currentTaskId, currentColumnId]);
 
   const getTask = useCallback((): TaskData => {
-    return boardData[getColumnIndex()].tasks[getTaskIndex()];
+    return boardData[getColumnIndex()].rows[getRowIndex()].tasks[
+      getTaskIndex()
+    ];
   }, [boardData, getColumnIndex, getTaskIndex]);
 
   useEffect(() => {
@@ -130,7 +150,9 @@ const AddTaskContainer = () => {
       );
 
       const newBoardData = [...boardData];
-      newBoardData[getColumnIndex()].tasks[getTaskIndex()] = {
+      newBoardData[getColumnIndex()].rows[getRowIndex()].tasks[
+        getTaskIndex()
+      ] = {
         id: editedTask.id,
         title: editedTask.title,
         description: editedTask.description,

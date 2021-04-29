@@ -3,6 +3,8 @@ import TaskDataForm from 'src/components/presentational/modals/forms/TaskDataFor
 import AddTaskButton from 'src/components/presentational/buttons/AddTaskButton';
 import boardDataContext from 'src/contexts/boardDataContext';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
+import currentRowIdContext from 'src/contexts/currentRowIdContext';
+import getBoardData from 'src/api/getBoardData';
 import addTask from 'src/api/addTask';
 import newNotification from 'src/utils/newNotification';
 import {
@@ -14,6 +16,7 @@ import {
 const AddTaskContainer = () => {
   const { boardData, setBoardData } = useContext(boardDataContext);
   const { id: currentColumnId } = useContext(currentColumnIdContext);
+  const { id: currentRowId } = useContext(currentRowIdContext);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const [inputTitle, setInputTitle] = useState<string>('');
   const [inputDescription, setInputDescription] = useState<string>('');
@@ -96,26 +99,23 @@ const AddTaskContainer = () => {
       newNotification('Task description is too long.');
       return;
     }
-    if (
-      boardData[getColumnIndex()].tasks.length ===
-      boardData[getColumnIndex()].limit
-    ) {
-      newNotification("Can't add more than column's task limit.");
-      return;
-    }
+    // if (
+    //   boardData[getColumnIndex()].tasks.length ===
+    //   boardData[getColumnIndex()].limit
+    // ) {
+    //   newNotification("Can't add more than column's task limit.");
+    //   return;
+    // }
     try {
       const task = await addTask(
         inputTitle,
         inputDescription,
         inputPriority,
         inputDifficulty,
-        currentColumnId
+        currentColumnId,
+        currentRowId
       );
-      const newBoardData = [...boardData];
-      newBoardData[getColumnIndex()].tasks = newBoardData[
-        getColumnIndex()
-      ].tasks.map((task) => ({ ...task, position: task.position + 1 }));
-      newBoardData[getColumnIndex()].tasks.push(task);
+      const newBoardData = await getBoardData();
       setBoardData(newBoardData);
       setInputTitle('');
       setInputDescription('');

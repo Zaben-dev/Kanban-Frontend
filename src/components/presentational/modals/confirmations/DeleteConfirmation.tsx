@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 const StyledModal = styled(Modal)`
   margin-top: 130px;
   width: 500px;
-  height: 245px;
+  height: 225px;
   margin-left: auto;
   margin-right: auto;
   background-color: #b4e1ff;

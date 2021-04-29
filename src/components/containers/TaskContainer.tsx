@@ -4,6 +4,7 @@ import ShowMoreTask from 'src/components/presentational/modals/ShowMoreTask';
 import { TaskData } from 'src/api/models';
 import currentTaskIdContext from 'src/contexts/currentTaskIdContext';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
+import currentRowIdContext from 'src/contexts/currentRowIdContext';
 import boardDataContext from 'src/contexts/boardDataContext';
 import { Draggable } from 'react-beautiful-dnd';
 
@@ -14,17 +15,24 @@ interface Props {
 
 const TaskContainer: React.FunctionComponent<Props> = ({ id, index }) => {
   const { id: currentColumnId } = useContext(currentColumnIdContext);
+  const { id: currentRowId } = useContext(currentRowIdContext);
   const { boardData } = useContext(boardDataContext);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
 
   const getTask = (): TaskData => {
+    console.log('currentcolumnId' + currentColumnId);
+    console.log('currentRowId' + currentRowId);
     const columnIndex = boardData.findIndex(
       (column) => column.id === currentColumnId
     );
-    const taskIndex = boardData[columnIndex].tasks.findIndex(
+    const rowIndex = boardData[columnIndex].rows.findIndex(
+      (row) => row.id === currentRowId
+    );
+    console.log('ROw index' + rowIndex);
+    const taskIndex = boardData[columnIndex].rows[rowIndex].tasks.findIndex(
       (task) => task.id === id
     );
-    return boardData[columnIndex].tasks[taskIndex];
+    return boardData[columnIndex].rows[rowIndex].tasks[taskIndex];
   };
 
   const openModal = (): void => {

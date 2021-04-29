@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
 import AddColumnContainer from 'src/components/containers/AddColumnContainer';
+import AddRowContainer from 'src/components/containers/AddRowContainer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -19,8 +20,8 @@ const App: React.FunctionComponent<Props> = ({ children }) => {
   Modal.setAppElement('#root');
   return (
     <>
-      <AddColumnContainer /> <StyledContainer>{children}</StyledContainer>{' '}
-      <ToastContainer />
+      <AddColumnContainer /> <AddRowContainer />{' '}
+      <StyledContainer>{children}</StyledContainer> <ToastContainer />
     </>
   );
 };

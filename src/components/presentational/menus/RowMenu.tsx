@@ -1,8 +1,9 @@
 import React from 'react';
+import AddTaskContainer from 'src/components/containers/AddTaskContainer';
+import DeleteRowContainer from 'src/components/containers/deleteRowContainer';
+import EditRowContainer from 'src/components/containers/EditRowContainer';
 import styled, { keyframes } from 'styled-components';
-import { MenuOutline } from '@styled-icons/evaicons-outline/MenuOutline';
-import DeleteColumnContainer from 'src/components/containers/DeleteColumnContainer';
-import EditColumnContainer from 'src/components/containers/EditColumnContainer';
+import { DotsHorizontalRounded } from '@styled-icons/boxicons-regular/DotsHorizontalRounded';
 
 const StyledContainer = styled.div`
   position: relative;
@@ -28,9 +29,10 @@ const StyledMenu = styled.div<MenuProps>`
   position: absolute;
   border: 2px solid #b4e1ff;
   background-color: #b4e1ff;
-  right: 5px;
+  right: 36px;
+  top: 7px;
   opacity: 1;
-  z-index: 1;
+  overflow: visible;
 `;
 
 const StyledMenuButton = styled.button`
@@ -40,10 +42,9 @@ const StyledMenuButton = styled.button`
   cursor: pointer;
   overflow: hidden;
   outline: none;
-  font-size: 25px;
 `;
 
-const StyledIcon = styled(MenuOutline)`
+const StyledIcon = styled(DotsHorizontalRounded)`
   color: #1a5669;
 `;
 
@@ -52,18 +53,19 @@ interface props {
   onClick: () => void;
 }
 
-const ColumnMenu: React.FunctionComponent<props> = ({ isActive, onClick }) => {
+const RowMenu: React.FunctionComponent<props> = ({ isActive, onClick }) => {
   return (
     <StyledContainer>
       <StyledMenuButton onClick={onClick}>
-        <StyledIcon size="32" />
+        <StyledIcon size="26" />
       </StyledMenuButton>
       <StyledMenu isActive={isActive}>
-        <EditColumnContainer />
-        <DeleteColumnContainer />
+        <AddTaskContainer />
+        <DeleteRowContainer />
+        <EditRowContainer />
       </StyledMenu>
     </StyledContainer>
   );
 };
 
-export default ColumnMenu;
+export default RowMenu;
