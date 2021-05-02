@@ -23,7 +23,7 @@ export interface TaskData {
   priority: priority;
   difficulty: difficulty;
   columnId: number;
-  rowId?: number;
+  rowId: number;
   position: number;
 }
 

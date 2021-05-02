@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const StyledModal = styled(Modal)`
   margin-top: 130px;
   width: 500px;
-  height: 190px;
+  height: 170px;
   margin-left: auto;
   margin-right: auto;
   background-color: #b4e1ff;
@@ -16,7 +16,7 @@ const StyledModal = styled(Modal)`
 const StyledGridContainer = styled.div`
   display: grid;
   width: 90%;
-  height: 160px;
+  height: 60px;
   padding-top: 50px;
   margin-left: auto;
   margin-right: auto;

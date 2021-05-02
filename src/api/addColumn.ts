@@ -3,9 +3,9 @@ import { ColumnData } from 'src/api/models';
 
 const parseColumn = (column: ColumnData): ColumnData => {
   return {
-    id: Number(column.id),
-    name: String(column.name),
-    limit: column.limit === null ? null : Number(column.limit),
+    id: +column.id,
+    name: column.name + '',
+    limit: column.limit === null ? null : +column.limit,
   };
 };
 

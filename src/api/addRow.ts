@@ -3,8 +3,8 @@ import { rowData } from 'src/api/models';
 
 const parseRow = (row: any): any => {
   return {
-    id: Number(row.id),
-    name: String(row.name),
+    id: +row.id,
+    name: row.name + '',
   };
 };
 

@@ -57,7 +57,6 @@ const EditColumnContainer = () => {
       setInputLimit(null);
     }
     if (event.target.checked === false) {
-      console.log(getColumnIndex());
       setInputLimit(boardData[getColumnIndex()].limit);
     }
   };

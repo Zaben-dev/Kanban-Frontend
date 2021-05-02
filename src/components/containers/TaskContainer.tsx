@@ -20,15 +20,12 @@ const TaskContainer: React.FunctionComponent<Props> = ({ id, index }) => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
 
   const getTask = (): TaskData => {
-    console.log('currentcolumnId' + currentColumnId);
-    console.log('currentRowId' + currentRowId);
     const columnIndex = boardData.findIndex(
       (column) => column.id === currentColumnId
     );
     const rowIndex = boardData[columnIndex].rows.findIndex(
       (row) => row.id === currentRowId
     );
-    console.log('ROw index' + rowIndex);
     const taskIndex = boardData[columnIndex].rows[rowIndex].tasks.findIndex(
       (task) => task.id === id
     );
@@ -51,7 +48,7 @@ const TaskContainer: React.FunctionComponent<Props> = ({ id, index }) => {
         title={getTask().title}
         description={getTask().description}
       />
-      <Draggable key={id} draggableId={id.toString()} index={index}>
+      <Draggable key={id} draggableId={id + ''} index={index}>
         {(provided) => (
           <Task
             provided={provided}

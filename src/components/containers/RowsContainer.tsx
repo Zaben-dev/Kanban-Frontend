@@ -4,7 +4,6 @@ import boardDataContext from 'src/contexts/boardDataContext';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import Row from 'src/components/presentational/Row';
 import ScrollableArea from 'src/components/presentational/ScrollableArea';
-import { Droppable } from 'react-beautiful-dnd';
 
 const RowsContainer = () => {
   const { id: currentColumnId } = useContext(currentColumnIdContext);

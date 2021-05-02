@@ -3,14 +3,14 @@ import { TaskData, priority, difficulty } from 'src/api/models';
 
 const parseTask = (task: TaskData): TaskData => {
   return {
-    id: Number(task.id),
-    title: String(task.title),
-    description: String(task.description),
-    priority: String(task.priority) as priority,
-    difficulty: String(task.difficulty) as difficulty,
-    columnId: Number(task.columnId),
-    position: Number(task.position),
-    rowId: Number(task.rowId),
+    id: +task.id,
+    title: task.title + '',
+    description: task.description + '',
+    priority: task.priority as priority,
+    difficulty: task.difficulty as difficulty,
+    columnId: +task.columnId,
+    position: +task.position,
+    rowId: +task.rowId,
   };
 };
 

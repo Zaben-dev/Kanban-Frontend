@@ -8,7 +8,7 @@ const StyledTaskContainer = styled.div`
   max-height: 180px;
   min-height: 73px;
   width: 100%;
-  margin-top: 9px;
+  margin-top: 8px;
   border: 3px solid #008cbaaf;
   background-color: #008cba22;
   border-radius: 4px;

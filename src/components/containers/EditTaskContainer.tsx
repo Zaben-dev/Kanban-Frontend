@@ -158,6 +158,7 @@ const AddTaskContainer = () => {
         description: editedTask.description,
         priority: editedTask.priority,
         difficulty: editedTask.difficulty,
+        rowId: editedTask.rowId,
         columnId: editedTask.columnId,
         position: editedTask.position,
       };

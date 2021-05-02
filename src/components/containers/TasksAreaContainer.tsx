@@ -16,7 +16,6 @@ const TasksAreaContainer = () => {
     const columnIndex = boardData.findIndex(
       (column) => column.id === currentColumnId
     );
-    console.log('test row ID' + currentRowId);
     const rowIndex = boardData[columnIndex].rows.findIndex(
       (row) => row.id === currentRowId
     );
@@ -25,7 +24,7 @@ const TasksAreaContainer = () => {
   };
 
   return (
-    <Droppable droppableId={currentColumnId.toString()}>
+    <Droppable droppableId={currentColumnId + ',' + currentRowId}>
       {(provided) => (
         <TasksArea innerRef={provided.innerRef} provided={provided}>
           {getTasks()

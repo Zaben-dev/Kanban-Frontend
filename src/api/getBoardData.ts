@@ -10,31 +10,31 @@ import {
 
 const parseColumns = (columns: ColumnData[]): ColumnData[] => {
   const parsedColumns = columns.map((column) => ({
-    id: Number(column.id),
-    name: String(column.name),
-    limit: column.limit === null ? null : Number(column.limit),
+    id: +column.id,
+    name: column.name + '',
+    limit: column.limit === null ? null : +column.limit,
   }));
   return parsedColumns;
 };
 
 const parseTasks = (tasks: TaskData[]): TaskData[] => {
   const parsedTasks = tasks.map((task: TaskData) => ({
-    id: Number(task.id),
-    title: String(task.title),
-    description: String(task.description),
-    priority: String(task.priority) as priority,
-    difficulty: String(task.difficulty) as difficulty,
-    rowId: Number(task.rowId),
-    columnId: Number(task.columnId),
-    position: Number(task.position),
+    id: +task.id,
+    title: task.title + '',
+    description: task.description + '',
+    priority: task.priority as priority,
+    difficulty: task.difficulty as difficulty,
+    rowId: +task.rowId,
+    columnId: +task.columnId,
+    position: +task.position,
   }));
   return parsedTasks;
 };
 
 const parseRows = (tasks: any): any => {
   const parsedRows = tasks.map((row: rowData) => ({
-    id: Number(row.id),
-    name: String(row.name),
+    id: +row.id,
+    name: row.name + '',
   }));
   return parsedRows;
 };
@@ -49,12 +49,10 @@ const parseBoardData = (
     rows: rows.map((row: any) => ({
       ...row,
       tasks: tasks.filter((task) => {
-        console.log(row.id);
         return task.columnId === column.id && task.rowId === row.id;
       }),
     })),
   }));
-  console.log(boardData);
   return boardData;
 };
 
