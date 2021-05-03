@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { rowData } from 'src/api/models';
 
-const parseRow = (row: any): any => {
+const parseRow = (row: rowData): rowData => {
   return {
     id: +row.id,
     name: row.name + '',
+    tasks: [],
   };
 };
 

@@ -61,8 +61,8 @@ const RowMenu: React.FunctionComponent<props> = ({ isActive, onClick }) => {
       </StyledMenuButton>
       <StyledMenu isActive={isActive}>
         <AddTaskContainer />
-        <DeleteRowContainer />
         <EditRowContainer />
+        <DeleteRowContainer />
       </StyledMenu>
     </StyledContainer>
   );

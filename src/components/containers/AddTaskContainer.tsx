@@ -34,6 +34,17 @@ const AddTaskContainer = () => {
     return columnIndex;
   }, [boardData, currentColumnId]);
 
+  const getRowIndex = useCallback((): number => {
+    const columnIndex = boardData.findIndex(
+      (column) => column.id === currentColumnId
+    );
+
+    const rowIndex = boardData[columnIndex].rows.findIndex(
+      (row) => row.id === currentRowId
+    );
+    return rowIndex;
+  }, [boardData, currentRowId, currentColumnId]);
+
   const openModal = (): void => {
     setIsOpen(true);
   };
@@ -99,13 +110,13 @@ const AddTaskContainer = () => {
       newNotification('Task description is too long.');
       return;
     }
-    // if (
-    //   boardData[getColumnIndex()].tasks.length ===
-    //   boardData[getColumnIndex()].limit
-    // ) {
-    //   newNotification("Can't add more than column's task limit.");
-    //   return;
-    // }
+    if (
+      boardData[getColumnIndex()].rows[getRowIndex()].tasks.length ===
+      boardData[getColumnIndex()].limit
+    ) {
+      newNotification("Can't add more than rows's task limit.");
+      return;
+    }
     try {
       const task = await addTask(
         inputTitle,

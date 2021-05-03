@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ColumnData } from 'src/api/models';
-import ColumnMenuContainer from 'src/components/containers/ColumnMenuContainer';
+import DropdownMenu from 'src/components/containers/DropdownMenu';
+import ColumnMenu from 'src/components/presentational/menus/ColumnMenu';
 import RowsContainer from 'src/components/containers/RowsContainer';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import { Infinity } from '@styled-icons/octicons/Infinity';
@@ -68,7 +69,7 @@ const Column: React.FunctionComponent<ColumnData> = ({ id, name, limit }) => {
             {name}
             &nbsp;
           </StyledName>
-          <ColumnMenuContainer />
+          <DropdownMenu Component={ColumnMenu} />
         </StyledFlexContainer>
         <StyledLimit>
           max: {limit === null ? <StyledInfinityIcon size="18" /> : limit}

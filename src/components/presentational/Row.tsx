@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import TasksAreaContainer from 'src/components/containers/TasksAreaContainer';
 import currentRowIdContext from 'src/contexts/currentRowIdContext';
-import RowMenuContainer from 'src/components/containers/RowMenuContainer';
+import DropdownMenu from 'src/components/containers/DropdownMenu';
+import RowMenu from 'src/components/presentational/menus/RowMenu';
 
 const StyledRowContainer = styled.div`
   margin-bottom: 8px;
@@ -49,7 +50,7 @@ const Row: React.FC<Props> = ({ index, id, name }) => {
             {name}
             &nbsp;
           </StyledName>
-          <RowMenuContainer />
+          <DropdownMenu Component={RowMenu} />
         </StyledFlexContainer>
         <TasksAreaContainer />
       </currentRowIdContext.Provider>

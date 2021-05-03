@@ -31,10 +31,11 @@ const parseTasks = (tasks: TaskData[]): TaskData[] => {
   return parsedTasks;
 };
 
-const parseRows = (tasks: any): any => {
-  const parsedRows = tasks.map((row: rowData) => ({
+const parseRows = (rows: rowData[]): rowData[] => {
+  const parsedRows = rows.map((row: rowData) => ({
     id: +row.id,
     name: row.name + '',
+    tasks: [],
   }));
   return parsedRows;
 };
@@ -42,11 +43,11 @@ const parseRows = (tasks: any): any => {
 const parseBoardData = (
   columns: ColumnData[],
   tasks: TaskData[],
-  rows: any
+  rows: rowData[]
 ): boardData[] => {
   const boardData = columns.map((column) => ({
     ...column,
-    rows: rows.map((row: any) => ({
+    rows: rows.map((row: rowData) => ({
       ...row,
       tasks: tasks.filter((task) => {
         return task.columnId === column.id && task.rowId === row.id;

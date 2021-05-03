@@ -32,7 +32,7 @@ interface Props {
 const AddColumnButton: React.FunctionComponent<Props> = ({ openModal }) => {
   return (
     <StyledAddButton onClick={openModal}>
-      add Row
+      add row
       <StyledAddIcon size="28" />
     </StyledAddButton>
   );

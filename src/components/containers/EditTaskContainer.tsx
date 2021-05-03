@@ -149,6 +149,9 @@ const AddTaskContainer = () => {
         inputDifficulty
       );
 
+      console.log(getTask().columnId);
+      console.log(getTask().rowId);
+
       const newBoardData = [...boardData];
       newBoardData[getColumnIndex()].rows[getRowIndex()].tasks[
         getTaskIndex()

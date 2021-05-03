@@ -60,7 +60,7 @@ const AppContainer = () => {
 
     if (
       result.source.droppableId !== result.destination.droppableId &&
-      boardData[destinationColumnIndex()].rows[sourceRowIndex()].tasks
+      boardData[destinationColumnIndex()].rows[destinationRowIndex()].tasks
         .length === boardData[destinationColumnIndex()].limit
     ) {
       newNotification("Can't add more than row's task limit.");
