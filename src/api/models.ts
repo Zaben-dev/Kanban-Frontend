@@ -23,12 +23,19 @@ export interface TaskData {
   priority: priority;
   difficulty: difficulty;
   columnId: number;
+  rowId: number;
   position: number;
+}
+
+export interface rowData {
+  id: number;
+  name: string;
+  tasks: TaskData[];
 }
 
 export interface boardData {
   id: number;
   name: string;
   limit: number | null;
-  tasks: TaskData[];
+  rows: rowData[];
 }

@@ -1,39 +1,31 @@
-import { useContext, useState, useCallback } from 'react';
+import { useContext, useState } from 'react';
 import currentTaskIdContext from 'src/contexts/currentTaskIdContext';
 import DeleteConfirmation from 'src/components/presentational/modals/confirmations/DeleteConfirmation';
 import DeleteTaskButton from 'src/components/presentational/buttons/DeleteTaskButton';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
+import currentRowIdContext from 'src/contexts/currentRowIdContext';
 import boardDataContext from 'src/contexts/boardDataContext';
 import newNotification from 'src/utils/newNotification';
-import deleteTask from 'src/api/deleteTask';
-import { TaskData } from 'src/api/models';
+import deleteTask from 'src/api/tasks/deleteTask';
+import findColumnIndex from 'src/utils/dataFinders/findColumnIndex';
+import findRowIndex from 'src/utils/dataFinders/findRowIndex';
+import findTaskIndex from 'src/utils/dataFinders/findTaskIndex';
 
-const DeleteTaskContainer = () => {
+const DeleteTask = () => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const { boardData, setBoardData } = useContext(boardDataContext);
   const { id: currentTaskId } = useContext(currentTaskIdContext);
   const { id: currentColumnId } = useContext(currentColumnIdContext);
-
-  const getColumnIndex = useCallback((): number => {
-    const columnIndex = boardData.findIndex(
-      (column) => column.id === currentColumnId
-    );
-    return columnIndex;
-  }, [boardData, currentColumnId]);
-
-  const getTaskIndex = useCallback((): number => {
-    const columnIndex = boardData.findIndex(
-      (column) => column.id === currentColumnId
-    );
-    const taskIndex = boardData[columnIndex].tasks.findIndex(
-      (task) => task.id === currentTaskId
-    );
-    return taskIndex;
-  }, [boardData, currentTaskId, currentColumnId]);
-
-  const getTask = useCallback((): TaskData => {
-    return boardData[getColumnIndex()].tasks[getTaskIndex()];
-  }, [boardData, getColumnIndex, getTaskIndex]);
+  const { id: currentRowId } = useContext(currentRowIdContext);
+  const columnIndex = findColumnIndex(currentColumnId, boardData);
+  const rowIndex = findRowIndex(currentColumnId, currentRowId, boardData);
+  const taskIndex = findTaskIndex(
+    currentColumnId,
+    currentRowId,
+    currentTaskId,
+    boardData
+  );
+  const task = boardData[columnIndex].rows[rowIndex].tasks[taskIndex];
 
   const openModal = (): void => {
     setIsOpen(true);
@@ -47,15 +39,15 @@ const DeleteTaskContainer = () => {
     try {
       await deleteTask(currentTaskId);
       const newBoardData = [...boardData];
-      const newTasks = boardData[getColumnIndex()].tasks.filter(
+      const newTasks = boardData[columnIndex].rows[rowIndex].tasks.filter(
         (task) => task.id !== currentTaskId
       );
 
-      for (let i = getTaskIndex(); i < newTasks.length; i++) {
+      for (let i = taskIndex; i < newTasks.length; i++) {
         newTasks[i].position--;
       }
 
-      newBoardData[getColumnIndex()].tasks = newTasks;
+      newBoardData[columnIndex].rows[rowIndex].tasks = newTasks;
       closeModal();
       setBoardData(newBoardData);
     } catch {
@@ -70,10 +62,10 @@ const DeleteTaskContainer = () => {
         handleDelete={handleDelete}
         modalIsOpen={modalIsOpen}
         closeModal={closeModal}
-        name={getTask() ? getTask().title : ''}
+        name={task ? task.title : ''}
       />
     </>
   );
 };
 
-export default DeleteTaskContainer;
+export default DeleteTask;

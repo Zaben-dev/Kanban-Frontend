@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ColumnData } from 'src/api/models';
-import ColumnMenuContainer from 'src/components/containers/ColumnMenuContainer';
-import TasksAreaContainer from 'src/components/containers/TasksAreaContainer';
+import DropdownMenu from 'src/components/logic/DropdownMenu';
+import ColumnMenu from 'src/components/presentational/menus/ColumnMenu';
+import RenderRows from 'src/components/logic/rows/RenderRows';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import { Infinity } from '@styled-icons/octicons/Infinity';
 
@@ -10,10 +11,10 @@ const StyledContainer = styled.div`
   background-color: #008cba2a;
   overflow: hidden;
   color: #1a1a1a;
-  min-width: 270px;
-  max-width: 270px;
+  min-width: 283px;
+  max-width: 283px;
   height: 89.5vh;
-  margin-left: 20px;
+  margin-left: 15px;
   animation: fadein 1s;
   border: 4px solid #0041572e;
 
@@ -53,6 +54,7 @@ const StyledLimit = styled.div`
   margin-left: 6px;
   margin-top: 5px;
 `;
+
 const StyledInfinityIcon = styled(Infinity)`
   padding-bottom: 1px;
   color: #1a1a1a;
@@ -67,12 +69,12 @@ const Column: React.FunctionComponent<ColumnData> = ({ id, name, limit }) => {
             {name}
             &nbsp;
           </StyledName>
-          <ColumnMenuContainer />
+          <DropdownMenu MenuType={ColumnMenu} />
         </StyledFlexContainer>
         <StyledLimit>
           max: {limit === null ? <StyledInfinityIcon size="18" /> : limit}
         </StyledLimit>
-        <TasksAreaContainer />
+        <RenderRows />
       </StyledContainer>
     </currentColumnIdContext.Provider>
   );

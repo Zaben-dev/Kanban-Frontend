@@ -1,6 +1,7 @@
 import React from 'react';
-import DeleteTask from 'src/components/logic/tasks/DeleteTask';
-import EditTask from 'src/components/logic/tasks/EditTask';
+import AddTask from 'src/components/logic/tasks/AddTask';
+import DeleteRow from 'src/components/logic/rows/DeleteRow';
+import EditRow from 'src/components/logic/rows/EditRow';
 import styled, { keyframes } from 'styled-components';
 import { DotsHorizontalRounded } from '@styled-icons/boxicons-regular/DotsHorizontalRounded';
 
@@ -52,18 +53,19 @@ interface props {
   onClick: () => void;
 }
 
-const TaskMenu: React.FunctionComponent<props> = ({ isActive, onClick }) => {
+const RowMenu: React.FunctionComponent<props> = ({ isActive, onClick }) => {
   return (
     <StyledContainer>
       <StyledMenuButton onClick={onClick}>
         <StyledIcon size="26" />
       </StyledMenuButton>
       <StyledMenu isActive={isActive}>
-        <EditTask />
-        <DeleteTask />
+        <AddTask />
+        <EditRow />
+        <DeleteRow />
       </StyledMenu>
     </StyledContainer>
   );
 };
 
-export default TaskMenu;
+export default RowMenu;

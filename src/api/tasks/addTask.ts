@@ -4,13 +4,14 @@ import { DOMAIN } from 'src/api/serverDomain';
 
 const parseTask = (task: TaskData): TaskData => {
   return {
-    id: Number(task.id),
-    title: String(task.title),
-    description: String(task.description),
-    priority: String(task.priority) as priority,
-    difficulty: String(task.difficulty) as difficulty,
-    columnId: Number(task.columnId),
-    position: Number(task.position),
+    id: +task.id,
+    title: task.title + '',
+    description: task.description + '',
+    priority: task.priority as priority,
+    difficulty: task.difficulty as difficulty,
+    columnId: +task.columnId,
+    position: +task.position,
+    rowId: +task.rowId,
   };
 };
 
@@ -19,7 +20,8 @@ const addTask = async (
   description: string,
   priority: priority,
   difficulty: difficulty,
-  columnId: number
+  columnId: number,
+  rowId: number
 ): Promise<TaskData> => {
   try {
     const response = await axios.post(DOMAIN + '/Tasks/', {
@@ -28,6 +30,7 @@ const addTask = async (
       priority,
       difficulty,
       columnId,
+      rowId,
     });
     return parseTask(response.data);
   } catch (e) {

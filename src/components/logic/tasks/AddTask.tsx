@@ -1,19 +1,24 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState, useContext } from 'react';
 import TaskDataForm from 'src/components/presentational/modals/forms/TaskDataForm';
 import AddTaskButton from 'src/components/presentational/buttons/AddTaskButton';
 import boardDataContext from 'src/contexts/boardDataContext';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
-import addTask from 'src/api/addTask';
+import currentRowIdContext from 'src/contexts/currentRowIdContext';
+import getBoardData from 'src/api/getBoardData';
+import addTask from 'src/api/tasks/addTask';
 import newNotification from 'src/utils/newNotification';
+import findColumnIndex from 'src/utils/dataFinders/findColumnIndex';
+import findRowIndex from 'src/utils/dataFinders/findRowIndex';
 import {
   priority as priorityEnum,
   difficulty as difficultyEnum,
   difficulty,
 } from 'src/api/models';
 
-const AddTaskContainer = () => {
+const AddTask = () => {
   const { boardData, setBoardData } = useContext(boardDataContext);
   const { id: currentColumnId } = useContext(currentColumnIdContext);
+  const { id: currentRowId } = useContext(currentRowIdContext);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const [inputTitle, setInputTitle] = useState<string>('');
   const [inputDescription, setInputDescription] = useState<string>('');
@@ -23,13 +28,8 @@ const AddTaskContainer = () => {
   const [inputDifficulty, setInputDifficulty] = useState<difficultyEnum>(
     difficultyEnum.Intermediate
   );
-
-  const getColumnIndex = useCallback((): number => {
-    const columnIndex = boardData.findIndex(
-      (column) => column.id === currentColumnId
-    );
-    return columnIndex;
-  }, [boardData, currentColumnId]);
+  const columnIndex = findColumnIndex(currentColumnId, boardData);
+  const rowIndex = findRowIndex(currentColumnId, currentRowId, boardData);
 
   const openModal = (): void => {
     setIsOpen(true);
@@ -97,25 +97,22 @@ const AddTaskContainer = () => {
       return;
     }
     if (
-      boardData[getColumnIndex()].tasks.length ===
-      boardData[getColumnIndex()].limit
+      boardData[columnIndex].rows[rowIndex].tasks.length ===
+      boardData[columnIndex].limit
     ) {
-      newNotification("Can't add more than column's task limit.");
+      newNotification("Can't add more than rows's task limit.");
       return;
     }
     try {
-      const task = await addTask(
+      await addTask(
         inputTitle,
         inputDescription,
         inputPriority,
         inputDifficulty,
-        currentColumnId
+        currentColumnId,
+        currentRowId
       );
-      const newBoardData = [...boardData];
-      newBoardData[getColumnIndex()].tasks = newBoardData[
-        getColumnIndex()
-      ].tasks.map((task) => ({ ...task, position: task.position + 1 }));
-      newBoardData[getColumnIndex()].tasks.push(task);
+      const newBoardData = await getBoardData();
       setBoardData(newBoardData);
       setInputTitle('');
       setInputDescription('');
@@ -145,4 +142,4 @@ const AddTaskContainer = () => {
   );
 };
 
-export default AddTaskContainer;
+export default AddTask;

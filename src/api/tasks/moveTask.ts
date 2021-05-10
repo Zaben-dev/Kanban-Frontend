@@ -6,6 +6,7 @@ const moveTask = async (
   id: number,
   title: string,
   description: string,
+  rowId: number,
   columnId: number,
   position: number
 ): Promise<TaskData> => {
@@ -13,6 +14,7 @@ const moveTask = async (
     const response = await axios.put(DOMAIN + '/Tasks/' + id + '/', {
       title,
       description,
+      rowId,
       columnId,
       position,
     });

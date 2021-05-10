@@ -7,7 +7,7 @@ import App from 'src/components/presentational/App';
 import { SpinnerComponent } from 'react-element-spinner';
 import { DragDropContext } from 'react-beautiful-dnd';
 import newNotification from 'src/utils/newNotification';
-import moveTask from 'src/api/moveTask';
+import moveTask from 'src/api/tasks/moveTask';
 
 const AppContainer = () => {
   const [boardData, setBoardData] = useState<boardData[]>([]);
@@ -34,67 +34,89 @@ const AppContainer = () => {
     if (!result || !result.destination || !result.source) {
       return;
     }
+    let sourceIds = result.source?.droppableId.split(',');
+    let sourceColumnId = +sourceIds[0];
+    let sourceRowId = +sourceIds[1];
+
+    let destinationIds = result.destination?.droppableId.split(',');
+    let destinationColumnId = +destinationIds[0];
+    let destinationRowId = +destinationIds[1];
+
     const sourceColumnIndex = (): number =>
-      boardData.findIndex(
-        (column) => column.id === Number(result.source?.droppableId)
+      boardData.findIndex((column) => column.id === sourceColumnId);
+
+    const sourceRowIndex = (): number =>
+      boardData[sourceColumnIndex()].rows.findIndex(
+        (row) => row.id === sourceRowId
       );
 
-    const destinationColumnIndex = (): number => {
-      if (!result || !result.destination) {
-        return 0;
-      }
-      return boardData.findIndex(
-        (column) => column.id === Number(result.destination?.droppableId)
+    const destinationColumnIndex = (): number =>
+      boardData.findIndex((column) => column.id === destinationColumnId);
+
+    const destinationRowIndex = (): number =>
+      boardData[destinationColumnIndex()].rows.findIndex(
+        (row) => row.id === destinationRowId
       );
-    };
 
     if (
       result.source.droppableId !== result.destination.droppableId &&
-      boardData[destinationColumnIndex()].tasks.length ===
-        boardData[destinationColumnIndex()].limit
+      boardData[destinationColumnIndex()].rows[destinationRowIndex()].tasks
+        .length === boardData[destinationColumnIndex()].limit
     ) {
-      newNotification("Can't add more than column's task limit.");
+      newNotification("Can't add more than row's task limit.");
       return;
     }
 
-    const task = boardData[sourceColumnIndex()].tasks[result.source.index];
+    const task =
+      boardData[sourceColumnIndex()].rows[sourceRowIndex()].tasks[
+        result.source.index
+      ];
     let newBoardData = [...boardData];
     let newSourceTasks = [
-      ...boardData[sourceColumnIndex()].tasks.slice(0, result.source.index),
-      ...newBoardData[sourceColumnIndex()].tasks.slice(result.source.index + 1),
+      ...boardData[sourceColumnIndex()].rows[sourceRowIndex()].tasks.slice(
+        0,
+        result.source.index
+      ),
+      ...newBoardData[sourceColumnIndex()].rows[sourceRowIndex()].tasks.slice(
+        result.source.index + 1
+      ),
     ];
-    newBoardData[sourceColumnIndex()].tasks = newSourceTasks;
+    newBoardData[sourceColumnIndex()].rows[sourceRowIndex()].tasks =
+      newSourceTasks;
 
     for (
       let i = result.source.index;
-      i < boardData[sourceColumnIndex()].tasks.length;
+      i < boardData[sourceColumnIndex()].rows[sourceRowIndex()].tasks.length;
       i++
     ) {
-      newBoardData[sourceColumnIndex()].tasks[i].position--;
+      newBoardData[sourceColumnIndex()].rows[sourceRowIndex()].tasks[i]
+        .position--;
     }
 
     let newDestinationTasks = [
-      ...boardData[destinationColumnIndex()].tasks.slice(
-        0,
-        result.destination.index
-      ),
+      ...boardData[destinationColumnIndex()].rows[
+        destinationRowIndex()
+      ].tasks.slice(0, result.destination.index),
       task,
-      ...newBoardData[destinationColumnIndex()].tasks.slice(
-        result.destination.index
-      ),
+      ...newBoardData[destinationColumnIndex()].rows[
+        destinationRowIndex()
+      ].tasks.slice(result.destination.index),
     ];
 
     for (
       let i = result.destination.index;
-      i < boardData[destinationColumnIndex()].tasks.length;
+      i <
+      boardData[destinationColumnIndex()].rows[destinationRowIndex()].tasks
+        .length;
       i++
     ) {
-      newBoardData[destinationColumnIndex()].tasks[i].position++;
+      newBoardData[destinationColumnIndex()].rows[destinationRowIndex()].tasks[
+        i
+      ].position++;
     }
-
-    newBoardData[destinationColumnIndex()].tasks = newDestinationTasks;
-
-    newBoardData[destinationColumnIndex()].tasks[
+    newBoardData[destinationColumnIndex()].rows[destinationRowIndex()].tasks =
+      newDestinationTasks;
+    newBoardData[destinationColumnIndex()].rows[destinationRowIndex()].tasks[
       result.destination.index
     ].position = result.destination.index + 1;
 
@@ -105,8 +127,9 @@ const AppContainer = () => {
         task.id,
         task.title,
         task.description,
-        Number(result.destination.droppableId),
-        Number(result.destination.index) + 1
+        +destinationRowId,
+        +destinationColumnId,
+        +result.destination.index + 1
       );
     } catch {
       const boardData = await getBoardData();

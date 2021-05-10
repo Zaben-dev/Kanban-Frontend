@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ColumnData } from './models';
+import { ColumnData } from 'src/api/models';
 import { DOMAIN } from 'src/api/serverDomain';
 
 const editColumn = async (
