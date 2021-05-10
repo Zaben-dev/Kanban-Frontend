@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import TasksAreaContainer from 'src/components/containers/TasksAreaContainer';
+import RenderTasks from 'src/components/logic/RenderTasks';
 import currentRowIdContext from 'src/contexts/currentRowIdContext';
-import DropdownMenu from 'src/components/containers/DropdownMenu';
+import DropdownMenu from 'src/components/logic/DropdownMenu';
 import RowMenu from 'src/components/presentational/menus/RowMenu';
 
 const StyledRowContainer = styled.div`
@@ -50,9 +50,9 @@ const Row: React.FC<Props> = ({ index, id, name }) => {
             {name}
             &nbsp;
           </StyledName>
-          <DropdownMenu Component={RowMenu} />
+          <DropdownMenu MenuType={RowMenu} />
         </StyledFlexContainer>
-        <TasksAreaContainer />
+        <RenderTasks />
       </currentRowIdContext.Provider>
     </StyledRowContainer>
   );

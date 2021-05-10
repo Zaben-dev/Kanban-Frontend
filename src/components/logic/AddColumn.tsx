@@ -1,15 +1,16 @@
 import { useState, useContext } from 'react';
-import RowDataForm from 'src/components/presentational/modals/forms/RowDataForm';
-import AddRowButton from 'src/components/presentational/buttons/AddRowButton';
-import addRow from 'src/api/addRow';
+import ColumnDataForm from 'src/components/presentational/modals/forms/ColumnDataForm';
+import AddColumnButton from 'src/components/presentational/buttons/AddColumnButton';
+import addColumn from 'src/api/addColumn';
 import getBoardData from 'src/api/getBoardData';
 import boardDataContext from 'src/contexts/boardDataContext';
 import newNotification from 'src/utils/newNotification';
 
-const AddRowContainer = () => {
+const AddColumn = () => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const { setBoardData } = useContext(boardDataContext);
   const [inputName, setInputName] = useState<string>('');
+  const [inputLimit, setInputLimit] = useState<number | null>(10);
 
   const openModal = (): void => {
     setIsOpen(true);
@@ -25,17 +26,34 @@ const AddRowContainer = () => {
     setInputName(event.target.value);
   };
 
+  const handleLimitChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    setInputLimit(parseInt(event.target.value));
+  };
+
+  const handleInfiniteLimit = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    if (event.target.checked === true) {
+      setInputLimit(null);
+    }
+    if (event.target.checked === false) {
+      setInputLimit(10);
+    }
+  };
+
   const handleSubmit = async (): Promise<void> => {
     if (inputName === '') {
       newNotification('Please provide all required fields.');
       return;
     }
-    if (inputName.length > 35) {
-      newNotification('Row name is too long.');
+    if (inputName.length > 40) {
+      newNotification('Column name is too long.');
       return;
     }
     try {
-      await addRow(inputName);
+      await addColumn(inputName, inputLimit);
       const newBoardData = await getBoardData();
       setBoardData(newBoardData);
       setInputName('');
@@ -47,16 +65,19 @@ const AddRowContainer = () => {
 
   return (
     <>
-      <AddRowButton openModal={openModal} />
-      <RowDataForm
+      <AddColumnButton openModal={openModal} />
+      <ColumnDataForm
         handleSubmit={handleSubmit}
         closeModal={closeModal}
         modalIsOpen={modalIsOpen}
         inputName={inputName}
+        inputLimit={inputLimit}
         handleNameChange={handleNameChange}
+        handleLimitChange={handleLimitChange}
+        handleInfiniteLimit={handleInfiniteLimit}
       />
     </>
   );
 };
 
-export default AddRowContainer;
+export default AddColumn;

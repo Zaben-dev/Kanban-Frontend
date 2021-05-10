@@ -1,47 +1,28 @@
-import { useState, useContext, useEffect, useCallback } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import RowDataForm from 'src/components/presentational/modals/forms/RowDataForm';
 import EditRowButton from 'src/components/presentational/buttons/EditRowButton';
 import editRow from 'src/api/editRow';
-import { rowData } from 'src/api/models';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import currentRowIdContext from 'src/contexts/currentRowIdContext';
 import getBoardData from 'src/api/getBoardData';
 import boardDataContext from 'src/contexts/boardDataContext';
 import newNotification from 'src/utils/newNotification';
+import findColumnIndex from 'src/utils/dataFinders/findColumnIndex';
+import findRowIndex from 'src/utils/dataFinders/findRowIndex';
 
-const AddRowContainer = () => {
+const EditRow = () => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const { boardData, setBoardData } = useContext(boardDataContext);
   const [inputName, setInputName] = useState<string>('');
   const { id: currentColumnId } = useContext(currentColumnIdContext);
   const { id: currentRowId } = useContext(currentRowIdContext);
-
-  const getColumnIndex = useCallback((): number => {
-    const columnIndex = boardData.findIndex(
-      (column) => column.id === currentColumnId
-    );
-    return columnIndex;
-  }, [boardData, currentColumnId]);
-
-  const getRowIndex = useCallback((): number => {
-    const columnIndex = boardData.findIndex(
-      (column) => column.id === currentColumnId
-    );
-
-    const rowIndex = boardData[columnIndex].rows.findIndex(
-      (row) => row.id === currentRowId
-    );
-
-    return rowIndex;
-  }, [boardData, currentRowId, currentColumnId]);
-
-  const getRow = useCallback((): rowData => {
-    return boardData[getColumnIndex()].rows[getRowIndex()];
-  }, [boardData, getColumnIndex]);
+  const columnIndex = findColumnIndex(currentColumnId, boardData);
+  const rowIndex = findRowIndex(currentColumnId, currentRowId, boardData);
+  const row = boardData[columnIndex].rows[rowIndex];
 
   useEffect(() => {
-    setInputName(getRow().name);
-  }, [getRow]);
+    setInputName(row.name);
+  }, [row]);
 
   const openModal = (): void => {
     setIsOpen(true);
@@ -91,4 +72,4 @@ const AddRowContainer = () => {
   );
 };
 
-export default AddRowContainer;
+export default EditRow;

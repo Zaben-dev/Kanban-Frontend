@@ -1,6 +1,6 @@
 import React from 'react';
-import DeleteTaskContainer from 'src/components/containers/DeleteTaskContainer';
-import EditTaskContainer from 'src/components/containers/EditTaskContainer';
+import DeleteTask from 'src/components/logic/DeleteTask';
+import EditTask from 'src/components/logic/EditTask';
 import styled, { keyframes } from 'styled-components';
 import { DotsHorizontalRounded } from '@styled-icons/boxicons-regular/DotsHorizontalRounded';
 
@@ -59,8 +59,8 @@ const TaskMenu: React.FunctionComponent<props> = ({ isActive, onClick }) => {
         <StyledIcon size="26" />
       </StyledMenuButton>
       <StyledMenu isActive={isActive}>
-        <EditTaskContainer />
-        <DeleteTaskContainer />
+        <EditTask />
+        <DeleteTask />
       </StyledMenu>
     </StyledContainer>
   );

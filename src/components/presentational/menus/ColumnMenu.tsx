@@ -1,8 +1,8 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { MenuOutline } from '@styled-icons/evaicons-outline/MenuOutline';
-import DeleteColumnContainer from 'src/components/containers/DeleteColumnContainer';
-import EditColumnContainer from 'src/components/containers/EditColumnContainer';
+import DeleteColumn from 'src/components/logic/DeleteColumn';
+import EditColumn from 'src/components/logic/EditColumn';
 
 const StyledContainer = styled.div`
   position: relative;
@@ -59,8 +59,8 @@ const ColumnMenu: React.FunctionComponent<props> = ({ isActive, onClick }) => {
         <StyledIcon size="32" />
       </StyledMenuButton>
       <StyledMenu isActive={isActive}>
-        <EditColumnContainer />
-        <DeleteColumnContainer />
+        <EditColumn />
+        <DeleteColumn />
       </StyledMenu>
     </StyledContainer>
   );

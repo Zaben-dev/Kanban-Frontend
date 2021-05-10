@@ -6,16 +6,16 @@ interface NestedComponentProps {
 }
 
 interface Props {
-  Component: React.FC<NestedComponentProps>;
+  MenuType: React.FC<NestedComponentProps>;
 }
 
-const DropdownMenu: React.FC<Props> = ({ Component }) => {
+const DropdownMenu: React.FC<Props> = ({ MenuType }) => {
   const [isActive, setIsActive] = useDetectClick(false);
   const onClick = (): void => {
     setIsActive(!isActive);
   };
 
-  return <Component onClick={onClick} isActive={isActive} />;
+  return <MenuType onClick={onClick} isActive={isActive} />;
 };
 
 export default DropdownMenu;

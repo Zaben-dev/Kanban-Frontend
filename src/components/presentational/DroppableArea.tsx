@@ -13,7 +13,7 @@ const StyledHorizontalLine = styled.div`
   );
 `;
 
-const StyledTasksArea = styled.div`
+const StyledDroppableArea = styled.div`
   display: inline-block;
   padding-right: 9px;
   min-height: 115px;
@@ -27,7 +27,7 @@ interface Props {
   provided: DroppableProvided;
 }
 
-const TasksArea: React.FunctionComponent<Props> = ({
+const DroppableArea: React.FunctionComponent<Props> = ({
   children,
   innerRef,
   provided,
@@ -35,11 +35,11 @@ const TasksArea: React.FunctionComponent<Props> = ({
   return (
     <>
       <StyledHorizontalLine></StyledHorizontalLine>
-      <StyledTasksArea {...provided.droppableProps} ref={innerRef}>
+      <StyledDroppableArea {...provided.droppableProps} ref={innerRef}>
         {children}
-      </StyledTasksArea>
+      </StyledDroppableArea>
     </>
   );
 };
 
-export default TasksArea;
+export default DroppableArea;

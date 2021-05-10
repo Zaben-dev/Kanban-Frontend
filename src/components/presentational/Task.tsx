@@ -2,7 +2,7 @@ import React from 'react';
 import { priority, difficulty } from 'src/api/models';
 import styled from 'styled-components';
 import { DraggableProvided } from 'react-beautiful-dnd';
-import DropdownMenu from 'src/components/containers/DropdownMenu';
+import DropdownMenu from 'src/components/logic/DropdownMenu';
 import TaskMenu from 'src/components/presentational/menus/TaskMenu';
 
 const StyledTaskContainer = styled.div`
@@ -83,7 +83,7 @@ const Task: React.FunctionComponent<Props> = ({
       <StyledTaskTopbar>
         <StyledFlexContainer>
           <div>{title}</div>
-          <DropdownMenu Component={TaskMenu} />
+          <DropdownMenu MenuType={TaskMenu} />
         </StyledFlexContainer>
         <div>
           <StyledAdditionalInfo>priority: {priority}</StyledAdditionalInfo>

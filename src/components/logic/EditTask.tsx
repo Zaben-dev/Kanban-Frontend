@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import TaskDataForm from 'src/components/presentational/modals/forms/TaskDataForm';
 import EditTaskButton from 'src/components/presentational/buttons/EditTaskButton';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
@@ -7,14 +7,16 @@ import currentRowIdContext from 'src/contexts/currentRowIdContext';
 import boardDataContext from 'src/contexts/boardDataContext';
 import newNotification from 'src/utils/newNotification';
 import editTask from 'src/api/editTask';
+import findColumnIndex from 'src/utils/dataFinders/findColumnIndex';
+import findRowIndex from 'src/utils/dataFinders/findRowIndex';
+import findTaskIndex from 'src/utils/dataFinders/findTaskIndex';
 import {
-  TaskData,
   priority as priorityEnum,
   difficulty as difficultyEnum,
   difficulty,
 } from 'src/api/models';
 
-const AddTaskContainer = () => {
+const EditTask = () => {
   const { id: currentTaskId } = useContext(currentTaskIdContext);
   const { id: currentColumnId } = useContext(currentColumnIdContext);
   const { id: currentRowId } = useContext(currentRowIdContext);
@@ -28,52 +30,22 @@ const AddTaskContainer = () => {
   const [inputDifficulty, setInputDifficulty] = useState<difficultyEnum>(
     difficultyEnum.Intermediate
   );
-
-  const getColumnIndex = useCallback((): number => {
-    const columnIndex = boardData.findIndex(
-      (column) => column.id === currentColumnId
-    );
-    return columnIndex;
-  }, [boardData, currentColumnId]);
-
-  const getRowIndex = useCallback((): number => {
-    const columnIndex = boardData.findIndex(
-      (column) => column.id === currentColumnId
-    );
-
-    const rowIndex = boardData[columnIndex].rows.findIndex(
-      (row) => row.id === currentRowId
-    );
-    return rowIndex;
-  }, [boardData, currentRowId, currentColumnId]);
-
-  const getTaskIndex = useCallback((): number => {
-    const columnIndex = boardData.findIndex(
-      (column) => column.id === currentColumnId
-    );
-
-    const rowIndex = boardData[columnIndex].rows.findIndex(
-      (row) => row.id === currentRowId
-    );
-
-    const taskIndex = boardData[columnIndex].rows[rowIndex].tasks.findIndex(
-      (task) => task.id === currentTaskId
-    );
-    return taskIndex;
-  }, [boardData, currentRowId, currentTaskId, currentColumnId]);
-
-  const getTask = useCallback((): TaskData => {
-    return boardData[getColumnIndex()].rows[getRowIndex()].tasks[
-      getTaskIndex()
-    ];
-  }, [boardData, getColumnIndex, getTaskIndex]);
+  const columnIndex = findColumnIndex(currentColumnId, boardData);
+  const rowIndex = findRowIndex(currentColumnId, currentRowId, boardData);
+  const taskIndex = findTaskIndex(
+    currentColumnId,
+    currentRowId,
+    currentTaskId,
+    boardData
+  );
+  const task = boardData[columnIndex].rows[rowIndex].tasks[taskIndex];
 
   useEffect(() => {
-    setInputTitle(getTask().title);
-    setInputDescription(getTask().description);
-    setInputPriority(getTask().priority);
-    setInputDifficulty(getTask().difficulty);
-  }, [getTask]);
+    setInputTitle(task.title);
+    setInputDescription(task.description);
+    setInputPriority(task.priority);
+    setInputDifficulty(task.difficulty);
+  }, [task]);
 
   const openModal = (): void => {
     setIsOpen(true);
@@ -149,13 +121,8 @@ const AddTaskContainer = () => {
         inputDifficulty
       );
 
-      console.log(getTask().columnId);
-      console.log(getTask().rowId);
-
       const newBoardData = [...boardData];
-      newBoardData[getColumnIndex()].rows[getRowIndex()].tasks[
-        getTaskIndex()
-      ] = {
+      newBoardData[columnIndex].rows[rowIndex].tasks[taskIndex] = {
         id: editedTask.id,
         title: editedTask.title,
         description: editedTask.description,
@@ -192,4 +159,4 @@ const AddTaskContainer = () => {
   );
 };
 
-export default AddTaskContainer;
+export default EditTask;

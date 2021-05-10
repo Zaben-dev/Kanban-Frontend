@@ -1,7 +1,7 @@
 import React from 'react';
-import AddTaskContainer from 'src/components/containers/AddTaskContainer';
-import DeleteRowContainer from 'src/components/containers/deleteRowContainer';
-import EditRowContainer from 'src/components/containers/EditRowContainer';
+import AddTask from 'src/components/logic/AddTask';
+import DeleteRow from 'src/components/logic/DeleteRow';
+import EditRow from 'src/components/logic/EditRow';
 import styled, { keyframes } from 'styled-components';
 import { DotsHorizontalRounded } from '@styled-icons/boxicons-regular/DotsHorizontalRounded';
 
@@ -60,9 +60,9 @@ const RowMenu: React.FunctionComponent<props> = ({ isActive, onClick }) => {
         <StyledIcon size="26" />
       </StyledMenuButton>
       <StyledMenu isActive={isActive}>
-        <AddTaskContainer />
-        <EditRowContainer />
-        <DeleteRowContainer />
+        <AddTask />
+        <EditRow />
+        <DeleteRow />
       </StyledMenu>
     </StyledContainer>
   );

@@ -1,27 +1,18 @@
-import { useContext, useState, useCallback } from 'react';
+import { useContext, useState } from 'react';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import DeleteConfirmation from 'src/components/presentational/modals/confirmations/DeleteConfirmation';
 import DeleteColumnButton from 'src/components/presentational/buttons/DeleteColumnButton';
 import boardDataContext from 'src/contexts/boardDataContext';
 import newNotification from 'src/utils/newNotification';
 import deleteColumn from 'src/api/deleteColumn';
-import { ColumnData } from 'src/api/models';
+import findColumnIndex from 'src/utils/dataFinders/findColumnIndex';
 
-const DeleteColumnContainer = () => {
+const DeleteColumn = () => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const { boardData, setBoardData } = useContext(boardDataContext);
   const { id: currentColumnId } = useContext(currentColumnIdContext);
-
-  const getColumnIndex = useCallback((): number => {
-    const columnIndex = boardData.findIndex(
-      (column) => column.id === currentColumnId
-    );
-    return columnIndex;
-  }, [boardData, currentColumnId]);
-
-  const getColumn = useCallback((): ColumnData => {
-    return boardData[getColumnIndex()];
-  }, [boardData, getColumnIndex]);
+  const columnIndex = findColumnIndex(currentColumnId, boardData);
+  const column = boardData[findColumnIndex(currentColumnId, boardData)];
 
   const openModal = (): void => {
     setIsOpen(true);
@@ -32,7 +23,7 @@ const DeleteColumnContainer = () => {
   };
 
   const handleDelete = async (): Promise<void> => {
-    boardData[getColumnIndex()].rows.map((row) => {
+    boardData[columnIndex].rows.map((row) => {
       if (row.tasks && row.tasks.length !== 0) {
         newNotification("Can't delete column which contain tasks.");
         closeModal();
@@ -58,10 +49,10 @@ const DeleteColumnContainer = () => {
         handleDelete={handleDelete}
         modalIsOpen={modalIsOpen}
         closeModal={closeModal}
-        name={getColumn().name}
+        name={column.name}
       />
     </>
   );
 };
 
-export default DeleteColumnContainer;
+export default DeleteColumn;
