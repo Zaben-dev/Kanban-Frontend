@@ -4,7 +4,7 @@ import DeleteConfirmation from 'src/components/presentational/modals/confirmatio
 import DeleteColumnButton from 'src/components/presentational/buttons/DeleteColumnButton';
 import boardDataContext from 'src/contexts/boardDataContext';
 import newNotification from 'src/utils/newNotification';
-import deleteColumn from 'src/api/deleteColumn';
+import deleteColumn from 'src/api/columns/deleteColumn';
 import findColumnIndex from 'src/utils/dataFinders/findColumnIndex';
 
 const DeleteColumn = () => {
@@ -23,13 +23,15 @@ const DeleteColumn = () => {
   };
 
   const handleDelete = async (): Promise<void> => {
-    boardData[columnIndex].rows.map((row) => {
+    let error = false;
+    boardData[columnIndex].rows.forEach((row) => {
       if (row.tasks && row.tasks.length !== 0) {
         newNotification("Can't delete column which contain tasks.");
         closeModal();
-        return;
+        error = true;
       }
     });
+    if (error) return;
     try {
       await deleteColumn(currentColumnId);
       closeModal();

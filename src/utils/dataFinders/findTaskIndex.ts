@@ -1,4 +1,4 @@
-import { boardData, ColumnData, rowData, TaskData } from 'src/api/models';
+import { boardData, ColumnData, rowData } from 'src/api/models';
 
 const findTaskIndex = (
   currentColumnId: number,

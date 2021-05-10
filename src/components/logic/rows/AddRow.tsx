@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import RowDataForm from 'src/components/presentational/modals/forms/RowDataForm';
 import AddRowButton from 'src/components/presentational/buttons/AddRowButton';
-import addRow from 'src/api/addRow';
+import addRow from 'src/api/rows/addRow';
 import getBoardData from 'src/api/getBoardData';
 import boardDataContext from 'src/contexts/boardDataContext';
 import newNotification from 'src/utils/newNotification';

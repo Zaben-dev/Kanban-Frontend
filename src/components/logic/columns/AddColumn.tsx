@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import ColumnDataForm from 'src/components/presentational/modals/forms/ColumnDataForm';
 import AddColumnButton from 'src/components/presentational/buttons/AddColumnButton';
-import addColumn from 'src/api/addColumn';
+import addColumn from 'src/api/columns/addColumn';
 import getBoardData from 'src/api/getBoardData';
 import boardDataContext from 'src/contexts/boardDataContext';
 import newNotification from 'src/utils/newNotification';

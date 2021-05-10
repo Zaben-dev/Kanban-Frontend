@@ -7,7 +7,7 @@ import App from 'src/components/presentational/App';
 import { SpinnerComponent } from 'react-element-spinner';
 import { DragDropContext } from 'react-beautiful-dnd';
 import newNotification from 'src/utils/newNotification';
-import moveTask from 'src/api/moveTask';
+import moveTask from 'src/api/tasks/moveTask';
 
 const AppContainer = () => {
   const [boardData, setBoardData] = useState<boardData[]>([]);
@@ -81,9 +81,8 @@ const AppContainer = () => {
         result.source.index + 1
       ),
     ];
-    newBoardData[sourceColumnIndex()].rows[
-      sourceRowIndex()
-    ].tasks = newSourceTasks;
+    newBoardData[sourceColumnIndex()].rows[sourceRowIndex()].tasks =
+      newSourceTasks;
 
     for (
       let i = result.source.index;
@@ -115,9 +114,8 @@ const AppContainer = () => {
         i
       ].position++;
     }
-    newBoardData[destinationColumnIndex()].rows[
-      destinationRowIndex()
-    ].tasks = newDestinationTasks;
+    newBoardData[destinationColumnIndex()].rows[destinationRowIndex()].tasks =
+      newDestinationTasks;
     newBoardData[destinationColumnIndex()].rows[destinationRowIndex()].tasks[
       result.destination.index
     ].position = result.destination.index + 1;

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ColumnData } from './models';
+import { ColumnData } from '../models';
 
 const editColumn = async (
   id: number,

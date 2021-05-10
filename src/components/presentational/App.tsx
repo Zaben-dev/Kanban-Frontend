@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
-import AddColumn from 'src/components/logic/AddColumn';
-import AddRowContainer from 'src/components/logic/AddRow';
+import AddColumn from 'src/components/logic/columns/AddColumn';
+import AddRowContainer from 'src/components/logic/rows/AddRow';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import AddTask from 'src/components/logic/AddTask';
-import DeleteRow from 'src/components/logic/DeleteRow';
-import EditRow from 'src/components/logic/EditRow';
+import AddTask from 'src/components/logic/tasks/AddTask';
+import DeleteRow from 'src/components/logic/rows/DeleteRow';
+import EditRow from 'src/components/logic/rows/EditRow';
 import styled, { keyframes } from 'styled-components';
 import { DotsHorizontalRounded } from '@styled-icons/boxicons-regular/DotsHorizontalRounded';
 

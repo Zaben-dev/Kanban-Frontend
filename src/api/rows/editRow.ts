@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { rowData } from './models';
+import { rowData } from '../models';
 
 const editRow = async (id: number, name: string): Promise<rowData> => {
   try {

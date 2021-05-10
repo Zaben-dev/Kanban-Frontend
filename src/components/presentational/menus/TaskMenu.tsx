@@ -1,6 +1,6 @@
 import React from 'react';
-import DeleteTask from 'src/components/logic/DeleteTask';
-import EditTask from 'src/components/logic/EditTask';
+import DeleteTask from 'src/components/logic/tasks/DeleteTask';
+import EditTask from 'src/components/logic/tasks/EditTask';
 import styled, { keyframes } from 'styled-components';
 import { DotsHorizontalRounded } from '@styled-icons/boxicons-regular/DotsHorizontalRounded';
 

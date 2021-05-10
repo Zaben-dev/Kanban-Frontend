@@ -1,8 +1,8 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { MenuOutline } from '@styled-icons/evaicons-outline/MenuOutline';
-import DeleteColumn from 'src/components/logic/DeleteColumn';
-import EditColumn from 'src/components/logic/EditColumn';
+import DeleteColumn from 'src/components/logic/columns/DeleteColumn';
+import EditColumn from 'src/components/logic/columns/EditColumn';
 
 const StyledContainer = styled.div`
   position: relative;

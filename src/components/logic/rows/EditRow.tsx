@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import RowDataForm from 'src/components/presentational/modals/forms/RowDataForm';
 import EditRowButton from 'src/components/presentational/buttons/EditRowButton';
-import editRow from 'src/api/editRow';
+import editRow from 'src/api/rows/editRow';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import currentRowIdContext from 'src/contexts/currentRowIdContext';
 import getBoardData from 'src/api/getBoardData';

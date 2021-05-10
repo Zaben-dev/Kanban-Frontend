@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
-import editColumn from 'src/api/editColumn';
+import editColumn from 'src/api/columns/editColumn';
 import boardDataContext from 'src/contexts/boardDataContext';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import newNotification from 'src/utils/newNotification';

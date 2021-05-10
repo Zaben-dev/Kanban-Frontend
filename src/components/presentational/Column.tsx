@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ColumnData } from 'src/api/models';
 import DropdownMenu from 'src/components/logic/DropdownMenu';
 import ColumnMenu from 'src/components/presentational/menus/ColumnMenu';
-import RenderRows from 'src/components/logic/RenderRows';
+import RenderRows from 'src/components/logic/rows/RenderRows';
 import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
 import { Infinity } from '@styled-icons/octicons/Infinity';
 

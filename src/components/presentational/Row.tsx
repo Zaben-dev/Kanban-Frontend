@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import RenderTasks from 'src/components/logic/RenderTasks';
+import RenderTasks from 'src/components/logic/tasks/RenderTasks';
 import currentRowIdContext from 'src/contexts/currentRowIdContext';
 import DropdownMenu from 'src/components/logic/DropdownMenu';
 import RowMenu from 'src/components/presentational/menus/RowMenu';

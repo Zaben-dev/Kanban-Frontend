@@ -1,28 +1,26 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import TaskDataForm from 'src/components/presentational/modals/forms/TaskDataForm';
-import EditTaskButton from 'src/components/presentational/buttons/EditTaskButton';
-import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
-import currentTaskIdContext from 'src/contexts/currentTaskIdContext';
-import currentRowIdContext from 'src/contexts/currentRowIdContext';
+import AddTaskButton from 'src/components/presentational/buttons/AddTaskButton';
 import boardDataContext from 'src/contexts/boardDataContext';
+import currentColumnIdContext from 'src/contexts/currentColumnIdContext';
+import currentRowIdContext from 'src/contexts/currentRowIdContext';
+import getBoardData from 'src/api/getBoardData';
+import addTask from 'src/api/tasks/addTask';
 import newNotification from 'src/utils/newNotification';
-import editTask from 'src/api/editTask';
 import findColumnIndex from 'src/utils/dataFinders/findColumnIndex';
 import findRowIndex from 'src/utils/dataFinders/findRowIndex';
-import findTaskIndex from 'src/utils/dataFinders/findTaskIndex';
 import {
   priority as priorityEnum,
   difficulty as difficultyEnum,
   difficulty,
 } from 'src/api/models';
 
-const EditTask = () => {
-  const { id: currentTaskId } = useContext(currentTaskIdContext);
+const AddTask = () => {
+  const { boardData, setBoardData } = useContext(boardDataContext);
   const { id: currentColumnId } = useContext(currentColumnIdContext);
   const { id: currentRowId } = useContext(currentRowIdContext);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const [inputTitle, setInputTitle] = useState<string>('');
-  const { boardData, setBoardData } = useContext(boardDataContext);
   const [inputDescription, setInputDescription] = useState<string>('');
   const [inputPriority, setInputPriority] = useState<priorityEnum>(
     priorityEnum.Medium
@@ -32,20 +30,6 @@ const EditTask = () => {
   );
   const columnIndex = findColumnIndex(currentColumnId, boardData);
   const rowIndex = findRowIndex(currentColumnId, currentRowId, boardData);
-  const taskIndex = findTaskIndex(
-    currentColumnId,
-    currentRowId,
-    currentTaskId,
-    boardData
-  );
-  const task = boardData[columnIndex].rows[rowIndex].tasks[taskIndex];
-
-  useEffect(() => {
-    setInputTitle(task.title);
-    setInputDescription(task.description);
-    setInputPriority(task.priority);
-    setInputDifficulty(task.difficulty);
-  }, [task]);
 
   const openModal = (): void => {
     setIsOpen(true);
@@ -101,7 +85,7 @@ const EditTask = () => {
 
   const handleSubmit = async (): Promise<void> => {
     if (inputTitle === '') {
-      newNotification('Task Title is required.');
+      newNotification('Task title is required.');
       return;
     }
     if (inputTitle.length > 70) {
@@ -112,27 +96,26 @@ const EditTask = () => {
       newNotification('Task description is too long.');
       return;
     }
+    if (
+      boardData[columnIndex].rows[rowIndex].tasks.length ===
+      boardData[columnIndex].limit
+    ) {
+      newNotification("Can't add more than rows's task limit.");
+      return;
+    }
     try {
-      const editedTask = await editTask(
-        currentTaskId,
+      await addTask(
         inputTitle,
         inputDescription,
         inputPriority,
-        inputDifficulty
+        inputDifficulty,
+        currentColumnId,
+        currentRowId
       );
-
-      const newBoardData = [...boardData];
-      newBoardData[columnIndex].rows[rowIndex].tasks[taskIndex] = {
-        id: editedTask.id,
-        title: editedTask.title,
-        description: editedTask.description,
-        priority: editedTask.priority,
-        difficulty: editedTask.difficulty,
-        rowId: editedTask.rowId,
-        columnId: editedTask.columnId,
-        position: editedTask.position,
-      };
+      const newBoardData = await getBoardData();
       setBoardData(newBoardData);
+      setInputTitle('');
+      setInputDescription('');
       closeModal();
     } catch {
       newNotification('Sorry, something went wrong.');
@@ -141,7 +124,7 @@ const EditTask = () => {
 
   return (
     <>
-      <EditTaskButton openModal={openModal} />
+      <AddTaskButton openModal={openModal} />
       <TaskDataForm
         modalIsOpen={modalIsOpen}
         inputTitle={inputTitle}
@@ -159,4 +142,4 @@ const EditTask = () => {
   );
 };
 
-export default EditTask;
+export default AddTask;
