@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { rowData } from 'src/api/models';
+import { DOMAIN } from 'src/api/serverDomain';
 
 const parseRow = (row: rowData): rowData => {
   return {
@@ -11,7 +12,7 @@ const parseRow = (row: rowData): rowData => {
 
 const addRow = async (name: string): Promise<rowData> => {
   try {
-    const response = await axios.post('http://127.0.0.1:8000/Rows/', {
+    const response = await axios.post(DOMAIN + '/Rows/', {
       name,
     });
     return parseRow(response.data);

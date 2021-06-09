@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'src/index.css';
-import AppContainer from 'src/components/logic/AppContainer';
+import App from 'src/components/logic/App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppContainer />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

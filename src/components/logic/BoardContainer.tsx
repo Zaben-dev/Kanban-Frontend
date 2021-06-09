@@ -3,13 +3,13 @@ import { boardData } from 'src/api/models';
 import getBoardData from 'src/api/getBoardData';
 import Column from 'src/components/presentational/Column';
 import boardDataContext from 'src/contexts/boardDataContext';
-import App from 'src/components/presentational/App';
+import Board from 'src/components/presentational/Board';
 import { SpinnerComponent } from 'react-element-spinner';
 import { DragDropContext } from 'react-beautiful-dnd';
 import newNotification from 'src/utils/newNotification';
 import moveTask from 'src/api/tasks/moveTask';
 
-const AppContainer = () => {
+const BoardContainer = () => {
   const [boardData, setBoardData] = useState<boardData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -146,7 +146,7 @@ const AppContainer = () => {
     return (
       <boardDataContext.Provider value={{ boardData, setBoardData }}>
         <DragDropContext onDragEnd={onDragEnd}>
-          <App>
+          <Board>
             {boardData.map((column, index) => (
               <Column
                 key={index}
@@ -155,11 +155,11 @@ const AppContainer = () => {
                 limit={column.limit}
               />
             ))}
-          </App>
+          </Board>
         </DragDropContext>
       </boardDataContext.Provider>
     );
   }
 };
 
-export default AppContainer;
+export default BoardContainer;

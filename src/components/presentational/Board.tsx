@@ -16,7 +16,7 @@ interface Props {
   children: ReactNode;
 }
 
-const App: React.FunctionComponent<Props> = ({ children }) => {
+const Board: React.FunctionComponent<Props> = ({ children }) => {
   Modal.setAppElement('#root');
   return (
     <>
@@ -26,4 +26,4 @@ const App: React.FunctionComponent<Props> = ({ children }) => {
   );
 };
 
-export default App;
+export default Board;

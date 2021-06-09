@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { rowData } from '../models';
+import { DOMAIN } from 'src/api/serverDomain';
 
 const editRow = async (id: number, name: string): Promise<rowData> => {
   try {
-    const response = await axios.put('http://127.0.0.1:8000/Rows/' + id + '/', {
+    const response = await axios.put(DOMAIN + '/Rows/' + id + '/', {
       name,
     });
     return response.data;
